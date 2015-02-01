@@ -3,32 +3,24 @@
 
 package com.cburch.logisim.instance;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.swing.Icon;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-
 import com.cburch.logisim.LogisimVersion;
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.comp.AbstractComponentFactory;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentDrawContext;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.AttributeSets;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.gui.log.Loggable;
 import com.cburch.logisim.tools.Pokable;
 import com.cburch.logisim.tools.key.KeyConfigurator;
 import com.cburch.logisim.util.Icons;
 import com.cburch.logisim.util.StringUtil;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents a category of components that appear in a circuit. This class
@@ -99,7 +91,7 @@ public abstract class InstanceFactory extends AbstractComponentFactory {
 
     @Override
     public final void paintIcon(ComponentDrawContext context,
-            int x, int y, AttributeSet attrs) {
+                                int x, int y, AttributeSet attrs) {
         InstancePainter painter = context.getInstancePainter();
         painter.setFactory(this, attrs);
         Graphics g = painter.getGraphics();
@@ -282,7 +274,7 @@ public abstract class InstanceFactory extends AbstractComponentFactory {
 
     @Override
     public final void drawGhost(ComponentDrawContext context, Color color,
-            int x, int y, AttributeSet attrs) {
+                                int x, int y, AttributeSet attrs) {
         InstancePainter painter = context.getInstancePainter();
         Graphics g = painter.getGraphics();
         g.setColor(color);
@@ -304,11 +296,16 @@ public abstract class InstanceFactory extends AbstractComponentFactory {
     }
 
     public abstract void paintInstance(InstancePainter painter);
+
     public abstract void propagate(InstanceState state);
 
     // event methods
-    protected void configureNewInstance(Instance instance) { }
-    protected void instanceAttributeChanged(Instance instance, Attribute<?> attr) { }
+    protected void configureNewInstance(Instance instance) {
+    }
+
+    protected void instanceAttributeChanged(Instance instance, Attribute<?> attr) {
+    }
+
     protected Object getInstanceFeature(Instance instance, Object key) {
         if (key == Pokable.class && pokerClass != null) {
             return new InstancePokerAdapter(instance.getComponent(), pokerClass);

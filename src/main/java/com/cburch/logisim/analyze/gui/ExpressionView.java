@@ -3,17 +3,15 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
+import com.cburch.logisim.analyze.model.Expression;
+import com.cburch.logisim.analyze.model.ExpressionVisitor;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
-import com.cburch.logisim.analyze.model.Expression;
-import com.cburch.logisim.analyze.model.ExpressionVisitor;
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
@@ -46,11 +44,16 @@ class ExpressionView extends JPanel {
         }
 
         @Override
-        public void componentMoved(ComponentEvent arg0) { }
+        public void componentMoved(ComponentEvent arg0) {
+        }
+
         @Override
-        public void componentShown(ComponentEvent arg0) { }
+        public void componentShown(ComponentEvent arg0) {
+        }
+
         @Override
-        public void componentHidden(ComponentEvent arg0) { }
+        public void componentHidden(ComponentEvent arg0) {
+        }
     }
 
     private MyListener myListener = new MyListener();
@@ -111,21 +114,33 @@ class ExpressionView extends JPanel {
             final StringBuilder text = new StringBuilder();
             expr.visit(new ExpressionVisitor<Object>() {
                 @Override
-                public Object visitAnd(Expression a, Expression b) { return binary(a, b, Expression.AND_LEVEL, " "); }
+                public Object visitAnd(Expression a, Expression b) {
+                    return binary(a, b, Expression.AND_LEVEL, " ");
+                }
+
                 @Override
-                public Object visitOr(Expression a, Expression b) { return binary(a, b, Expression.OR_LEVEL, " + "); }
+                public Object visitOr(Expression a, Expression b) {
+                    return binary(a, b, Expression.OR_LEVEL, " + ");
+                }
+
                 @Override
-                public Object visitXor(Expression a, Expression b) { return binary(a, b, Expression.XOR_LEVEL, " ^ "); }
+                public Object visitXor(Expression a, Expression b) {
+                    return binary(a, b, Expression.XOR_LEVEL, " ^ ");
+                }
 
                 private Object binary(Expression a, Expression b, int level, String op) {
                     if (a.getPrecedence() < level) {
-                        text.append("("); a.visit(this); text.append(")");
+                        text.append("(");
+                        a.visit(this);
+                        text.append(")");
                     } else {
                         a.visit(this);
                     }
                     text.append(op);
                     if (b.getPrecedence() < level) {
-                        text.append("("); b.visit(this); text.append(")");
+                        text.append("(");
+                        b.visit(this);
+                        text.append(")");
                     } else {
                         b.visit(this);
                     }
@@ -174,7 +189,8 @@ class ExpressionView extends JPanel {
                 //    or curNot == null if none such exists
                 char cur = text.charAt(i);
                 if (cur == ' ') {
-                    badness[i] = BADNESS_BEFORE_SPACE;;
+                    badness[i] = BADNESS_BEFORE_SPACE;
+                    ;
                 } else if (Character.isJavaIdentifierPart(cur)) {
                     if (Character.isJavaIdentifierPart(prev)) {
                         badness[i] = BADNESS_IDENT_BREAK;
@@ -187,7 +203,7 @@ class ExpressionView extends JPanel {
                     badness[i] = BADNESS_BEFORE_XOR;
                 } else if (cur == ')') {
                     badness[i] = BADNESS_BEFORE_SPACE;
-                // cur == '('
+                    // cur == '('
                 } else {
                     badness[i] = BADNESS_BEFORE_AND;
                 }
@@ -235,14 +251,14 @@ class ExpressionView extends JPanel {
             height = MINIMUM_HEIGHT;
 
             if (fm == null) {
-                lineText = new String[] { exprData.text };
+                lineText = new String[]{exprData.text};
                 lineNots = new ArrayList<ArrayList<NotData>>();
                 lineNots.add(exprData.nots);
                 computeNotDepths();
-                lineY = new int[] { MINIMUM_HEIGHT };
+                lineY = new int[]{MINIMUM_HEIGHT};
             } else {
                 if (exprData.text.length() == 0) {
-                    lineText = new String[] { getFromLocale("expressionEmpty") };
+                    lineText = new String[]{getFromLocale("expressionEmpty")};
                     lineNots = new ArrayList<ArrayList<NotData>>();
                     lineNots.add(new ArrayList<NotData>());
                 } else {
@@ -261,7 +277,7 @@ class ExpressionView extends JPanel {
             int[] badness = exprData.badness;
 
             if (fm.stringWidth(text) <= width) {
-                lineText = new String[] { text };
+                lineText = new String[]{text};
                 return;
             }
 
@@ -277,7 +293,7 @@ class ExpressionView extends JPanel {
                 int bestStopPos = stopPos;
                 int lineWidth = fm.stringWidth(bestLine);
                 int bestBadness = badness[stopPos]
-                    + (width - lineWidth) * BADNESS_PER_PIXEL;
+                        + (width - lineWidth) * BADNESS_PER_PIXEL;
                 while (stopPos < text.length()) {
                     ++stopPos;
                     String line = text.substring(startPos, stopPos);
@@ -288,7 +304,7 @@ class ExpressionView extends JPanel {
 
 
                     int lineBadness = badness[stopPos]
-                        + (width - lineWidth) * BADNESS_PER_PIXEL;
+                            + (width - lineWidth) * BADNESS_PER_PIXEL;
                     if (lineBadness < bestBadness) {
                         bestBadness = lineBadness;
                         bestStopPos = stopPos;

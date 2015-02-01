@@ -3,19 +3,14 @@
 
 package com.cburch.logisim.instance;
 
-import java.awt.Graphics;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.WireSet;
 import com.cburch.logisim.comp.ComponentDrawContext;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.proj.Project;
+
+import java.awt.*;
 
 public class InstancePainter implements InstanceState {
     private ComponentDrawContext context;
@@ -24,7 +19,7 @@ public class InstancePainter implements InstanceState {
     private AttributeSet attrs;
 
     public InstancePainter(ComponentDrawContext context,
-            InstanceComponent instance) {
+                           InstanceComponent instance) {
         this.context = context;
         this.comp = instance;
     }
@@ -200,7 +195,7 @@ public class InstancePainter implements InstanceState {
     }
 
     public void drawRectangle(int x, int y,
-            int width, int height, String label) {
+                              int width, int height, String label) {
         context.drawRectangle(x, y, width, height, label);
     }
 

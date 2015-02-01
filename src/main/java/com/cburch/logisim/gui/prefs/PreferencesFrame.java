@@ -3,24 +3,19 @@
 
 package com.cburch.logisim.gui.prefs;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-
 import com.cburch.logisim.gui.generic.LFrame;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
 import com.cburch.logisim.util.WindowMenuItemManager;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class PreferencesFrame extends LFrame {
@@ -90,7 +85,7 @@ public class PreferencesFrame extends LFrame {
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setJMenuBar(new LogisimMenuBar(this, null));
 
-        panels = new OptionsPanel[] {
+        panels = new OptionsPanel[]{
                 new TemplateOptions(this),
                 new IntlOptions(this),
                 new WindowOptions(this),

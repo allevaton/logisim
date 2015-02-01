@@ -3,18 +3,17 @@
 
 package com.cburch.logisim.util;
 
+import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.HashMap;
 
-import javax.swing.JFrame;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.WindowConstants;
-
 public abstract class WindowMenuItemManager {
     private class MyListener implements WindowListener {
         @Override
-        public void windowOpened(WindowEvent event) { }
+        public void windowOpened(WindowEvent event) {
+        }
+
         @Override
         public void windowClosing(WindowEvent event) {
             JFrame frame = getJFrame(false);
@@ -29,7 +28,8 @@ public abstract class WindowMenuItemManager {
         }
 
         @Override
-        public void windowDeiconified(WindowEvent event) { }
+        public void windowDeiconified(WindowEvent event) {
+        }
 
         @Override
         public void windowIconified(WindowEvent event) {
@@ -54,8 +54,8 @@ public abstract class WindowMenuItemManager {
     private boolean persistent;
     private boolean listenerAdded = false;
     private boolean inManager = false;
-    private HashMap<WindowMenu,JRadioButtonMenuItem> menuItems
-        = new HashMap<WindowMenu,JRadioButtonMenuItem>();
+    private HashMap<WindowMenu, JRadioButtonMenuItem> menuItems
+            = new HashMap<WindowMenu, JRadioButtonMenuItem>();
 
     public WindowMenuItemManager(String text, boolean persistent) {
         this.text = text;

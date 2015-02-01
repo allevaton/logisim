@@ -52,7 +52,7 @@ class SimulatorTicker extends Thread {
             int millis = millisPerTickPhase;
             int ticks = ticksPerTickPhase;
             try {
-                synchronized(this) {
+                synchronized (this) {
                     curShouldTick = shouldTick;
                     millis = millisPerTickPhase;
                     ticks = ticksPerTickPhase;
@@ -64,7 +64,8 @@ class SimulatorTicker extends Thread {
                         ticks = ticksPerTickPhase;
                     }
                 }
-            } catch (InterruptedException e) { }
+            } catch (InterruptedException e) {
+            }
 
             if (complete) {
                 break;
@@ -84,12 +85,10 @@ class SimulatorTicker extends Thread {
                 for (int i = 0; i < toTick; i++) {
                     manager.requestTick();
                 }
-                synchronized(this) {
+                synchronized (this) {
                     if (ticksPending > toTick) {
                         ticksPending -= toTick;
-                    }
-
-                    else {
+                    } else {
                         ticksPending = 0;
                     }
 
@@ -111,7 +110,8 @@ class SimulatorTicker extends Thread {
                 }
 
                 Thread.sleep(wait);
-            } catch (InterruptedException e) { }
+            } catch (InterruptedException e) {
+            }
         }
     }
 }

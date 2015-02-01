@@ -3,15 +3,15 @@
 
 package com.cburch.logisim.tools;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.Icon;
-
 import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.util.Icons;
 
-/** This class allows an object to be created holding all the information
+import javax.swing.*;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * This class allows an object to be created holding all the information
  * essential to showing a ComponentFactory in the explorer window, but without
  * actually loading the ComponentFactory unless a program genuinely gets around
  * to needing to use it. Note that for this to work, the relevant
@@ -21,7 +21,7 @@ import com.cburch.logisim.util.Icons;
  */
 public class FactoryDescription {
     public static List<Tool> getTools(Class<? extends Library> base,
-            FactoryDescription[] descriptions) {
+                                      FactoryDescription[] descriptions) {
         Tool[] tools = new Tool[descriptions.length];
         for (int i = 0; i < tools.length; i++) {
             tools[i] = new AddTool(base, descriptions[i]);
@@ -40,7 +40,7 @@ public class FactoryDescription {
     private String toolTip;
 
     public FactoryDescription(String name, String displayName,
-            String iconName, String factoryClassName) {
+                              String iconName, String factoryClassName) {
         this(name, displayName, factoryClassName);
         this.iconName = iconName;
         this.iconLoadAttempted = false;
@@ -48,7 +48,7 @@ public class FactoryDescription {
     }
 
     public FactoryDescription(String name, String displayName,
-            Icon icon, String factoryClassName) {
+                              Icon icon, String factoryClassName) {
         this(name, displayName, factoryClassName);
         this.iconName = "???";
         this.iconLoadAttempted = true;
@@ -56,7 +56,7 @@ public class FactoryDescription {
     }
 
     public FactoryDescription(String name, String displayName,
-            String factoryClassName) {
+                              String factoryClassName) {
         this.name = name;
         this.displayName = displayName;
         this.iconName = "???";
@@ -100,34 +100,34 @@ public class FactoryDescription {
 
         String msg = "";
         try {
-        	msg = "getting class loader";
-        	ClassLoader loader = libraryClass.getClassLoader();
-        	msg = "getting package name";
-        	String name;
-        	Package pack = libraryClass.getPackage();
-        	if (pack == null) {
-        		name = factoryClassName;
-        	} else {
-        		name = pack.getName() + "." + factoryClassName;
-        	}
-        	msg = "loading class";
-        	Class<?> factoryClass = loader.loadClass(name);
-        	msg = "creating instance";
-        	Object factoryValue = factoryClass.newInstance();
-        	msg = "converting to factory";
-        	if (factoryValue instanceof ComponentFactory) {
-        		ret = (ComponentFactory) factoryValue;
-        		factory = ret;
-        		factoryLoadAttempted = true;
-        		return ret;
-        	}
+            msg = "getting class loader";
+            ClassLoader loader = libraryClass.getClassLoader();
+            msg = "getting package name";
+            String name;
+            Package pack = libraryClass.getPackage();
+            if (pack == null) {
+                name = factoryClassName;
+            } else {
+                name = pack.getName() + "." + factoryClassName;
+            }
+            msg = "loading class";
+            Class<?> factoryClass = loader.loadClass(name);
+            msg = "creating instance";
+            Object factoryValue = factoryClass.newInstance();
+            msg = "converting to factory";
+            if (factoryValue instanceof ComponentFactory) {
+                ret = (ComponentFactory) factoryValue;
+                factory = ret;
+                factoryLoadAttempted = true;
+                return ret;
+            }
         } catch (Exception t) {
-        	String name = t.getClass().getName();
-    		msg += ": " + name;
-        	String m = t.getMessage();
-        	if (m != null) {
-        		msg += ": " + m;
-        	}
+            String name = t.getClass().getName();
+            msg += ": " + name;
+            String m = t.getMessage();
+            if (m != null) {
+                msg += ": " + m;
+            }
         }
         //OK
         System.err.println("error while " + msg);

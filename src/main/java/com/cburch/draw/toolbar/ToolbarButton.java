@@ -3,15 +3,12 @@
 
 package com.cburch.draw.toolbar;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import com.cburch.logisim.util.GraphicsUtil;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import javax.swing.JComponent;
-
-import com.cburch.logisim.util.GraphicsUtil;
 
 @SuppressWarnings("serial")
 class ToolbarButton extends JComponent implements MouseListener {
@@ -94,12 +91,12 @@ class ToolbarButton extends JComponent implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    	
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-    	
+
     }
 
     @Override

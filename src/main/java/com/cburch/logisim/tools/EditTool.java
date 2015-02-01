@@ -3,18 +3,6 @@
 
 package com.cburch.logisim.tools;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Set;
-
 import com.cburch.logisim.LogisimVersion;
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitEvent;
@@ -23,24 +11,27 @@ import com.cburch.logisim.circuit.Wire;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentDrawContext;
 import com.cburch.logisim.comp.ComponentFactory;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.gui.main.Canvas;
 import com.cburch.logisim.gui.main.Selection;
-import com.cburch.logisim.gui.main.SelectionActions;
 import com.cburch.logisim.gui.main.Selection.Event;
+import com.cburch.logisim.gui.main.SelectionActions;
 import com.cburch.logisim.proj.Action;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 
 public class EditTool extends Tool {
     private static final int CACHE_MAX_SIZE = 32;
     private static final Location NULL_LOCATION
-        = Location.create(Integer.MIN_VALUE, Integer.MIN_VALUE);
+            = Location.create(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
     private class Listener implements CircuitListener, Selection.Listener {
         @Override
@@ -64,7 +55,7 @@ public class EditTool extends Tool {
     private SelectTool select;
     private WiringTool wiring;
     private Tool current;
-    private LinkedHashMap<Location,Boolean> cache;
+    private LinkedHashMap<Location, Boolean> cache;
     private Canvas lastCanvas;
     private int lastRawX;
     private int lastRawY;
@@ -85,7 +76,7 @@ public class EditTool extends Tool {
         this.select = select;
         this.wiring = wiring;
         this.current = select;
-        this.cache = new LinkedHashMap<Location,Boolean>();
+        this.cache = new LinkedHashMap<Location, Boolean>();
         this.lastX = -1;
         this.wireLoc = NULL_LOCATION;
         this.pressX = -1;
@@ -308,17 +299,17 @@ public class EditTool extends Tool {
 
         Location snap = Location.create(snapx, snapy);
         if (modsSame) {
-        	Object o = cache.get(snap);
-        	if (o != null) {
-        		lastX = snapx;
-        		lastY = snapy;
-        		canvas.repaint();
-        		boolean ret = ((Boolean) o).booleanValue();
-        		wireLoc = ret ? snap : NULL_LOCATION;
-        		return ret;
-        	}
+            Object o = cache.get(snap);
+            if (o != null) {
+                lastX = snapx;
+                lastY = snapy;
+                canvas.repaint();
+                boolean ret = ((Boolean) o).booleanValue();
+                wireLoc = ret ? snap : NULL_LOCATION;
+                return ret;
+            }
         } else {
-        	cache.clear();
+            cache.clear();
         }
 
         boolean ret = isEligible && isWiringPoint(canvas, snap, mods);
@@ -327,9 +318,9 @@ public class EditTool extends Tool {
         int toRemove = cache.size() - CACHE_MAX_SIZE;
         Iterator<Location> it = cache.keySet().iterator();
         while (it.hasNext() && toRemove > 0) {
-        	it.next();
-        	it.remove();
-        	--toRemove;
+            it.next();
+            it.remove();
+            --toRemove;
         }
 
         lastX = snapx;
@@ -363,11 +354,11 @@ public class EditTool extends Tool {
         }
 
         for (Wire w : circ.getWires()) {
-        	if (w.contains(loc)) {
-        		return wiring;
-        	}
+            if (w.contains(loc)) {
+                return wiring;
+            }
         }
-        
+
         return select;
     }
 
@@ -379,70 +370,67 @@ public class EditTool extends Tool {
     @Override
     public void keyPressed(Canvas canvas, KeyEvent e) {
         switch (e.getKeyCode()) {
-        case KeyEvent.VK_BACK_SPACE:
-        case KeyEvent.VK_DELETE:
-            if (!canvas.getSelection().isEmpty()) {
-                Action act = SelectionActions.clear(canvas.getSelection());
+            case KeyEvent.VK_BACK_SPACE:
+            case KeyEvent.VK_DELETE:
+                if (!canvas.getSelection().isEmpty()) {
+                    Action act = SelectionActions.clear(canvas.getSelection());
+                    canvas.getProject().doAction(act);
+                    e.consume();
+                } else {
+                    wiring.keyPressed(canvas, e);
+                }
+                break;
+            case KeyEvent.VK_INSERT:
+                Action act = SelectionActions.duplicate(canvas.getSelection());
                 canvas.getProject().doAction(act);
                 e.consume();
-            } else {
-                wiring.keyPressed(canvas, e);
-            }
-            break;
-        case KeyEvent.VK_INSERT:
-            Action act = SelectionActions.duplicate(canvas.getSelection());
-            canvas.getProject().doAction(act);
-            e.consume();
-            break;
-        case KeyEvent.VK_UP:
-        	if (e.getModifiersEx() == 0) {
-        		attemptReface(canvas, Direction.NORTH, e);
-        	}
-        	else {
-        		select.keyPressed(canvas, e);
-        	}
-        	break;
-        case KeyEvent.VK_DOWN:
-        	if (e.getModifiersEx() == 0) {
-        		attemptReface(canvas, Direction.SOUTH, e);
-        	}
-        	else {
-        		select.keyPressed(canvas, e);
-        	}
-        	break;
-        case KeyEvent.VK_LEFT:
-        	if (e.getModifiersEx() == 0) {
-        		attemptReface(canvas, Direction.WEST, e);
-        	}
-        	else {
-        		select.keyPressed(canvas, e);
-        	}
-        	break;
-        case KeyEvent.VK_RIGHT:
-        	if (e.getModifiersEx() == 0) {
-        		attemptReface(canvas, Direction.EAST, e);
-        	}
-        	else {
-        		select.keyPressed(canvas, e);
-        	}
-        	break;
-        case KeyEvent.VK_ALT:
-        	updateLocation(canvas, e); e.consume();
-        	break;
-        default:
-            select.keyPressed(canvas, e);
+                break;
+            case KeyEvent.VK_UP:
+                if (e.getModifiersEx() == 0) {
+                    attemptReface(canvas, Direction.NORTH, e);
+                } else {
+                    select.keyPressed(canvas, e);
+                }
+                break;
+            case KeyEvent.VK_DOWN:
+                if (e.getModifiersEx() == 0) {
+                    attemptReface(canvas, Direction.SOUTH, e);
+                } else {
+                    select.keyPressed(canvas, e);
+                }
+                break;
+            case KeyEvent.VK_LEFT:
+                if (e.getModifiersEx() == 0) {
+                    attemptReface(canvas, Direction.WEST, e);
+                } else {
+                    select.keyPressed(canvas, e);
+                }
+                break;
+            case KeyEvent.VK_RIGHT:
+                if (e.getModifiersEx() == 0) {
+                    attemptReface(canvas, Direction.EAST, e);
+                } else {
+                    select.keyPressed(canvas, e);
+                }
+                break;
+            case KeyEvent.VK_ALT:
+                updateLocation(canvas, e);
+                e.consume();
+                break;
+            default:
+                select.keyPressed(canvas, e);
         }
     }
 
     @Override
     public void keyReleased(Canvas canvas, KeyEvent e) {
         switch (e.getKeyCode()) {
-        case KeyEvent.VK_ALT:
-        	updateLocation(canvas, e);
-        	e.consume();
-        	break;
-        default:
-            select.keyReleased(canvas, e);
+            case KeyEvent.VK_ALT:
+                updateLocation(canvas, e);
+                e.consume();
+                break;
+            default:
+                select.keyReleased(canvas, e);
         }
     }
 

@@ -6,19 +6,16 @@ package com.cburch.logisim.std.memory;
 import java.util.Arrays;
 
 class MemContentsSub {
-    private MemContentsSub() { }
+    private MemContentsSub() {
+    }
 
     static ContentsInterface createContents(int size, int bits) {
         if (bits <= 8) {
-                  return new ByteContents(size);
-        }
-
-        else if (bits <= 16) {
+            return new ByteContents(size);
+        } else if (bits <= 16) {
             return new ShortContents(size);
-        }
-
-        else {
-                           return new IntContents(size);
+        } else {
+            return new IntContents(size);
         }
 
     }
@@ -32,10 +29,15 @@ class MemContentsSub {
                 return this;
             }
         }
+
         abstract int getLength();
+
         abstract int get(int addr);
+
         abstract void set(int addr, int value);
+
         abstract void clear();
+
         abstract void load(int start, int[] values, int mask);
 
         boolean matches(int[] values, int start, int mask) {

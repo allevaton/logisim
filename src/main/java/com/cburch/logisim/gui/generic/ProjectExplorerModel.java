@@ -3,13 +3,13 @@
 
 package com.cburch.logisim.gui.generic;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.proj.ProjectEvent;
 import com.cburch.logisim.proj.ProjectListener;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 @SuppressWarnings("serial")
 class ProjectExplorerModel extends DefaultTreeModel implements ProjectListener {
@@ -41,8 +41,8 @@ class ProjectExplorerModel extends DefaultTreeModel implements ProjectListener {
             if (parent == null) {
                 model.fireTreeStructureChanged(this, this.getPath(), null, null);
             } else {
-                int[] indices = new int[] { parent.getIndex(this) };
-                Object[] items = new Object[] { this.getUserObject() };
+                int[] indices = new int[]{parent.getIndex(this)};
+                Object[] items = new Object[]{this.getUserObject()};
                 model.fireTreeNodesChanged(this, parent.getPath(), indices, items);
             }
         }

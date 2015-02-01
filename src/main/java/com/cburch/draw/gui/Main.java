@@ -3,11 +3,6 @@
 
 package com.cburch.draw.gui;
 
-import java.awt.BorderLayout;
-import java.util.Collections;
-
-import javax.swing.JFrame;
-
 import com.cburch.draw.canvas.Canvas;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.Drawing;
@@ -18,6 +13,10 @@ import com.cburch.draw.undo.UndoLogDispatcher;
 import com.cburch.logisim.gui.generic.AttrTable;
 import com.cburch.logisim.util.HorizontalSplitPane;
 import com.cburch.logisim.util.VerticalSplitPane;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {

@@ -3,24 +3,20 @@
 
 package com.cburch.logisim.util;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.LayoutManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class VerticalSplitPane extends JPanel {
     private class MyLayout implements LayoutManager {
         @Override
-        public void addLayoutComponent(String name, Component comp) { }
+        public void addLayoutComponent(String name, Component comp) {
+        }
+
         @Override
-        public void removeLayoutComponent(Component comp) { }
+        public void removeLayoutComponent(Component comp) {
+        }
 
         @Override
         public Dimension preferredLayoutSize(Container parent) {
@@ -109,7 +105,7 @@ public class VerticalSplitPane extends JPanel {
     }
 
     public VerticalSplitPane(JComponent comp0, JComponent comp1,
-            double fraction) {
+                             double fraction) {
         this.comp0 = comp0;
         this.comp1 = comp1;
         // above the other components

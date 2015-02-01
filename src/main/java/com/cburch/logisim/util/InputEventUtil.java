@@ -3,22 +3,24 @@
 
 package com.cburch.logisim.util;
 
-import java.awt.Event;
+import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 import java.util.Iterator;
-import static com.cburch.logisim.util.LocaleString.*;
+import java.util.StringTokenizer;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class InputEventUtil {
-    public static String CTRL    = "Ctrl";
-    public static String SHIFT   = "Shift";
-    public static String ALT     = "Alt";
+    public static String CTRL = "Ctrl";
+    public static String SHIFT = "Shift";
+    public static String ALT = "Alt";
     public static String BUTTON1 = "Button1";
     public static String BUTTON2 = "Button2";
     public static String BUTTON3 = "Button3";
 
-    private InputEventUtil() { }
+    private InputEventUtil() {
+    }
 
     public static int fromString(String str) {
         int ret = 0;
@@ -26,30 +28,18 @@ public class InputEventUtil {
         while (toks.hasMoreTokens()) {
             String s = toks.nextToken();
             if (s.equals(CTRL)) {
-                        ret |= InputEvent.CTRL_DOWN_MASK;
-            }
-
-            else if (s.equals(SHIFT)) {
-                  ret |= InputEvent.SHIFT_DOWN_MASK;
-            }
-
-            else if (s.equals(ALT)) {
-                    ret |= InputEvent.ALT_DOWN_MASK;
-            }
-
-            else if (s.equals(BUTTON1)) {
+                ret |= InputEvent.CTRL_DOWN_MASK;
+            } else if (s.equals(SHIFT)) {
+                ret |= InputEvent.SHIFT_DOWN_MASK;
+            } else if (s.equals(ALT)) {
+                ret |= InputEvent.ALT_DOWN_MASK;
+            } else if (s.equals(BUTTON1)) {
                 ret |= InputEvent.BUTTON1_DOWN_MASK;
-            }
-
-            else if (s.equals(BUTTON2)) {
+            } else if (s.equals(BUTTON2)) {
                 ret |= InputEvent.BUTTON2_DOWN_MASK;
-            }
-
-            else if (s.equals(BUTTON3)) {
+            } else if (s.equals(BUTTON3)) {
                 ret |= InputEvent.BUTTON3_DOWN_MASK;
-            }
-
-            else {
+            } else {
                 throw new NumberFormatException("InputEventUtil");
             }
 
@@ -59,15 +49,15 @@ public class InputEventUtil {
 
     public static String toString(int mods) {
         ArrayList<String> arr = new ArrayList<String>();
-        if ((mods & InputEvent.CTRL_DOWN_MASK)    != 0) {
+        if ((mods & InputEvent.CTRL_DOWN_MASK) != 0) {
             arr.add(CTRL);
         }
 
-        if ((mods & InputEvent.ALT_DOWN_MASK)     != 0) {
+        if ((mods & InputEvent.ALT_DOWN_MASK) != 0) {
             arr.add(ALT);
         }
 
-        if ((mods & InputEvent.SHIFT_DOWN_MASK)   != 0) {
+        if ((mods & InputEvent.SHIFT_DOWN_MASK) != 0) {
             arr.add(SHIFT);
         }
 
@@ -101,33 +91,22 @@ public class InputEventUtil {
         int ret = 0;
         StringTokenizer toks = new StringTokenizer(str);
         while (toks.hasMoreTokens()) {
-        	String s = toks.nextToken();
-        	if (s.equals(getFromLocale("ctrlMod"))) {
-        		ret |= InputEvent.CTRL_DOWN_MASK;
-        	}
-
-        	else if (s.equals(getFromLocale("altMod"))) {
-        		ret |= InputEvent.ALT_DOWN_MASK;
-        	}
-
-        	else if (s.equals(getFromLocale("shiftMod"))) {
-        		ret |= InputEvent.SHIFT_DOWN_MASK;
-        	}
-
-        	else if (s.equals(getFromLocale("button1Mod"))) {
-        		ret |= InputEvent.BUTTON1_DOWN_MASK;
-        	}
-
-        	else if (s.equals(getFromLocale("button2Mod"))) {
-        		ret |= InputEvent.BUTTON2_DOWN_MASK;
-        	}
-
-        	else if (s.equals(getFromLocale("button3Mod"))) {
-        		ret |= InputEvent.BUTTON3_DOWN_MASK;
-        	}
-        	else {
-        		throw new NumberFormatException("InputEventUtil");
-        	}
+            String s = toks.nextToken();
+            if (s.equals(getFromLocale("ctrlMod"))) {
+                ret |= InputEvent.CTRL_DOWN_MASK;
+            } else if (s.equals(getFromLocale("altMod"))) {
+                ret |= InputEvent.ALT_DOWN_MASK;
+            } else if (s.equals(getFromLocale("shiftMod"))) {
+                ret |= InputEvent.SHIFT_DOWN_MASK;
+            } else if (s.equals(getFromLocale("button1Mod"))) {
+                ret |= InputEvent.BUTTON1_DOWN_MASK;
+            } else if (s.equals(getFromLocale("button2Mod"))) {
+                ret |= InputEvent.BUTTON2_DOWN_MASK;
+            } else if (s.equals(getFromLocale("button3Mod"))) {
+                ret |= InputEvent.BUTTON3_DOWN_MASK;
+            } else {
+                throw new NumberFormatException("InputEventUtil");
+            }
 
         }
         return ret;
@@ -135,15 +114,15 @@ public class InputEventUtil {
 
     public static String toDisplayString(int mods) {
         ArrayList<String> arr = new ArrayList<String>();
-        if ((mods & InputEvent.CTRL_DOWN_MASK)    != 0) {
+        if ((mods & InputEvent.CTRL_DOWN_MASK) != 0) {
             arr.add(getFromLocale("ctrlMod"));
         }
 
-        if ((mods & InputEvent.ALT_DOWN_MASK)     != 0) {
+        if ((mods & InputEvent.ALT_DOWN_MASK) != 0) {
             arr.add(getFromLocale("altMod"));
         }
 
-        if ((mods & InputEvent.SHIFT_DOWN_MASK)   != 0) {
+        if ((mods & InputEvent.SHIFT_DOWN_MASK) != 0) {
             arr.add(getFromLocale("shiftMod"));
         }
 
@@ -158,28 +137,28 @@ public class InputEventUtil {
         if ((mods & InputEvent.BUTTON3_DOWN_MASK) != 0) {
             arr.add(getFromLocale("button3Mod"));
         }
-        
+
         return StringUtil.join(arr, " ");
     }
 
     public static String toKeyDisplayString(int mods) {
         ArrayList<String> arr = new ArrayList<String>();
-        if ((mods & Event.META_MASK)  != 0) {
+        if ((mods & Event.META_MASK) != 0) {
             arr.add(getFromLocale("metaMod"));
         }
 
-        if ((mods & Event.CTRL_MASK)  != 0) {
+        if ((mods & Event.CTRL_MASK) != 0) {
             arr.add(getFromLocale("ctrlMod"));
         }
 
-        if ((mods & Event.ALT_MASK)   != 0) {
+        if ((mods & Event.ALT_MASK) != 0) {
             arr.add(getFromLocale("altMod"));
         }
 
         if ((mods & Event.SHIFT_MASK) != 0) {
             arr.add(getFromLocale("shiftMod"));
         }
-        
+
         return StringUtil.join(arr, " ");
     }
 }

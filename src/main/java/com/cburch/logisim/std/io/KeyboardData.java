@@ -3,10 +3,10 @@
 
 package com.cburch.logisim.std.io;
 
-import java.awt.FontMetrics;
-
 import com.cburch.logisim.data.Value;
 import com.cburch.logisim.instance.InstanceData;
+
+import java.awt.*;
 
 class KeyboardData implements InstanceData, Cloneable {
     private Value lastClock;
@@ -58,7 +58,7 @@ class KeyboardData implements InstanceData, Cloneable {
     }
 
     public void updateBufferLength(int len) {
-        synchronized(this) {
+        synchronized (this) {
             char[] buf = buffer;
             int oldLen = buf.length;
             if (oldLen != len) {
@@ -234,23 +234,31 @@ class KeyboardData implements InstanceData, Cloneable {
             // rearrange start/end so as to include cursor
             if (pos <= i0) {
                 if (pos < i0) {
-                    { i1 += pos - i0;
+                    {
+                        i1 += pos - i0;
+                    }
+                    i0 = pos;
                 }
- i0 = pos; }
                 if (pos == i0 && i0 > 0) {
-                    { i0--;
+                    {
+                        i0--;
+                    }
+                    i1--;
                 }
- i1--; }
             }
             if (pos >= i1) {
                 if (pos > i1) {
-                    { i0 += pos - i1;
+                    {
+                        i0 += pos - i1;
+                    }
+                    i1 = pos;
                 }
- i1 = pos; }
                 if (pos == i1 && i1 < len) {
-                    { i0++;
+                    {
+                        i0++;
+                    }
+                    i1++;
                 }
- i1++; }
             }
             if (i0 <= 2) {
                 i0 = 0;
@@ -262,7 +270,7 @@ class KeyboardData implements InstanceData, Cloneable {
             if (fits(fm, str, w0, w1, i0, i1, max)) {
                 while (fits(fm, str, w0, w1, i0, i1 + 1, max)) i1++;
                 while (fits(fm, str, w0, w1, i0 - 1, i1, max)) i0--;
-            // should shrink
+                // should shrink
             } else {
                 if (pos < (i0 + i1) / 2) {
                     i1--;
@@ -284,7 +292,7 @@ class KeyboardData implements InstanceData, Cloneable {
     }
 
     private boolean fits(FontMetrics fm, String str, int w0, int w1,
-            int i0, int i1, int max) {
+                         int i0, int i1, int max) {
         if (i0 >= i1) {
             return true;
         }

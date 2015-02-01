@@ -3,13 +3,6 @@
 
 package com.cburch.logisim.circuit.appear;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import com.cburch.logisim.circuit.ReplacementMap;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentEvent;
@@ -21,6 +14,8 @@ import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.std.wiring.Pin;
 
+import java.util.*;
+
 public class CircuitPins {
     private class MyComponentListener
             implements ComponentListener, AttributeListener {
@@ -28,11 +23,15 @@ public class CircuitPins {
         public void endChanged(ComponentEvent e) {
             appearanceManager.updatePorts();
         }
-        @Override
-        public void componentInvalidated(ComponentEvent e) { }
 
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void componentInvalidated(ComponentEvent e) {
+        }
+
+        @Override
+        public void attributeListChanged(AttributeEvent e) {
+        }
+
         @Override
         public void attributeValueChanged(AttributeEvent e) {
             Attribute<?> attr = e.getAttribute();

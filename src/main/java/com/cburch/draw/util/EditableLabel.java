@@ -3,21 +3,15 @@
 
 package com.cburch.draw.util;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import com.cburch.logisim.data.Bounds;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
-
-import javax.swing.JTextField;
-
-import com.cburch.logisim.data.Bounds;
 
 public class EditableLabel implements Cloneable {
     public static final int LEFT = JTextField.LEFT;
@@ -68,10 +62,10 @@ public class EditableLabel implements Cloneable {
         if (other instanceof EditableLabel) {
             EditableLabel that = (EditableLabel) other;
             return this.x == that.x && this.y == that.y
-                && this.text.equals(that.text) && this.font.equals(that.font)
-                && this.color.equals(that.color)
-                && this.horzAlign == that.horzAlign
-                && this.vertAlign == that.vertAlign;
+                    && this.text.equals(that.text) && this.font.equals(that.font)
+                    && this.color.equals(that.color)
+                    && this.horzAlign == that.horzAlign
+                    && this.vertAlign == that.vertAlign;
         } else {
             return false;
         }
@@ -196,29 +190,29 @@ public class EditableLabel implements Cloneable {
 
     private int getLeftX() {
         switch (horzAlign) {
-        case LEFT:   
-        	return x;
-		case CENTER: 
-        	return x - width / 2;
-        case RIGHT:  
-        	return x - width;
-        default:     
-        	return x;
+            case LEFT:
+                return x;
+            case CENTER:
+                return x - width / 2;
+            case RIGHT:
+                return x - width;
+            default:
+                return x;
         }
     }
 
     private int getBaseY() {
         switch (vertAlign) {
-        case TOP:      
-        	return y + ascent;
-        case MIDDLE:   
-        	return y + (ascent - descent) / 2;
-        case BASELINE: 
-        	return y;
-        case BOTTOM:   
-        	return y - descent;
-        default:       
-        	return y;
+            case TOP:
+                return y + ascent;
+            case MIDDLE:
+                return y + (ascent - descent) / 2;
+            case BASELINE:
+                return y;
+            case BOTTOM:
+                return y - descent;
+            default:
+                return y;
         }
     }
 
@@ -256,18 +250,18 @@ public class EditableLabel implements Cloneable {
         w = Math.max(w, dim.width);
         int h = dim.height;
         switch (horzAlign) {
-        case LEFT:   
-        	x0 = x0 - border; 
-        	break;
-        case CENTER: 
-        	x0 = x0 - (w / 2) + 1; 
-        	break;
-        case RIGHT:  
-        	x0 = x0 - w + border + 1; 
-        	break;
-        default:     
-        	x0 = x0 - border;
-        	break;
+            case LEFT:
+                x0 = x0 - border;
+                break;
+            case CENTER:
+                x0 = x0 - (w / 2) + 1;
+                break;
+            case RIGHT:
+                x0 = x0 - w + border + 1;
+                break;
+            default:
+                x0 = x0 - border;
+                break;
         }
         y0 = y0 - border;
 

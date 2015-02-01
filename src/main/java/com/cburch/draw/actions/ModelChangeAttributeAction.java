@@ -3,17 +3,17 @@
 
 package com.cburch.draw.actions;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import com.cburch.draw.model.AttributeMapKey;
 import com.cburch.draw.model.CanvasModel;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.logisim.data.Attribute;
 
-import static com.cburch.logisim.util.LocaleString.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ModelChangeAttributeAction extends ModelAction {
     private Map<AttributeMapKey, Object> oldValues;
@@ -21,8 +21,8 @@ public class ModelChangeAttributeAction extends ModelAction {
     private Attribute<?> attr;
 
     public ModelChangeAttributeAction(CanvasModel model,
-            Map<AttributeMapKey, Object> oldValues,
-            Map<AttributeMapKey, Object> newValues) {
+                                      Map<AttributeMapKey, Object> oldValues,
+                                      Map<AttributeMapKey, Object> newValues) {
         super(model);
         this.oldValues = oldValues;
         this.newValues = newValues;
@@ -48,7 +48,7 @@ public class ModelChangeAttributeAction extends ModelAction {
                     if (a == null ? at != null : !a.equals(at)) {
                         a = null;
                         break;
-                   }
+                    }
                 } else {
                     found = true;
                     a = at;
@@ -56,7 +56,7 @@ public class ModelChangeAttributeAction extends ModelAction {
             }
             attr = a;
         }
-        
+
         if (a == null) {
             return getFromLocale("actionChangeAttributes");
         }

@@ -8,7 +8,7 @@ import com.cburch.logisim.data.Location;
 
 public class PolyUtil {
     private PolyUtil() {
-    	
+
     }
 
     public static class ClosestResult {
@@ -35,7 +35,7 @@ public class PolyUtil {
     }
 
     public static ClosestResult getClosestPoint(Location loc, boolean closed,
-            Handle[] hs) {
+                                                Handle[] hs) {
         int xq = loc.getX();
         int yq = loc.getY();
         ClosestResult ret = new ClosestResult();
@@ -45,7 +45,7 @@ public class PolyUtil {
             int x0 = h0.getX();
             int y0 = h0.getY();
             int stop = closed ? hs.length : (hs.length - 1);
-            for(int i = 0; i < stop; i++) {
+            for (int i = 0; i < stop; i++) {
                 Handle h1 = hs[(i + 1) % hs.length];
                 int x1 = h1.getX();
                 int y1 = h1.getY();

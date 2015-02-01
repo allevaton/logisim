@@ -5,7 +5,8 @@ package com.cburch.logisim.analyze.model;
 
 
 public class Expressions {
-    private Expressions() { }
+    private Expressions() {
+    }
 
     private static abstract class Binary extends Expression {
         protected final Expression a;
@@ -33,7 +34,7 @@ public class Expressions {
         @Override
         public int hashCode() {
             return 31 * (31 * getClass().hashCode() + a.hashCode())
-                + b.hashCode();
+                    + b.hashCode();
         }
     }
 

@@ -3,20 +3,14 @@
 
 package com.cburch.logisim.tools.move;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.Wire;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.EndData;
 import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.data.Location;
+
+import java.util.*;
 
 public class MoveGesture {
     private MoveRequestListener listener;
@@ -25,16 +19,16 @@ public class MoveGesture {
 
     private transient Set<ConnectionData> connections;
     private transient AvoidanceMap initAvoid;
-    private HashMap<MoveRequest,MoveResult> cachedResults;
+    private HashMap<MoveRequest, MoveResult> cachedResults;
 
     public MoveGesture(MoveRequestListener listener, Circuit circuit,
-            Collection<Component> selected) {
+                       Collection<Component> selected) {
         this.listener = listener;
         this.circuit = circuit;
         this.selected = new HashSet<Component>(selected);
         this.connections = null;
         this.initAvoid = null;
-        this.cachedResults = new HashMap<MoveRequest,MoveResult>();
+        this.cachedResults = new HashMap<MoveRequest, MoveResult>();
     }
 
     HashSet<Component> getSelected() {
@@ -111,7 +105,7 @@ public class MoveGesture {
     }
 
     private static Set<ConnectionData> computeConnections(Circuit circuit,
-            Set<Component> selected) {
+                                                          Set<Component> selected) {
         if (selected == null || selected.isEmpty()) {
             return Collections.emptySet();
         }
@@ -146,7 +140,7 @@ public class MoveGesture {
                     wirePath = new ArrayList<Wire>();
                     Location cur = loc;
                     for (Wire w = lastOnPath; w != null;
-                            w = findWire(circuit, cur, selected, w)) {
+                         w = findWire(circuit, cur, selected, w)) {
                         wirePath.add(w);
                         cur = w.getOtherEnd(cur);
                     }
@@ -172,7 +166,7 @@ public class MoveGesture {
     }
 
     private static Wire findWire(Circuit circ, Location loc,
-            Set<Component> ignore, Wire ignoreW) {
+                                 Set<Component> ignore, Wire ignoreW) {
         Wire ret = null;
         for (Component comp : circ.getComponents(loc)) {
             if (!ignore.contains(comp) && comp != ignoreW) {

@@ -3,34 +3,21 @@
 
 package com.cburch.logisim.circuit;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-
-import org.apache.commons.collections15.iterators.IteratorChain;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentDrawContext;
 import com.cburch.logisim.comp.EndData;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.std.wiring.PullResistor;
 import com.cburch.logisim.std.wiring.Tunnel;
 import com.cburch.logisim.util.GraphicsUtil;
+import org.apache.commons.collections15.iterators.IteratorChain;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 class CircuitWires {
     static class SplitterData {
@@ -45,6 +32,7 @@ class CircuitWires {
     static class ThreadBundle {
         int loc;
         WireBundle b;
+
         ThreadBundle(int loc, WireBundle b) {
             this.loc = loc;
             this.b = b;
@@ -53,7 +41,7 @@ class CircuitWires {
 
     static class State {
         BundleMap bundleMap;
-        HashMap<WireThread,Value> thr_values = new HashMap<WireThread,Value>();
+        HashMap<WireThread, Value> thr_values = new HashMap<WireThread, Value>();
 
         State(BundleMap bundleMap) {
             this.bundleMap = bundleMap;
@@ -69,7 +57,8 @@ class CircuitWires {
 
     private class TunnelListener implements AttributeListener {
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
 
         @Override
         public void attributeValueChanged(AttributeEvent e) {
@@ -82,7 +71,7 @@ class CircuitWires {
 
     static class BundleMap {
         boolean computed = false;
-        HashMap<Location,WireBundle> pointBundles = new HashMap<Location,WireBundle>();
+        HashMap<Location, WireBundle> pointBundles = new HashMap<Location, WireBundle>();
         HashSet<WireBundle> bundles = new HashSet<WireBundle>();
         boolean isValid = true;
         // NOTE: It would make things more efficient if we also had
@@ -142,7 +131,10 @@ class CircuitWires {
 
         synchronized void waitUntilComputed() {
             while (!computed) {
-                try { wait(); } catch (InterruptedException e) { }
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                }
             }
         }
     }
@@ -161,7 +153,8 @@ class CircuitWires {
     private Bounds bounds = Bounds.EMPTY_BOUNDS;
     private BundleMap bundleMap = null;
 
-    CircuitWires() { }
+    CircuitWires() {
+    }
 
     //
     // query methods
@@ -422,9 +415,11 @@ class CircuitWires {
                 for (int i = 0; i < tvs.length; i++) {
                     Value tv = s.thr_values.get(b.threads[i]);
                     if (tv == null) {
-                        { tvs_valid = false;
+                        {
+                            tvs_valid = false;
+                        }
+                        break;
                     }
- break; }
                     tvs[i] = tv;
                 }
                 if (tvs_valid) {
@@ -461,10 +456,8 @@ class CircuitWires {
                 } else if (showState) {
                     if (!isValid) {
                         g.setColor(Value.NIL_COLOR);
-                    }
-
-                    else {
-                                g.setColor(state.getValue(s).getColor());
+                    } else {
+                        g.setColor(state.getValue(s).getColor());
                     }
 
                 } else {
@@ -488,10 +481,8 @@ class CircuitWires {
                         } else if (showState) {
                             if (!isValid) {
                                 g.setColor(Value.NIL_COLOR);
-                            }
-
-                            else {
-                                        g.setColor(state.getValue(loc).getColor());
+                            } else {
+                                g.setColor(state.getValue(loc).getColor());
                             }
 
                         } else {
@@ -516,10 +507,8 @@ class CircuitWires {
                     } else if (showState) {
                         if (!isValid) {
                             g.setColor(Value.NIL_COLOR);
-                        }
-
-                        else {
-                                    g.setColor(state.getValue(s).getColor());
+                        } else {
+                            g.setColor(state.getValue(s).getColor());
                         }
 
                     } else {
@@ -555,10 +544,8 @@ class CircuitWires {
                             } else if (showState) {
                                 if (!isValid) {
                                     g.setColor(Value.NIL_COLOR);
-                                }
-
-                                else {
-                                            g.setColor(state.getValue(loc).getColor());
+                                } else {
+                                    g.setColor(state.getValue(loc).getColor());
                                 }
 
                             } else {
@@ -599,10 +586,10 @@ class CircuitWires {
                     computeBundleMap(ret);
                     bundleMap = ret;
                     break;
-        } catch (Exception e) {
+                } catch (Exception e) {
                     if (tries == 0) {
                         e.printStackTrace();
-                        System.err.println( e.getLocalizedMessage() );
+                        System.err.println(e.getLocalizedMessage());
                         bundleMap = ret;
                     }
                 }
@@ -677,7 +664,7 @@ class CircuitWires {
 
         // unite threads going through splitters
         for (Splitter spl : splitters) {
-            synchronized(spl) {
+            synchronized (spl) {
                 SplitterAttributes spl_attrs = (SplitterAttributes) spl.getAttributeSet();
                 byte[] bit_end = spl_attrs.bit_end;
                 SplitterData spl_data = spl.wire_data;
@@ -741,12 +728,14 @@ class CircuitWires {
             WireBundle b0 = ret.getBundleAt(w.e0);
             if (b0 == null) {
                 WireBundle b1 = ret.createBundleAt(w.e1);
-                b1.points.add(w.e0); ret.setBundleAt(w.e0, b1);
+                b1.points.add(w.e0);
+                ret.setBundleAt(w.e0, b1);
             } else {
                 WireBundle b1 = ret.getBundleAt(w.e1);
                 // t1 doesn't exist
                 if (b1 == null) {
-                    b0.points.add(w.e1); ret.setBundleAt(w.e1, b0);
+                    b0.points.add(w.e1);
+                    ret.setBundleAt(w.e1, b0);
                 } else {
                     // unite b0 and b1
                     b1.unite(b0);
@@ -757,7 +746,7 @@ class CircuitWires {
 
     private void connectTunnels(BundleMap ret) {
         // determine the sets of tunnels
-        HashMap<String,ArrayList<Location>> tunnelSets = new HashMap<String,ArrayList<Location>>();
+        HashMap<String, ArrayList<Location>> tunnelSets = new HashMap<String, ArrayList<Location>>();
         for (Component comp : tunnels) {
             String label = comp.getAttributeSet().getValue(StdAttr.LABEL);
             label = label.trim();
@@ -843,9 +832,7 @@ class CircuitWires {
         } else if (base.getWidth() == 1) {
             if (base == Value.UNKNOWN) {
                 return pullTo;
-            }
-
-            else {
+            } else {
                 return base;
             }
 
@@ -875,13 +862,17 @@ class CircuitWires {
         int ymax = w.e1.getY();
         while (it.hasNext()) {
             w = it.next();
-            int x0 = w.e0.getX(); if (x0 < xmin) xmin = x0;
-            int x1 = w.e1.getX(); if (x1 > xmax) xmax = x1;
-            int y0 = w.e0.getY(); if (y0 < ymin) ymin = y0;
-            int y1 = w.e1.getY(); if (y1 > ymax) ymax = y1;
+            int x0 = w.e0.getX();
+            if (x0 < xmin) xmin = x0;
+            int x1 = w.e1.getX();
+            if (x1 > xmax) xmax = x1;
+            int y0 = w.e0.getY();
+            if (y0 < ymin) ymin = y0;
+            int y1 = w.e1.getY();
+            if (y1 > ymax) ymax = y1;
         }
         Bounds bds = Bounds.create(xmin, ymin,
-            xmax - xmin + 1, ymax - ymin + 1);
+                xmax - xmin + 1, ymax - ymin + 1);
         bounds = bds;
         return bds;
     }

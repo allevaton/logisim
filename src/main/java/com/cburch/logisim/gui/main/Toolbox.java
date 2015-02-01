@@ -3,15 +3,13 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import com.cburch.draw.toolbar.Toolbar;
 import com.cburch.logisim.gui.generic.ProjectExplorer;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.Tool;
+
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 class Toolbox extends JPanel {

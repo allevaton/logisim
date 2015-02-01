@@ -3,61 +3,58 @@
 
 package com.cburch.logisim.circuit;
 
-import java.awt.Font;
+import com.cburch.logisim.circuit.appear.CircuitAppearanceEvent;
+import com.cburch.logisim.circuit.appear.CircuitAppearanceListener;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.Instance;
+import com.cburch.logisim.instance.StdAttr;
+
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
-import com.cburch.logisim.circuit.appear.CircuitAppearanceEvent;
-import com.cburch.logisim.circuit.appear.CircuitAppearanceListener;
-import com.cburch.logisim.data.AbstractAttributeSet;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.AttributeSets;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.StdAttr;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class CircuitAttributes extends AbstractAttributeSet {
     public static final Attribute<String> NAME_ATTR
-        = Attributes.forString("circuit", getFromLocale("circuitName"));
+            = Attributes.forString("circuit", getFromLocale("circuitName"));
 
     public static final Attribute<Direction> LABEL_LOCATION_ATTR
-        = Attributes.forDirection("labelloc", getFromLocale("circuitLabelLocAttr"));
+            = Attributes.forDirection("labelloc", getFromLocale("circuitLabelLocAttr"));
 
     public static final Attribute<String> CIRCUIT_LABEL_ATTR
-        = Attributes.forString("clabel", getFromLocale("circuitLabelAttr"));
+            = Attributes.forString("clabel", getFromLocale("circuitLabelAttr"));
 
     public static final Attribute<Direction> CIRCUIT_LABEL_FACING_ATTR
-        = Attributes.forDirection("clabelup", getFromLocale("circuitLabelDirAttr"));
+            = Attributes.forDirection("clabelup", getFromLocale("circuitLabelDirAttr"));
 
     public static final Attribute<Font> CIRCUIT_LABEL_FONT_ATTR
-        = Attributes.forFont("clabelfont", getFromLocale("circuitLabelFontAttr"));
+            = Attributes.forFont("clabelfont", getFromLocale("circuitLabelFontAttr"));
 
     private static final Attribute<?>[] STATIC_ATTRS = {
-        NAME_ATTR, CIRCUIT_LABEL_ATTR, CIRCUIT_LABEL_FACING_ATTR, CIRCUIT_LABEL_FONT_ATTR,
+            NAME_ATTR, CIRCUIT_LABEL_ATTR, CIRCUIT_LABEL_FACING_ATTR, CIRCUIT_LABEL_FONT_ATTR,
     };
     private static final Object[] STATIC_DEFAULTS = {
-        "", "", Direction.EAST, StdAttr.DEFAULT_LABEL_FONT,
+            "", "", Direction.EAST, StdAttr.DEFAULT_LABEL_FONT,
     };
     private static final List<Attribute<?>> INSTANCE_ATTRS
-        = Arrays.asList(new Attribute<?>[] {
-                StdAttr.FACING, StdAttr.LABEL, LABEL_LOCATION_ATTR,
-                StdAttr.LABEL_FONT,
-                CircuitAttributes.NAME_ATTR, CIRCUIT_LABEL_ATTR,
-                CIRCUIT_LABEL_FACING_ATTR, CIRCUIT_LABEL_FONT_ATTR,
-            });
+            = Arrays.asList(new Attribute<?>[]{
+            StdAttr.FACING, StdAttr.LABEL, LABEL_LOCATION_ATTR,
+            StdAttr.LABEL_FONT,
+            CircuitAttributes.NAME_ATTR, CIRCUIT_LABEL_ATTR,
+            CIRCUIT_LABEL_FACING_ATTR, CIRCUIT_LABEL_FONT_ATTR,
+    });
 
     private static class StaticListener implements AttributeListener {
         private Circuit source;
 
-        private StaticListener(Circuit s) { source = s; }
+        private StaticListener(Circuit s) {
+            source = s;
+        }
 
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
 
         @Override
         public void attributeValueChanged(AttributeEvent e) {
@@ -69,7 +66,8 @@ public class CircuitAttributes extends AbstractAttributeSet {
 
     private class MyListener implements AttributeListener, CircuitAppearanceListener {
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
 
         @Override
         public void attributeValueChanged(AttributeEvent e) {

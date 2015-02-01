@@ -3,44 +3,28 @@
 
 package com.cburch.logisim.gui.generic;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Window;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.FocusEvent;
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
+import com.cburch.logisim.util.JDialogOk;
+import com.cburch.logisim.util.JInputComponent;
+import com.cburch.logisim.util.LocaleListener;
+import com.cburch.logisim.util.LocaleManager;
+
+import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
-
-import com.cburch.logisim.util.JDialogOk;
-import com.cburch.logisim.util.JInputComponent;
-import com.cburch.logisim.util.LocaleListener;
-import com.cburch.logisim.util.LocaleManager;
-
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.LinkedList;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class AttrTable extends JPanel implements LocaleListener {
@@ -48,16 +32,27 @@ public class AttrTable extends JPanel implements LocaleListener {
 
     private static class NullAttrModel implements AttrTableModel {
         @Override
-        public void addAttrTableModelListener(AttrTableModelListener listener) { }
-        @Override
-        public void removeAttrTableModelListener(AttrTableModelListener listener) { }
+        public void addAttrTableModelListener(AttrTableModelListener listener) {
+        }
 
         @Override
-        public String getTitle() { return null; }
+        public void removeAttrTableModelListener(AttrTableModelListener listener) {
+        }
+
         @Override
-        public int getRowCount() { return 0; }
+        public String getTitle() {
+            return null;
+        }
+
         @Override
-        public AttrTableModelRow getRow(int rowIndex) { return null; }
+        public int getRowCount() {
+            return 0;
+        }
+
+        @Override
+        public AttrTableModelRow getRow(int rowIndex) {
+            return null;
+        }
     }
 
     private static class TitleLabel extends JLabel {
@@ -158,10 +153,8 @@ public class AttrTable extends JPanel implements LocaleListener {
         public String getColumnName(int columnIndex) {
             if (columnIndex == 0) {
                 return "Attribute";
-            }
-
-            else {
-                                 return "Value";
+            } else {
+                return "Value";
             }
 
         }
@@ -192,7 +185,7 @@ public class AttrTable extends JPanel implements LocaleListener {
 
         @Override
         public void setValueAt(Object value, int rowIndex,
-                int columnIndex) {
+                               int columnIndex) {
             if (columnIndex > 0) {
                 try {
                     attrModel.getRow(rowIndex).setValue(value);
@@ -327,7 +320,7 @@ public class AttrTable extends JPanel implements LocaleListener {
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
-                boolean isSelected, int rowIndex, int columnIndex) {
+                                                     boolean isSelected, int rowIndex, int columnIndex) {
             AttrTableModel attrModel = tableModel.attrModel;
             AttrTableModelRow row = attrModel.getRow(rowIndex);
 
@@ -393,7 +386,8 @@ public class AttrTable extends JPanel implements LocaleListener {
         }
 
         @Override
-        public void focusGained(FocusEvent e) { }
+        public void focusGained(FocusEvent e) {
+        }
 
         //
         // ActionListener methods

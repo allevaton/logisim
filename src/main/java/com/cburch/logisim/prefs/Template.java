@@ -3,12 +3,9 @@
 
 package com.cburch.logisim.prefs;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import static com.cburch.logisim.util.LocaleString.*;
+import java.io.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Template {
     public static Template createEmpty() {

@@ -3,34 +3,25 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.io.File;
-import java.io.IOException;
-import java.util.WeakHashMap;
-
 import com.cburch.hex.HexModel;
 import com.cburch.hex.HexModelListener;
 import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.gui.hex.HexFile;
 import com.cburch.logisim.gui.hex.HexFrame;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.MenuExtender;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.tools.key.JoinedConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.WeakHashMap;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 abstract class Mem extends InstanceFactory {
     // Note: The code is meant to be able to handle up to 32-bit addresses, but it
@@ -54,11 +45,11 @@ abstract class Mem extends InstanceFactory {
     // other constants
     static final int DELAY = 10;
 
-    private WeakHashMap<Instance,File> currentInstanceFiles;
+    private WeakHashMap<Instance, File> currentInstanceFiles;
 
     Mem(String name, String desc, int extraPorts) {
         super(name, desc);
-        currentInstanceFiles = new WeakHashMap<Instance,File>();
+        currentInstanceFiles = new WeakHashMap<Instance, File>();
         setInstancePoker(MemPoker.class);
         setKeyConfigurator(JoinedConfigurator.create(
                 new BitWidthConfigurator(ADDR_ATTR, 2, 24, 0),
@@ -68,11 +59,16 @@ abstract class Mem extends InstanceFactory {
     }
 
     abstract void configurePorts(Instance instance);
+
     @Override
     public abstract AttributeSet createAttributeSet();
+
     abstract MemState getState(InstanceState state);
+
     abstract MemState getState(Instance instance, CircuitState state);
+
     abstract HexFrame getHexFrame(Project proj, Instance instance, CircuitState state);
+
     @Override
     public abstract void propagate(InstanceState state);
 
@@ -82,9 +78,9 @@ abstract class Mem extends InstanceFactory {
     }
 
     void configureStandardPorts(Instance instance, Port[] ps) {
-        ps[DATA] = new Port(   0,  0, Port.INOUT, DATA_ATTR);
-        ps[ADDR] = new Port(-140,  0, Port.INPUT, ADDR_ATTR);
-        ps[CS]   = new Port( -90, 40, Port.INPUT, 1);
+        ps[DATA] = new Port(0, 0, Port.INOUT, DATA_ATTR);
+        ps[ADDR] = new Port(-140, 0, Port.INPUT, ADDR_ATTR);
+        ps[CS] = new Port(-90, 40, Port.INPUT, 1);
         ps[DATA].setToolTip(getFromLocale("memDataTip"));
         ps[ADDR].setToolTip(getFromLocale("memAddrTip"));
         ps[CS].setToolTip(getFromLocale("memCSTip"));
@@ -166,14 +162,17 @@ abstract class Mem extends InstanceFactory {
     static class MemListener implements HexModelListener {
         Instance instance;
 
-        MemListener(Instance instance) { this.instance = instance; }
+        MemListener(Instance instance) {
+            this.instance = instance;
+        }
 
         @Override
-        public void metainfoChanged(HexModel source) { }
+        public void metainfoChanged(HexModel source) {
+        }
 
         @Override
         public void bytesChanged(HexModel source, long start,
-                long numBytes, int[] values) {
+                                 long numBytes, int[] values) {
             instance.fireInvalidated();
         }
     }

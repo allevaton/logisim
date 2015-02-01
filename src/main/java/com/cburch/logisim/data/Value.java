@@ -3,18 +3,19 @@
 
 package com.cburch.logisim.data;
 
-import java.awt.Color;
+import com.cburch.logisim.util.Cache;
+
+import java.awt.*;
 import java.util.Arrays;
 
-import com.cburch.logisim.util.Cache;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Value {
-    public static final Value FALSE   = new Value(1, 0, 0, 0);
-    public static final Value TRUE    = new Value(1, 0, 0, 1);
+    public static final Value FALSE = new Value(1, 0, 0, 0);
+    public static final Value TRUE = new Value(1, 0, 0, 1);
     public static final Value UNKNOWN = new Value(1, 0, 1, 0);
-    public static final Value ERROR   = new Value(1, 1, 0, 0);
-    public static final Value NIL     = new Value(0, 0, 0, 0);
+    public static final Value ERROR = new Value(1, 1, 0, 0);
+    public static final Value NIL = new Value(0, 0, 0, 0);
 
     public static final int MAX_WIDTH = 32;
 
@@ -38,7 +39,7 @@ public class Value {
         }
 
         if (values.length > MAX_WIDTH) throw new RuntimeException(
-            "Cannot have more than " + MAX_WIDTH + " bits in a value");
+                "Cannot have more than " + MAX_WIDTH + " bits in a value");
 
         int width = values.length;
         int value = 0;
@@ -47,24 +48,17 @@ public class Value {
         for (int i = 0; i < values.length; i++) {
             int mask = 1 << i;
             if (values[i] == TRUE) {
-                        value |= mask;
-            }
-
-            else if (values[i] == FALSE) {
-                  /* do nothing */;
-            }
-
-            else if (values[i] == UNKNOWN) {
+                value |= mask;
+            } else if (values[i] == FALSE) {
+                  /* do nothing */
+                ;
+            } else if (values[i] == UNKNOWN) {
                 unknown |= mask;
-            }
-
-            else if (values[i] == ERROR) {
-                  error |= mask;
-            }
-
-            else {
+            } else if (values[i] == ERROR) {
+                error |= mask;
+            } else {
                 throw new RuntimeException("unrecognized value "
-                    + values[i]);
+                        + values[i]);
             }
         }
         return Value.create(width, error, unknown, value);
@@ -87,18 +81,12 @@ public class Value {
             return Value.NIL;
         } else if (width == 1) {
             if ((error & 1) != 0) {
-                      return Value.ERROR;
-            }
-
-            else if ((unknown & 1) != 0) {
-                   return Value.UNKNOWN;
-            }
-
-            else if ((value & 1) != 0) {
-                 return Value.TRUE;
-            }
-
-            else {
+                return Value.ERROR;
+            } else if ((unknown & 1) != 0) {
+                return Value.UNKNOWN;
+            } else if ((value & 1) != 0) {
+                return Value.TRUE;
+            } else {
                 return Value.FALSE;
             }
 
@@ -115,7 +103,7 @@ public class Value {
                 if (val.value == value && val.width == width && val.error == error
                         && val.unknown == unknown) return val;
             }
-            Value ret= new Value(width, error, unknown, value);
+            Value ret = new Value(width, error, unknown, value);
             cache.put(hashCode, ret);
             return ret;
         }
@@ -191,9 +179,9 @@ public class Value {
         } else {
             int mask = ~(1 << which);
             return Value.create(this.width,
-                (this.error   & mask) | (val.error   << which),
-                (this.unknown & mask) | (val.unknown << which),
-                (this.value   & mask) | (val.value   << which));
+                    (this.error & mask) | (val.error << which),
+                    (this.unknown & mask) | (val.unknown << which),
+                    (this.value & mask) | (val.value << which));
         }
     }
 
@@ -213,17 +201,11 @@ public class Value {
         int mask = 1 << which;
         if ((error & mask) != 0) {
             return ERROR;
-        }
-
-        else if ((unknown & mask) != 0) {
+        } else if ((unknown & mask) != 0) {
             return UNKNOWN;
-        }
-
-        else if ((value & mask) != 0) {
+        } else if ((value & mask) != 0) {
             return TRUE;
-        }
-
-        else {
+        } else {
             return FALSE;
         }
 
@@ -245,9 +227,9 @@ public class Value {
 
         Value other = (Value) other_obj;
         boolean ret = this.width == other.width
-            && this.error == other.error
-            && this.unknown == other.unknown
-            && this.value == other.value;
+                && this.error == other.error
+                && this.unknown == other.unknown
+                && this.value == other.value;
         return ret;
     }
 
@@ -275,34 +257,29 @@ public class Value {
     @Override
     public String toString() {
         switch (width) {
-        case 0: return "-";
-        case 1:
-            if (error != 0) {
-                       return "E";
-            }
-
-            else if (unknown != 0) {
-                return "x";
-            }
-
-            else if (value != 0) {
-                  return "1";
-            }
-
-            else {
-                                 return "0";
-            }
-
-        default:
-            StringBuilder ret = new StringBuilder();
-            for (int i = width - 1; i >= 0; i--) {
-                ret.append(get(i).toString());
-                if (i % 4 == 0 && i != 0) {
-                    ret.append(" ");
+            case 0:
+                return "-";
+            case 1:
+                if (error != 0) {
+                    return "E";
+                } else if (unknown != 0) {
+                    return "x";
+                } else if (value != 0) {
+                    return "1";
+                } else {
+                    return "0";
                 }
 
-            }
-            return ret.toString();
+            default:
+                StringBuilder ret = new StringBuilder();
+                for (int i = width - 1; i >= 0; i--) {
+                    ret.append(get(i).toString());
+                    if (i % 4 == 0 && i != 0) {
+                        ret.append(" ");
+                    }
+
+                }
+                return ret.toString();
         }
     }
 
@@ -320,13 +297,17 @@ public class Value {
                 c[i] = '?';
                 for (int j = last - 1; j >= frst; j--) {
                     if (vals[j] == Value.ERROR) {
-                        { c[i] = 'E';
+                        {
+                            c[i] = 'E';
+                        }
+                        break;
                     }
- break; }
                     if (vals[j] == Value.UNKNOWN) {
-                        { c[i] = 'x';
+                        {
+                            c[i] = 'x';
+                        }
+                        break;
                     }
- break; }
                     v = 2 * v;
                     if (vals[j] == Value.TRUE) {
                         v++;
@@ -356,13 +337,17 @@ public class Value {
                 c[i] = '?';
                 for (int j = last - 1; j >= frst; j--) {
                     if (vals[j] == Value.ERROR) {
-                        { c[i] = 'E';
+                        {
+                            c[i] = 'E';
+                        }
+                        break;
                     }
- break; }
                     if (vals[j] == Value.UNKNOWN) {
-                        { c[i] = 'x';
+                        {
+                            c[i] = 'x';
+                        }
+                        break;
                     }
- break; }
                     v = 2 * v;
                     if (vals[j] == Value.TRUE) {
                         v++;
@@ -405,56 +390,54 @@ public class Value {
 
     public String toDisplayString(int radix) {
         switch (radix) {
-        case 2:  return toDisplayString();
-        case 8:  return toOctalString();
-        case 16: return toHexString();
-        default:
-            if (width == 0) {
-                return "-";
-            }
+            case 2:
+                return toDisplayString();
+            case 8:
+                return toOctalString();
+            case 16:
+                return toHexString();
+            default:
+                if (width == 0) {
+                    return "-";
+                }
 
-            if (isErrorValue()) {
-                return getFromLocale("valueError");
-            }
+                if (isErrorValue()) {
+                    return getFromLocale("valueError");
+                }
 
-            if (!isFullyDefined()) {
-                return getFromLocale("valueUnknown");
-            }
+                if (!isFullyDefined()) {
+                    return getFromLocale("valueUnknown");
+                }
 
-            return Integer.toString(toIntValue(), radix);
+                return Integer.toString(toIntValue(), radix);
         }
     }
 
     public String toDisplayString() {
         switch (width) {
-        case 0: return "-";
-        case 1:
-            if (error != 0) {
-                       return getFromLocale("valueErrorSymbol");
-            }
-
-            else if (unknown != 0) {
-                return getFromLocale("valueUnknownSymbol");
-            }
-
-            else if (value != 0) {
-                  return "1";
-            }
-
-            else {
-                                 return "0";
-            }
-
-        default:
-            StringBuilder ret = new StringBuilder();
-            for (int i = width - 1; i >= 0; i--) {
-                ret.append(get(i).toString());
-                if (i % 4 == 0 && i != 0) {
-                    ret.append(" ");
+            case 0:
+                return "-";
+            case 1:
+                if (error != 0) {
+                    return getFromLocale("valueErrorSymbol");
+                } else if (unknown != 0) {
+                    return getFromLocale("valueUnknownSymbol");
+                } else if (value != 0) {
+                    return "1";
+                } else {
+                    return "0";
                 }
 
-            }
-            return ret.toString();
+            default:
+                StringBuilder ret = new StringBuilder();
+                for (int i = width - 1; i >= 0; i--) {
+                    ret.append(get(i).toString());
+                    if (i % 4 == 0 && i != 0) {
+                        ret.append(" ");
+                    }
+
+                }
+                return ret.toString();
         }
     }
 
@@ -487,11 +470,11 @@ public class Value {
             return ERROR;
         } else {
             int disagree = (this.value ^ other.value)
-                & ~(this.unknown | other.unknown);
+                    & ~(this.unknown | other.unknown);
             return Value.create(Math.max(this.width, other.width),
-                this.error | other.error | disagree,
-                this.unknown & other.unknown,
-                (this.value & ~this.unknown) | (other.value & ~other.unknown));
+                    this.error | other.error | disagree,
+                    this.unknown & other.unknown,
+                    (this.value & ~this.unknown) | (other.value & ~other.unknown));
         }
     }
 
@@ -505,7 +488,7 @@ public class Value {
                 return FALSE;
             }
 
-            if (this == TRUE  && other == TRUE ) {
+            if (this == TRUE && other == TRUE) {
                 return TRUE;
             }
 
@@ -527,7 +510,7 @@ public class Value {
         }
 
         if (this.width == 1 && other.width == 1) {
-            if (this == TRUE  || other == TRUE ) {
+            if (this == TRUE || other == TRUE) {
                 return TRUE;
             }
 
@@ -541,9 +524,9 @@ public class Value {
             int true1 = other.value & ~other.error & ~other.unknown;
             int trues = true0 | true1;
             return Value.create(Math.max(this.width, other.width),
-                (this.error | other.error | this.unknown | other.unknown) & ~trues,
-                0,
-                this.value | other.value);
+                    (this.error | other.error | this.unknown | other.unknown) & ~trues,
+                    0,
+                    this.value | other.value);
         }
     }
 
@@ -572,9 +555,9 @@ public class Value {
             return TRUE;
         } else {
             return Value.create(Math.max(this.width, other.width),
-                this.error | other.error | this.unknown | other.unknown,
-                0,
-                this.value ^ other.value);
+                    this.error | other.error | this.unknown | other.unknown,
+                    0,
+                    this.value ^ other.value);
         }
     }
 
@@ -591,9 +574,9 @@ public class Value {
             return ERROR;
         } else {
             return Value.create(this.width,
-                this.error | this.unknown,
-                0,
-                ~this.value);
+                    this.error | this.unknown,
+                    0,
+                    ~this.value);
         }
     }
 
@@ -605,13 +588,9 @@ public class Value {
         } else if (width == 1) {
             if (this == UNKNOWN) {
                 return UNKNOWN_COLOR;
-            }
-
-            else if (this == TRUE) {
+            } else if (this == TRUE) {
                 return TRUE_COLOR;
-            }
-
-            else {
+            } else {
                 return FALSE_COLOR;
             }
 

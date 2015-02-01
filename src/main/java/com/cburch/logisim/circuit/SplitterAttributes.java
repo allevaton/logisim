@@ -3,43 +3,39 @@
 
 package com.cburch.logisim.circuit;
 
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.StdAttr;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.cburch.logisim.data.AbstractAttributeSet;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.instance.StdAttr;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class SplitterAttributes extends AbstractAttributeSet {
     public static final AttributeOption APPEAR_LEGACY
-        = new AttributeOption("legacy", getFromLocale("splitterAppearanceLegacy"));
+            = new AttributeOption("legacy", getFromLocale("splitterAppearanceLegacy"));
     public static final AttributeOption APPEAR_LEFT
-        = new AttributeOption("left", getFromLocale("splitterAppearanceLeft"));
+            = new AttributeOption("left", getFromLocale("splitterAppearanceLeft"));
     public static final AttributeOption APPEAR_RIGHT
-        = new AttributeOption("right", getFromLocale("splitterAppearanceRight"));
+            = new AttributeOption("right", getFromLocale("splitterAppearanceRight"));
     public static final AttributeOption APPEAR_CENTER
-        = new AttributeOption("center", getFromLocale("splitterAppearanceCenter"));
+            = new AttributeOption("center", getFromLocale("splitterAppearanceCenter"));
 
     public static final Attribute<AttributeOption> ATTR_APPEARANCE
-        = Attributes.forOption("appear", getFromLocale("splitterAppearanceAttr"),
-                new AttributeOption[] { APPEAR_LEFT, APPEAR_RIGHT, APPEAR_CENTER,
+            = Attributes.forOption("appear", getFromLocale("splitterAppearanceAttr"),
+            new AttributeOption[]{APPEAR_LEFT, APPEAR_RIGHT, APPEAR_CENTER,
                     APPEAR_LEGACY});
 
     public static final Attribute<BitWidth> ATTR_WIDTH
-        = Attributes.forBitWidth("incoming", getFromLocale("splitterBitWidthAttr"));
+            = Attributes.forBitWidth("incoming", getFromLocale("splitterBitWidthAttr"));
     public static final Attribute<Integer> ATTR_FANOUT
-        = Attributes.forIntegerRange("fanout", getFromLocale("splitterFanOutAttr"), 1, 32);
+            = Attributes.forIntegerRange("fanout", getFromLocale("splitterFanOutAttr"), 1, 32);
 
     private static final List<Attribute<?>> INIT_ATTRIBUTES
-        = Arrays.asList(new Attribute<?>[] {
+            = Arrays.asList(new Attribute<?>[]{
             StdAttr.FACING, ATTR_FANOUT, ATTR_WIDTH, ATTR_APPEARANCE,
-        });
+    });
 
     private static final String unchosen_val = "none";
 
@@ -136,7 +132,7 @@ class SplitterAttributes extends AbstractAttributeSet {
     byte fanout = 2;
     // how each bit maps to an end (0 if nowhere);
     byte[] bit_end = new byte[2];
-                                     //   other values will be between 1 and fanout
+    //   other values will be between 1 and fanout
     BitOutOption[] options = null;
 
     SplitterAttributes() {
@@ -230,7 +226,7 @@ class SplitterAttributes extends AbstractAttributeSet {
             if (value instanceof Integer) {
                 val = ((Integer) value).intValue();
             } else {
-                val= ((BitOutOption) value).value + 1;
+                val = ((BitOutOption) value).value + 1;
             }
             if (val >= 0 && val <= fanout) {
                 bit_end[bitOutAttr.which] = (byte) val;

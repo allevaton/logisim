@@ -3,15 +3,6 @@
 
 package com.cburch.logisim.gui.menu;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.file.LoadedLibrary;
 import com.cburch.logisim.file.Loader;
@@ -22,7 +13,12 @@ import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class Popups {
@@ -39,11 +35,15 @@ public class Popups {
             super(getFromLocale("projMenu"));
             this.proj = proj;
 
-            load.add(loadBuiltin); loadBuiltin.addActionListener(this);
-            load.add(loadLogisim); loadLogisim.addActionListener(this);
-            load.add(loadJar); loadJar.addActionListener(this);
+            load.add(loadBuiltin);
+            loadBuiltin.addActionListener(this);
+            load.add(loadLogisim);
+            loadLogisim.addActionListener(this);
+            load.add(loadJar);
+            loadJar.addActionListener(this);
 
-            add(add); add.addActionListener(this);
+            add(add);
+            add.addActionListener(this);
             add(load);
         }
 
@@ -74,8 +74,10 @@ public class Popups {
             this.proj = proj;
             this.lib = lib;
 
-            add(unload); unload.addActionListener(this);
-            add(reload); reload.addActionListener(this);
+            add(unload);
+            unload.addActionListener(this);
+            add(reload);
+            reload.addActionListener(this);
             unload.setEnabled(is_top);
             reload.setEnabled(is_top && lib instanceof LoadedLibrary);
         }
@@ -108,13 +110,19 @@ public class Popups {
             this.proj = proj;
             this.circuit = circuit;
 
-            add(editLayout); editLayout.addActionListener(this);
-            add(editAppearance); editAppearance.addActionListener(this);
-            add(analyze); analyze.addActionListener(this);
-            add(stats); stats.addActionListener(this);
+            add(editLayout);
+            editLayout.addActionListener(this);
+            add(editAppearance);
+            editAppearance.addActionListener(this);
+            add(analyze);
+            analyze.addActionListener(this);
+            add(stats);
+            stats.addActionListener(this);
             addSeparator();
-            add(main); main.addActionListener(this);
-            add(remove); remove.addActionListener(this);
+            add(main);
+            main.addActionListener(this);
+            add(remove);
+            remove.addActionListener(this);
 
             boolean canChange = proj.getLogisimFile().contains(circuit);
             LogisimFile file = proj.getLogisimFile();

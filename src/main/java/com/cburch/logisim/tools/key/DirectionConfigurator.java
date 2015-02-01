@@ -3,10 +3,10 @@
 
 package com.cburch.logisim.tools.key;
 
-import java.awt.event.KeyEvent;
-
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.Direction;
+
+import java.awt.event.KeyEvent;
 
 public class DirectionConfigurator implements KeyConfigurator, Cloneable {
     private Attribute<Direction> attr;
@@ -34,10 +34,18 @@ public class DirectionConfigurator implements KeyConfigurator, Cloneable {
             if (e.getModifiersEx() == modsEx) {
                 Direction value = null;
                 switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP: value = Direction.NORTH; break;
-                case KeyEvent.VK_DOWN: value = Direction.SOUTH; break;
-                case KeyEvent.VK_LEFT: value = Direction.WEST; break;
-                case KeyEvent.VK_RIGHT: value = Direction.EAST; break;
+                    case KeyEvent.VK_UP:
+                        value = Direction.NORTH;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        value = Direction.SOUTH;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        value = Direction.WEST;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        value = Direction.EAST;
+                        break;
                 }
                 if (value != null) {
                     event.consume();

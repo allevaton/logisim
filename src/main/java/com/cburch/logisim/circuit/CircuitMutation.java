@@ -3,17 +3,13 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.proj.Action;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public final class CircuitMutation extends CircuitTransaction {
     private Circuit primary;
@@ -85,8 +81,8 @@ public final class CircuitMutation extends CircuitTransaction {
     }
 
     @Override
-    protected Map<Circuit,Integer> getAccessedCircuits() {
-        HashMap<Circuit,Integer> accessMap = new HashMap<Circuit,Integer>();
+    protected Map<Circuit, Integer> getAccessedCircuits() {
+        HashMap<Circuit, Integer> accessMap = new HashMap<Circuit, Integer>();
         HashSet<Circuit> supercircsDone = new HashSet<Circuit>();
         for (CircuitChange change : changes) {
             Circuit circ = change.getCircuit();

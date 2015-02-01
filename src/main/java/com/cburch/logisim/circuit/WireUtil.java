@@ -3,15 +3,16 @@
 
 package com.cburch.logisim.circuit;
 
+import com.cburch.logisim.comp.Component;
+import com.cburch.logisim.data.Location;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import com.cburch.logisim.comp.Component;
-import com.cburch.logisim.data.Location;
-
 public class WireUtil {
-    private WireUtil() { }
+    private WireUtil() {
+    }
 
     static CircuitPoints computeCircuitPoints(Collection<? extends Component> components) {
         CircuitPoints points = new CircuitPoints();

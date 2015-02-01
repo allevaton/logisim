@@ -3,21 +3,14 @@
 
 package com.cburch.logisim.circuit.appear;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.StdAttr;
+
+import java.util.*;
 
 class PortManager {
     private CircuitAppearance appearance;
@@ -33,7 +26,7 @@ class PortManager {
     }
 
     void updatePorts(Set<Instance> adds, Set<Instance> removes,
-            Map<Instance, Instance> replaces, Collection<Instance> allPins) {
+                     Map<Instance, Instance> replaces, Collection<Instance> allPins) {
         if (appearance.isDefaultAppearance()) {
             appearance.recomputePorts();
         } else if (!doingUpdate) {
@@ -49,7 +42,7 @@ class PortManager {
     }
 
     private void performUpdate(Set<Instance> adds, Set<Instance> removes,
-            Map<Instance, Instance> replaces, Collection<Instance> allPins) {
+                               Map<Instance, Instance> replaces, Collection<Instance> allPins) {
         // Find the current objects corresponding to pins
         Map<Instance, AppearancePort> oldObjects;
         oldObjects = new HashMap<Instance, AppearancePort>();
@@ -97,15 +90,15 @@ class PortManager {
             if (port != null) {
                 port.setPin(entry.getValue());
                 oldObjects.put(entry.getValue(), port);
-            // this really shouldn't happen, but just to make sure...
+                // this really shouldn't happen, but just to make sure...
             } else {
                 addsCopy.add(entry.getValue());
             }
         }
         // handle additions
         DefaultAppearance.sortPinList(addsCopy, Direction.EAST);
-            // They're probably not really all facing east.
-            // I'm just sorting them so it works predictably.
+        // They're probably not really all facing east.
+        // I'm just sorting them so it works predictably.
         for (Instance pin : addsCopy) {
             if (!oldObjects.containsKey(pin)) {
                 Location loc = computeDefaultLocation(appearance, pin, oldObjects);
@@ -120,7 +113,7 @@ class PortManager {
     }
 
     private static Location computeDefaultLocation(CircuitAppearance appear,
-            Instance pin, Map<Instance, AppearancePort> others) {
+                                                   Instance pin, Map<Instance, AppearancePort> others) {
         // Determine which locations are being used in canvas, and look for
         // which instances facing the same way in layout
         Set<Location> usedLocs = new HashSet<Location>();
@@ -157,7 +150,7 @@ class PortManager {
             int dy;
             if (facing == Direction.EAST || facing == Direction.WEST) {
                 dx = 0;
-                dy = isFirst? -10 : 10;
+                dy = isFirst ? -10 : 10;
             } else {
                 dx = isFirst ? -10 : 10;
                 dy = 0;
@@ -186,17 +179,17 @@ class PortManager {
             x = bds.getX() - 7;
             y = bds.getY() + 5;
             dy = 10;
-        // on east side by default
+            // on east side by default
         } else if (facing == Direction.WEST) {
             x = bds.getX() + bds.getWidth() - 3;
             y = bds.getY() + 5;
             dy = 10;
-        // on north side by default
+            // on north side by default
         } else if (facing == Direction.SOUTH) {
             x = bds.getX() + 5;
             y = bds.getY() - 7;
             dx = 10;
-        // on south side by default
+            // on south side by default
         } else {
             x = bds.getX() + 5;
             y = bds.getY() + bds.getHeight() - 3;

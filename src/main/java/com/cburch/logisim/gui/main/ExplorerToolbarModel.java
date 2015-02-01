@@ -3,16 +3,16 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-
 import com.cburch.draw.toolbar.AbstractToolbarModel;
 import com.cburch.draw.toolbar.ToolbarItem;
 import com.cburch.draw.toolbar.ToolbarSeparator;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
-import static com.cburch.logisim.util.LocaleString.*;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class ExplorerToolbarModel extends AbstractToolbarModel
         implements MenuListener.EnabledListener {
@@ -35,13 +35,13 @@ class ExplorerToolbarModel extends AbstractToolbarModel
         itemAppearance = new LogisimToolbarItem(menu, "projapp.svg",
                 LogisimMenuBar.EDIT_APPEARANCE, getFromLocale("projectEditAppearanceTip"));
 
-        items = UnmodifiableList.decorate(Arrays.asList(new ToolbarItem[] {
+        items = UnmodifiableList.decorate(Arrays.asList(new ToolbarItem[]{
                 itemToolbox,
                 itemSimulation,
                 new ToolbarSeparator(4),
                 itemLayout,
                 itemAppearance,
-            }));
+        }));
 
         menu.addEnabledListener(this);
     }

@@ -3,22 +3,20 @@
 
 package com.cburch.logisim.gui.menu;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.Simulator;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
 import com.cburch.logisim.util.WindowMenu;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @SuppressWarnings("serial")
 public class LogisimMenuBar extends JMenuBar {
@@ -70,8 +68,8 @@ public class LogisimMenuBar extends JMenuBar {
     private MyListener listener;
     private Project proj;
     private SimulateListener simulateListener = null;
-    private HashMap<LogisimMenuItem,MenuItem> menuItems
-        = new HashMap<LogisimMenuItem,MenuItem>();
+    private HashMap<LogisimMenuItem, MenuItem> menuItems
+            = new HashMap<LogisimMenuItem, MenuItem>();
     private ArrayList<ChangeListener> enableListeners;
 
     private MenuFile file;

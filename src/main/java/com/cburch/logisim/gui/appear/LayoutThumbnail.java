@@ -3,15 +3,6 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.Collection;
-import java.util.Collections;
-
-import javax.swing.JComponent;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.appear.AppearancePort;
@@ -21,6 +12,11 @@ import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.std.wiring.Pin;
 import com.cburch.logisim.util.GraphicsUtil;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Collection;
+import java.util.Collections;
 
 @SuppressWarnings("serial")
 public class LayoutThumbnail extends JComponent {
@@ -37,7 +33,7 @@ public class LayoutThumbnail extends JComponent {
     }
 
     public void setCircuit(CircuitState circuitState,
-            Collection<Instance> ports) {
+                           Collection<Instance> ports) {
         this.circuitState = circuitState;
         this.ports = ports;
         repaint();

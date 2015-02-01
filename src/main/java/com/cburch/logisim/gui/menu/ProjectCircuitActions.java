@@ -3,21 +3,6 @@
 
 package com.cburch.logisim.gui.menu;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.util.ArrayList;
-import java.util.Map;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import com.cburch.logisim.analyze.gui.Analyzer;
 import com.cburch.logisim.analyze.gui.AnalyzerManager;
 import com.cburch.logisim.analyze.model.AnalyzerModel;
@@ -31,10 +16,19 @@ import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.std.wiring.Pin;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.util.ArrayList;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ProjectCircuitActions {
-    private ProjectCircuitActions() { }
+    private ProjectCircuitActions() {
+    }
 
     public static void doAddCircuit(Project proj) {
         String name = promptForCircuitName(proj.getFrame(), proj.getLogisimFile(), "");
@@ -46,7 +40,7 @@ public class ProjectCircuitActions {
     }
 
     private static String promptForCircuitName(JFrame frame,
-            Library lib, String initialValue) {
+                                               Library lib, String initialValue) {
         JLabel label = new JLabel(getFromLocale("circuitNamePrompt"));
         final JTextField field = new JTextField(15);
         field.setText(initialValue);
@@ -61,10 +55,14 @@ public class ProjectCircuitActions {
         gc.weightx = 1.0;
         gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.LINE_START;
-        gb.setConstraints(label, gc); panel.add(label);
-        gb.setConstraints(field, gc); panel.add(field);
-        gb.setConstraints(error, gc); panel.add(error);
-        gb.setConstraints(strut, gc); panel.add(strut);
+        gb.setConstraints(label, gc);
+        panel.add(label);
+        gb.setConstraints(field, gc);
+        panel.add(field);
+        gb.setConstraints(error, gc);
+        panel.add(error);
+        gb.setConstraints(strut, gc);
+        panel.add(strut);
         JOptionPane pane = new JOptionPane(panel, JOptionPane.QUESTION_MESSAGE,
                 JOptionPane.OK_CANCEL_OPTION);
         pane.setInitialValue(field);
@@ -76,7 +74,8 @@ public class ProjectCircuitActions {
             }
 
             @Override
-            public void windowLostFocus(WindowEvent arg0) { }
+            public void windowLostFocus(WindowEvent arg0) {
+            }
         });
 
         while (true) {
@@ -127,9 +126,9 @@ public class ProjectCircuitActions {
                     JOptionPane.ERROR_MESSAGE);
         } else if (!proj.getDependencies().canRemove(circuit)) {
             JOptionPane.showMessageDialog(proj.getFrame(),
-                getFromLocale("circuitRemoveUsedError"),
-                getFromLocale("circuitRemoveErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                    getFromLocale("circuitRemoveUsedError"),
+                    getFromLocale("circuitRemoveErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
         } else {
             proj.doAction(LogisimFileActions.removeCircuit(circuit));
         }
@@ -157,11 +156,11 @@ public class ProjectCircuitActions {
             }
         }
         if (inputNames.size() > AnalyzerModel.MAX_INPUTS) {
-            analyzeError(proj, getFromLocale("analyzeTooManyInputsError","" + AnalyzerModel.MAX_INPUTS));
+            analyzeError(proj, getFromLocale("analyzeTooManyInputsError", "" + AnalyzerModel.MAX_INPUTS));
             return;
         }
         if (outputNames.size() > AnalyzerModel.MAX_OUTPUTS) {
-            analyzeError(proj, getFromLocale("analyzeTooManyOutputsError","" + AnalyzerModel.MAX_OUTPUTS));
+            analyzeError(proj, getFromLocale("analyzeTooManyOutputsError", "" + AnalyzerModel.MAX_OUTPUTS));
             return;
         }
 
@@ -173,8 +172,8 @@ public class ProjectCircuitActions {
     }
 
     private static void configureAnalyzer(Project proj, Circuit circuit,
-            Analyzer analyzer, Map<Instance, String> pinNames,
-            ArrayList<String> inputNames, ArrayList<String> outputNames) {
+                                          Analyzer analyzer, Map<Instance, String> pinNames,
+                                          ArrayList<String> inputNames, ArrayList<String> outputNames) {
         analyzer.getModel().setVariables(inputNames, outputNames);
 
         // If there are no inputs, we stop with that tab selected
@@ -207,8 +206,8 @@ public class ProjectCircuitActions {
 
     private static void analyzeError(Project proj, String message) {
         JOptionPane.showMessageDialog(proj.getFrame(), message,
-            getFromLocale("analyzeErrorTitle"),
-            JOptionPane.ERROR_MESSAGE);
+                getFromLocale("analyzeErrorTitle"),
+                JOptionPane.ERROR_MESSAGE);
         return;
     }
 }

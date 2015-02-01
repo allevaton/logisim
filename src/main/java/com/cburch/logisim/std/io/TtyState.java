@@ -3,11 +3,11 @@
 
 package com.cburch.logisim.std.io;
 
-import java.util.Arrays;
-
 import com.cburch.logisim.data.Value;
 import com.cburch.logisim.gui.start.TtyInterface;
 import com.cburch.logisim.instance.InstanceData;
+
+import java.util.Arrays;
 
 class TtyState implements InstanceData, Cloneable {
     private Value lastClock;
@@ -56,13 +56,9 @@ class TtyState implements InstanceData, Cloneable {
     public String getRowString(int index) {
         if (index < row) {
             return rowData[index];
-        }
-
-        else if (index == row) {
+        } else if (index == row) {
             return lastRow.toString();
-        }
-
-        else {
+        } else {
             return "";
         }
 
@@ -83,31 +79,32 @@ class TtyState implements InstanceData, Cloneable {
 
         int lastLength = lastRow.length();
         switch (c) {
-        // control-L
-        case 12:
-            row = 0;
-            lastRow.delete(0, lastLength);
-            Arrays.fill(rowData, "");
-            break;
-        // backspace
-        case '\b':
-            if (lastLength > 0) {
-                lastRow.delete(lastLength - 1, lastLength);
-            }
-
-            break;
-        // newline
-        case '\n': case '\r':
-            commit();
-            break;
-        default:
-            if (!Character.isISOControl(c)) {
-                if (lastLength == colCount) {
-                    commit();
+            // control-L
+            case 12:
+                row = 0;
+                lastRow.delete(0, lastLength);
+                Arrays.fill(rowData, "");
+                break;
+            // backspace
+            case '\b':
+                if (lastLength > 0) {
+                    lastRow.delete(lastLength - 1, lastLength);
                 }
 
-                lastRow.append(c);
-            }
+                break;
+            // newline
+            case '\n':
+            case '\r':
+                commit();
+                break;
+            default:
+                if (!Character.isISOControl(c)) {
+                    if (lastLength == colCount) {
+                        commit();
+                    }
+
+                    lastRow.append(c);
+                }
         }
     }
 
@@ -132,7 +129,7 @@ class TtyState implements InstanceData, Cloneable {
                     || row < rows - 1) {
                 System.arraycopy(rowData, 0, newData, 0, row);
                 Arrays.fill(newData, row, rows - 1, "");
-            // rows removed, and some filled rows must go
+                // rows removed, and some filled rows must go
             } else {
                 System.arraycopy(rowData, row - rows + 1, newData, 0, rows - 1);
                 row = rows - 1;
@@ -141,7 +138,7 @@ class TtyState implements InstanceData, Cloneable {
         }
 
         int oldCols = colCount;
-        if (cols != oldCols){
+        if (cols != oldCols) {
             colCount = cols;
             // will need to trim any long rows
             if (cols < oldCols) {

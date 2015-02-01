@@ -3,14 +3,10 @@
 
 package com.cburch.logisim.gui.log;
 
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Value;
+
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 class SelectionList extends JList {
@@ -32,18 +28,20 @@ class SelectionList extends JList {
         }
 
         @Override
-        public void entryAdded(ModelEvent event, Value[] values) { }
+        public void entryAdded(ModelEvent event, Value[] values) {
+        }
 
         @Override
-        public void filePropertyChanged(ModelEvent event) { }
+        public void filePropertyChanged(ModelEvent event) {
+        }
     }
 
     private class MyCellRenderer extends DefaultListCellRenderer {
         @Override
         public java.awt.Component getListCellRendererComponent(JList list,
-                Object value, int index, boolean isSelected, boolean hasFocus) {
+                                                               Object value, int index, boolean isSelected, boolean hasFocus) {
             java.awt.Component ret = super.getListCellRendererComponent(list,
-                value, index, isSelected, hasFocus);
+                    value, index, isSelected, hasFocus);
             if (ret instanceof JLabel && value instanceof SelectionItem) {
                 JLabel label = (JLabel) ret;
                 SelectionItem item = (SelectionItem) value;

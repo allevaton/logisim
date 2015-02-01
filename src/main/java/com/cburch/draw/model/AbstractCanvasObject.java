@@ -4,17 +4,11 @@
 package com.cburch.draw.model;
 
 import com.cburch.draw.shapes.DrawAttr;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 import com.cburch.logisim.util.GraphicsUtil;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 
@@ -36,20 +30,26 @@ public abstract class AbstractCanvasObject
 
     @Override
     public abstract String getDisplayName();
+
     //public abstract Element toSvgElement(Document doc);
     @Override
     public abstract boolean matches(CanvasObject other);
+
     @Override
     public abstract int matchesHashCode();
 
     @Override
     public abstract Bounds getBounds();
+
     @Override
     public abstract boolean contains(Location loc, boolean assumeFilled);
+
     @Override
     public abstract void translate(int dx, int dy);
+
     @Override
     public abstract List<Handle> getHandles(HandleGesture gesture);
+
     protected abstract void updateValue(Attribute<?> attr, Object value);
 
     @Override
@@ -146,6 +146,7 @@ public abstract class AbstractCanvasObject
     // methods required by AttributeSet interface
     @Override
     public abstract List<Attribute<?>> getAttributes();
+
     @Override
     public abstract <V> V getValue(Attribute<V> attr);
 

@@ -14,6 +14,7 @@ public class Cache {
     public Cache() {
         this(8);
     }
+
     public Cache(int logSize) {
         if (logSize > 12) {
             logSize = 12;

@@ -3,13 +3,13 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.cburch.logisim.gui.main.EditHandler;
 import com.cburch.logisim.gui.menu.EditPopup;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.gui.menu.LogisimMenuItem;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class AppearanceEditPopup extends EditPopup implements EditHandler.Listener {
@@ -29,7 +29,7 @@ public class AppearanceEditPopup extends EditPopup implements EditHandler.Listen
 
     @Override
     public void enableChanged(EditHandler handler, LogisimMenuItem action,
-            boolean value) {
+                              boolean value) {
         enabled.put(action, Boolean.valueOf(value));
     }
 

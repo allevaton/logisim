@@ -3,9 +3,8 @@
 
 package com.cburch.logisim.gui.generic;
 
-import java.awt.Frame;
-
-import javax.swing.JDialog;
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class LDialog extends JDialog {

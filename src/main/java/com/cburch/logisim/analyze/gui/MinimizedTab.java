@@ -3,26 +3,18 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import com.cburch.logisim.analyze.model.AnalyzerModel;
+import com.cburch.logisim.analyze.model.OutputExpressions;
+import com.cburch.logisim.analyze.model.OutputExpressionsEvent;
+import com.cburch.logisim.analyze.model.OutputExpressionsListener;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import com.cburch.logisim.analyze.model.AnalyzerModel;
-import com.cburch.logisim.analyze.model.OutputExpressions;
-import com.cburch.logisim.analyze.model.OutputExpressionsEvent;
-import com.cburch.logisim.analyze.model.OutputExpressionsListener;
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
@@ -30,8 +22,10 @@ class MinimizedTab extends AnalyzerTab {
     private static class FormatModel extends AbstractListModel<String> implements ComboBoxModel<String> {
         static int getFormatIndex(int choice) {
             switch (choice) {
-            case AnalyzerModel.FORMAT_PRODUCT_OF_SUMS: return 1;
-            default: return 0;
+                case AnalyzerModel.FORMAT_PRODUCT_OF_SUMS:
+                    return 1;
+                default:
+                    return 0;
             }
         }
 
@@ -52,8 +46,10 @@ class MinimizedTab extends AnalyzerTab {
 
         int getSelectedFormat() {
             switch (selected) {
-            case 1: return AnalyzerModel.FORMAT_PRODUCT_OF_SUMS;
-            default: return AnalyzerModel.FORMAT_SUM_OF_PRODUCTS;
+                case 1:
+                    return AnalyzerModel.FORMAT_PRODUCT_OF_SUMS;
+                default:
+                    return AnalyzerModel.FORMAT_SUM_OF_PRODUCTS;
             }
         }
 
@@ -125,7 +121,7 @@ class MinimizedTab extends AnalyzerTab {
     private JButton setAsExpr = new JButton();
 
     private MyListener myListener = new MyListener();
-//	private AnalyzerModel model;
+    //	private AnalyzerModel model;
     private OutputExpressions outputExprs;
 
     public MinimizedTab(AnalyzerModel model) {
@@ -161,13 +157,16 @@ class MinimizedTab extends AnalyzerTab {
         gc.gridy = GridBagConstraints.RELATIVE;
         gc.fill = GridBagConstraints.BOTH;
         gc.anchor = GridBagConstraints.CENTER;
-        gb.setConstraints(karnaughMap, gc); add(karnaughMap);
-          Insets oldInsets = gc.insets;
-          gc.insets = new Insets(20, 0, 0, 0);
-        gb.setConstraints(minimizedExpr, gc); add(minimizedExpr);
-          gc.insets = oldInsets;
-          gc.fill = GridBagConstraints.NONE;
-        gb.setConstraints(buttons, gc); add(buttons);
+        gb.setConstraints(karnaughMap, gc);
+        add(karnaughMap);
+        Insets oldInsets = gc.insets;
+        gc.insets = new Insets(20, 0, 0, 0);
+        gb.setConstraints(minimizedExpr, gc);
+        add(minimizedExpr);
+        gc.insets = oldInsets;
+        gc.fill = GridBagConstraints.NONE;
+        gb.setConstraints(buttons, gc);
+        add(buttons);
 
         String selected = selector.getSelectedOutput();
         setAsExpr.setEnabled(selected != null
@@ -175,17 +174,19 @@ class MinimizedTab extends AnalyzerTab {
     }
 
     private void addRow(GridBagLayout gb, GridBagConstraints gc,
-        JLabel label, JComboBox<String> choice) {
+                        JLabel label, JComboBox<String> choice) {
         Insets oldInsets = gc.insets;
         gc.weightx = 0.0;
         gc.gridx = 0;
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.anchor = GridBagConstraints.LINE_START;
         gc.insets = new Insets(5, 5, 5, 5);
-        gb.setConstraints(label, gc); add(label);
+        gb.setConstraints(label, gc);
+        add(label);
         gc.gridx = 1;
         gc.fill = GridBagConstraints.VERTICAL;
-        gb.setConstraints(choice, gc); add(choice);
+        gb.setConstraints(choice, gc);
+        add(choice);
         gc.gridy++;
         gc.insets = oldInsets;
     }

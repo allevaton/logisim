@@ -3,26 +3,18 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Location;
+
+import java.util.*;
 
 class WireRepair extends CircuitTransaction {
 
     private static class MergeSets {
-        private final HashMap<Wire,ArrayList<Wire>> map;
+        private final HashMap<Wire, ArrayList<Wire>> map;
 
         MergeSets() {
-            map = new HashMap<Wire,ArrayList<Wire>>();
+            map = new HashMap<Wire, ArrayList<Wire>>();
         }
 
         void merge(Wire a, Wire b) {
@@ -40,7 +32,7 @@ class WireRepair extends CircuitTransaction {
             } else if (set0 != null && set1 == null) {
                 set0.add(b);
                 map.put(b, set0);
-            // neither is null, and they are different
+                // neither is null, and they are different
             } else if (set0 != set1) {
                 // ensure set1 is the larger
                 if (set0.size() > set1.size()) {
@@ -56,8 +48,8 @@ class WireRepair extends CircuitTransaction {
         }
 
         Collection<ArrayList<Wire>> getMergeSets() {
-            IdentityHashMap<ArrayList<Wire>,Boolean> lists;
-            lists = new IdentityHashMap<ArrayList<Wire>,Boolean>();
+            IdentityHashMap<ArrayList<Wire>, Boolean> lists;
+            lists = new IdentityHashMap<ArrayList<Wire>, Boolean>();
             for (ArrayList<Wire> list : map.values()) {
                 lists.put(list, Boolean.TRUE);
             }
@@ -72,7 +64,7 @@ class WireRepair extends CircuitTransaction {
     }
 
     @Override
-    protected Map<Circuit,Integer> getAccessedCircuits() {
+    protected Map<Circuit, Integer> getAccessedCircuits() {
         return Collections.singletonMap(circuit, READ_WRITE);
     }
 
@@ -141,8 +133,8 @@ class WireRepair extends CircuitTransaction {
     }
 
     private void doOverlaps(CircuitMutator mutator) {
-        HashMap<Location,ArrayList<Wire>> wirePoints;
-        wirePoints = new HashMap<Location,ArrayList<Wire>>();
+        HashMap<Location, ArrayList<Wire>> wirePoints;
+        wirePoints = new HashMap<Location, ArrayList<Wire>>();
         for (Wire w : circuit.getWires()) {
             for (Location loc : w) {
                 ArrayList<Wire> locWires = wirePoints.get(loc);
@@ -180,7 +172,7 @@ class WireRepair extends CircuitTransaction {
     }
 
     private void doMergeSet(ArrayList<Wire> mergeSet, ReplacementMap replacements,
-            Set<Location> splitLocs) {
+                            Set<Location> splitLocs) {
         TreeSet<Location> ends = new TreeSet<Location>();
         for (Wire w : mergeSet) {
             ends.add(w.getEnd0());

@@ -3,23 +3,16 @@
 
 package com.cburch.logisim.gui.start;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
-
 import com.cburch.logisim.circuit.Analyze;
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.Propagator;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Value;
+import com.cburch.logisim.file.FileStatistics;
 import com.cburch.logisim.file.LoadFailedException;
 import com.cburch.logisim.file.Loader;
 import com.cburch.logisim.file.LogisimFile;
-import com.cburch.logisim.file.FileStatistics;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.proj.Project;
@@ -28,6 +21,14 @@ import com.cburch.logisim.std.io.Tty;
 import com.cburch.logisim.std.memory.Ram;
 import com.cburch.logisim.std.wiring.Pin;
 import com.cburch.logisim.tools.Library;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Map;
+
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class TtyInterface {
@@ -127,7 +128,7 @@ public class TtyInterface {
 
         }
         String fmt = "%" + countDigits(total.getUniqueCount()) + "d\t"
-            + "%" + countDigits(total.getRecursiveCount()) + "d\t";
+                + "%" + countDigits(total.getRecursiveCount()) + "d\t";
         String fmtNormal = fmt + "%-" + maxName + "s\t%s\n";
         for (FileStatistics.Count count : stats.getCounts()) {
             Library lib = count.getLibrary();
@@ -185,7 +186,7 @@ public class TtyInterface {
     }
 
     private static boolean prepareForTty(CircuitState circState,
-            ArrayList<InstanceState> keybStates) {
+                                         ArrayList<InstanceState> keybStates) {
         boolean found = false;
         for (Component comp : circState.getCircuit().getNonWires()) {
             Object factory = comp.getFactory();
@@ -207,7 +208,7 @@ public class TtyInterface {
     }
 
     private static int runSimulation(CircuitState circState,
-            ArrayList<Instance> outputPins, Instance haltPin, int format) {
+                                     ArrayList<Instance> outputPins, Instance haltPin, int format) {
         boolean showTable = (format & FORMAT_TABLE) != 0;
         boolean showSpeed = (format & FORMAT_SPEED) != 0;
         boolean showTty = (format & FORMAT_TTY) != 0;
@@ -296,7 +297,7 @@ public class TtyInterface {
     }
 
     private static void displayTableRow(ArrayList<Value> prevOutputs,
-            ArrayList<Value> curOutputs) {
+                                        ArrayList<Value> curOutputs) {
         boolean shouldPrint = false;
         if (prevOutputs == null) {
             shouldPrint = true;
@@ -330,21 +331,13 @@ public class TtyInterface {
         double precision;
         if (hertz >= 100) {
             precision = 1.0;
-        }
-
-        else if (hertz >= 10) {
+        } else if (hertz >= 10) {
             precision = 0.1;
-        }
-
-        else if (hertz >= 1) {
+        } else if (hertz >= 1) {
             precision = 0.01;
-        }
-
-        else if (hertz >= 0.01) {
+        } else if (hertz >= 0.01) {
             precision = 0.0001;
-        }
-
-        else {
+        } else {
             precision = 0.0000001;
         }
 
@@ -388,7 +381,8 @@ public class TtyInterface {
                             queue.addLast(add);
                         }
                     }
-                } catch (IOException e) { }
+                } catch (IOException e) {
+                }
             }
         }
     }

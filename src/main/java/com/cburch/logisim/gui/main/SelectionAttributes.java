@@ -3,27 +3,14 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.Wire;
 import com.cburch.logisim.comp.Component;
-import com.cburch.logisim.data.AbstractAttributeSet;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.proj.Project;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.util.*;
 
 class SelectionAttributes extends AbstractAttributeSet {
     private static final Attribute<?>[] EMPTY_ATTRIBUTES = new Attribute<?>[0];
@@ -94,9 +81,7 @@ class SelectionAttributes extends AbstractAttributeSet {
         Set<Component> newSel;
         if (sel == null) {
             newSel = Collections.emptySet();
-        }
-
-        else {
+        } else {
             newSel = createSet(sel.getComponents());
         }
 
@@ -119,7 +104,7 @@ class SelectionAttributes extends AbstractAttributeSet {
             }
         }
 
-        LinkedHashMap<Attribute<Object>,Object> attrMap = computeAttributes(newSel);
+        LinkedHashMap<Attribute<Object>, Object> attrMap = computeAttributes(newSel);
         boolean same = isSame(attrMap, this.attrs, this.values);
 
         if (same) {
@@ -134,7 +119,7 @@ class SelectionAttributes extends AbstractAttributeSet {
             Object[] newValues = new Object[newAttrs.length];
             boolean[] newReadOnly = new boolean[newAttrs.length];
             int i = -1;
-            for (Map.Entry<Attribute<Object>,Object> entry : attrMap.entrySet()) {
+            for (Map.Entry<Attribute<Object>, Object> entry : attrMap.entrySet()) {
                 i++;
                 newAttrs[i] = entry.getKey();
                 newValues[i] = entry.getValue();
@@ -181,9 +166,11 @@ class SelectionAttributes extends AbstractAttributeSet {
         boolean includeWires = true;
         for (Component comp : comps) {
             if (!(comp instanceof Wire)) {
-                { includeWires = false;
+                {
+                    includeWires = false;
+                }
+                break;
             }
- break; }
         }
 
         if (includeWires) {
@@ -218,9 +205,9 @@ class SelectionAttributes extends AbstractAttributeSet {
         }
     }
 
-    private static LinkedHashMap<Attribute<Object>,Object> computeAttributes(Collection<Component> newSel)  {
-        LinkedHashMap<Attribute<Object>,Object> attrMap;
-        attrMap = new LinkedHashMap<Attribute<Object>,Object>();
+    private static LinkedHashMap<Attribute<Object>, Object> computeAttributes(Collection<Component> newSel) {
+        LinkedHashMap<Attribute<Object>, Object> attrMap;
+        attrMap = new LinkedHashMap<Attribute<Object>, Object>();
         Iterator<Component> sit = newSel.iterator();
         if (sit.hasNext()) {
             AttributeSet first = sit.next().getAttributeSet();
@@ -248,13 +235,13 @@ class SelectionAttributes extends AbstractAttributeSet {
         return attrMap;
     }
 
-    private static boolean isSame(LinkedHashMap<Attribute<Object>,Object> attrMap,
-            Attribute<?>[] oldAttrs, Object[] oldValues) {
+    private static boolean isSame(LinkedHashMap<Attribute<Object>, Object> attrMap,
+                                  Attribute<?>[] oldAttrs, Object[] oldValues) {
         if (oldAttrs.length != attrMap.size()) {
             return false;
         } else {
             int j = -1;
-            for (Map.Entry<Attribute<Object>,Object> entry : attrMap.entrySet()) {
+            for (Map.Entry<Attribute<Object>, Object> entry : attrMap.entrySet()) {
                 j++;
 
                 Attribute<Object> a = entry.getKey();

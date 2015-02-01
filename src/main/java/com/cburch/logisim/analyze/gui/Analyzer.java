@@ -3,29 +3,21 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import com.cburch.logisim.analyze.model.AnalyzerModel;
 import com.cburch.logisim.gui.generic.LFrame;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
@@ -194,11 +186,16 @@ public class Analyzer extends LFrame {
             }
 
             @Override
-            public void componentMoved(ComponentEvent arg0) { }
+            public void componentMoved(ComponentEvent arg0) {
+            }
+
             @Override
-            public void componentShown(ComponentEvent arg0) { }
+            public void componentShown(ComponentEvent arg0) {
+            }
+
             @Override
-            public void componentHidden(ComponentEvent arg0) { }
+            public void componentHidden(ComponentEvent arg0) {
+            }
         });
         tabbedPane.insertTab("Untitled", null, pane, null, index);
     }

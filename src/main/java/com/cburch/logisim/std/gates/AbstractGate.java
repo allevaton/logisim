@@ -3,32 +3,15 @@
 
 package com.cburch.logisim.std.gates;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.Map;
-
-import javax.swing.Icon;
-
 import com.cburch.draw.tools.SVGIcon;
 import com.cburch.logisim.LogisimVersion;
 import com.cburch.logisim.analyze.model.Expression;
 import com.cburch.logisim.analyze.model.Expressions;
 import com.cburch.logisim.circuit.ExpressionComputer;
 import com.cburch.logisim.comp.TextField;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.file.Options;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.tools.WireRepair;
 import com.cburch.logisim.tools.WireRepairData;
@@ -37,6 +20,10 @@ import com.cburch.logisim.tools.key.IntegerConfigurator;
 import com.cburch.logisim.tools.key.JoinedConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.Icons;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Map;
 
 abstract class AbstractGate extends InstanceFactory {
     private String[] iconNames = new String[3];
@@ -56,9 +43,9 @@ abstract class AbstractGate extends InstanceFactory {
         this.isXor = isXor;
         setFacingAttribute(StdAttr.FACING);
         setKeyConfigurator(JoinedConfigurator.create(
-            new IntegerConfigurator(GateAttributes.ATTR_INPUTS, 2,
-                    GateAttributes.MAX_INPUTS, 0),
-            new BitWidthConfigurator(StdAttr.WIDTH)));
+                new IntegerConfigurator(GateAttributes.ATTR_INPUTS, 2,
+                        GateAttributes.MAX_INPUTS, 0),
+                new BitWidthConfigurator(StdAttr.WIDTH)));
     }
 
 
@@ -169,7 +156,9 @@ abstract class AbstractGate extends InstanceFactory {
         int width = bds.getWidth();
         int height = bds.getHeight();
         if (facing == Direction.NORTH || facing == Direction.SOUTH) {
-            int t = width; width = height; height = t;
+            int t = width;
+            width = height;
+            height = t;
         }
         if (negated != 0) {
             width -= 10;
@@ -204,7 +193,7 @@ abstract class AbstractGate extends InstanceFactory {
             paintRectangular(painter, width, height);
         } else if (shape == AppPreferences.SHAPE_DIN40700) {
             paintDinShape(painter, width, height, inputs);
-        // SHAPE_SHAPED
+            // SHAPE_SHAPED
         } else {
             if (negateOutput) {
                 g.translate(-10, 0);
@@ -333,10 +322,10 @@ abstract class AbstractGate extends InstanceFactory {
     protected abstract Value getIdentity();
 
     protected abstract void paintShape(InstancePainter painter,
-            int width, int height);
+                                       int width, int height);
 
     protected void paintRectangular(InstancePainter painter,
-            int width, int height) {
+                                    int width, int height) {
         int don = negateOutput ? 10 : 0;
         AttributeSet attrs = painter.getAttributeSet();
         painter.drawRectangle(-width, -height / 2, width - don, height,
@@ -347,13 +336,13 @@ abstract class AbstractGate extends InstanceFactory {
     }
 
     protected abstract void paintDinShape(InstancePainter painter,
-            int width, int height, int inputs);
+                                          int width, int height, int inputs);
 
     protected abstract Value computeOutput(Value[] inputs, int numInputs,
-            InstanceState state);
+                                           InstanceState state);
 
     protected abstract Expression computeExpression(Expression[] inputs,
-            int numInputs);
+                                                    int numInputs);
 
     protected boolean shouldRepairWire(Instance instance, WireRepairData data) {
         return false;
@@ -434,7 +423,7 @@ abstract class AbstractGate extends InstanceFactory {
         int negated = attrs.negated;
         AttributeSet opts = state.getProject().getOptions().getAttributeSet();
         boolean errorIfUndefined = opts.getValue(Options.ATTR_GATE_UNDEFINED)
-                                    .equals(Options.GATE_UNDEFINED_ERROR);
+                .equals(Options.GATE_UNDEFINED_ERROR);
 
         Value[] inputs = new Value[inputCount];
         int numInputs = 0;
@@ -501,7 +490,7 @@ abstract class AbstractGate extends InstanceFactory {
         if (key == ExpressionComputer.class) {
             return new ExpressionComputer() {
                 @Override
-                public void computeExpression(Map<Location,Expression> expressionMap) {
+                public void computeExpression(Map<Location, Expression> expressionMap) {
                     GateAttributes attrs = (GateAttributes) instance.getAttributeSet();
                     int inputCount = attrs.inputs;
                     int negated = attrs.negated;

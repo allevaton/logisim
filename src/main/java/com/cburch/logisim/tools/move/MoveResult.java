@@ -3,14 +3,14 @@
 
 package com.cburch.logisim.tools.move;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.cburch.logisim.circuit.ReplacementMap;
 import com.cburch.logisim.circuit.Wire;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Location;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class MoveResult {
     private ReplacementMap replacements;
@@ -19,8 +19,8 @@ public class MoveResult {
     private int totalDistance;
 
     public MoveResult(MoveRequest request, ReplacementMap replacements,
-            Collection<ConnectionData> unsatisfiedConnections,
-            int totalDistance) {
+                      Collection<ConnectionData> unsatisfiedConnections,
+                      int totalDistance) {
         this.replacements = replacements;
         this.unsatisfiedConnections = unsatisfiedConnections;
         this.totalDistance = totalDistance;

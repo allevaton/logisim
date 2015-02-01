@@ -3,10 +3,7 @@
 
 package com.cburch.hex;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.*;
 
 class Measures {
     private HexEditor hex;
@@ -32,13 +29,33 @@ class Measures {
         computeCellSize(null);
     }
 
-    public int getColumnCount() { return cols; }
-    public int getBaseX() { return baseX; }
-    public int getCellHeight() { return cellHeight; }
-    public int getCellWidth() { return cellWidth; }
-    public int getLabelWidth() { return headerWidth; }
-    public int getLabelChars() { return headerChars; }
-    public int getCellChars() { return cellChars; }
+    public int getColumnCount() {
+        return cols;
+    }
+
+    public int getBaseX() {
+        return baseX;
+    }
+
+    public int getCellHeight() {
+        return cellHeight;
+    }
+
+    public int getCellWidth() {
+        return cellWidth;
+    }
+
+    public int getLabelWidth() {
+        return headerWidth;
+    }
+
+    public int getLabelChars() {
+        return headerChars;
+    }
+
+    public int getCellChars() {
+        return cellChars;
+    }
 
     public int getValuesX() {
         return baseX + spacerWidth;
@@ -122,19 +139,15 @@ class Measures {
             int ret = (width - headerWidth) / (cellWidth + (spacerWidth + 3) / 4);
             if (ret >= 16) {
                 cols = 16;
-            }
-
-            else if (ret >= 8) {
+            } else if (ret >= 8) {
                 cols = 8;
-            }
-
-            else {
+            } else {
                 cols = 4;
             }
 
         }
         int lineWidth = headerWidth + cols * cellWidth
-            + ((cols / 4) - 1) * spacerWidth;
+                + ((cols / 4) - 1) * spacerWidth;
         int newBase = headerWidth + Math.max(0, (width - lineWidth) / 2);
         if (baseX != newBase) {
             baseX = newBase;
@@ -180,7 +193,7 @@ class Measures {
         } else {
             guessed = false;
             charWidth = 0;
-            for(int i = 0; i < 16; i++) {
+            for (int i = 0; i < 16; i++) {
                 int width = fm.stringWidth(Integer.toHexString(i));
                 if (width > charWidth) {
                     charWidth = width;

@@ -3,9 +3,9 @@
 
 package com.cburch.draw.undo;
 
-import java.util.LinkedList;
-
 import com.cburch.logisim.util.EventSourceWeakSupport;
+
+import java.util.LinkedList;
 
 public class UndoLog {
     private static final int MAX_UNDO_SIZE = 64;

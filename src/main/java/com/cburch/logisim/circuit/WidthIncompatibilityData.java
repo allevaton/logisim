@@ -3,10 +3,10 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.ArrayList;
-
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Location;
+
+import java.util.ArrayList;
 
 public class WidthIncompatibilityData {
     private ArrayList<Location> points;
@@ -41,11 +41,11 @@ public class WidthIncompatibilityData {
     }
 
     @Override
-	public int hashCode() {
-		return this.size();
-	}
+    public int hashCode() {
+        return this.size();
+    }
 
-	@Override
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof WidthIncompatibilityData)) {
             return false;
@@ -69,9 +69,11 @@ public class WidthIncompatibilityData {
                 Location q = this.getPoint(j);
                 BitWidth x = this.getBitWidth(j);
                 if (p.equals(q) && w.equals(x)) {
-                    { matched = true;
+                    {
+                        matched = true;
+                    }
+                    break;
                 }
- break; }
             }
             if (!matched) {
                 return false;

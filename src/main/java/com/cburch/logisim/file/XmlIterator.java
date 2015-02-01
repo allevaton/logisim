@@ -3,13 +3,13 @@
 
 package com.cburch.logisim.file;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class XmlIterator<E extends Node> implements Iterable<E>, Iterator<E>, Cloneable {
     public static XmlIterator<Node> forChildren(Element node) {

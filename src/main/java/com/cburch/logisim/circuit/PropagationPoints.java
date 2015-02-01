@@ -3,15 +3,15 @@
 
 package com.cburch.logisim.circuit;
 
-import java.awt.Graphics;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentDrawContext;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.util.GraphicsUtil;
+
+import java.awt.*;
+import java.util.HashMap;
+import java.util.HashSet;
 
 class PropagationPoints {
     private static class Entry {
@@ -64,7 +64,7 @@ class PropagationPoints {
 
 
         CircuitState state = context.getCircuitState();
-        HashMap<CircuitState,CircuitState> stateMap = new HashMap<CircuitState,CircuitState>();
+        HashMap<CircuitState, CircuitState> stateMap = new HashMap<CircuitState, CircuitState>();
         for (CircuitState s : state.getSubstates()) {
             addSubstates(stateMap, s, s);
         }
@@ -85,8 +85,8 @@ class PropagationPoints {
         GraphicsUtil.switchToWidth(g, 1);
     }
 
-    private void addSubstates(HashMap<CircuitState,CircuitState> map,
-            CircuitState source, CircuitState value) {
+    private void addSubstates(HashMap<CircuitState, CircuitState> map,
+                              CircuitState source, CircuitState value) {
         map.put(source, value);
         for (CircuitState s : source.getSubstates()) {
             addSubstates(map, s, value);

@@ -3,53 +3,42 @@
 
 package com.cburch.logisim.std.arith;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
+import com.cburch.logisim.tools.key.BitWidthConfigurator;
+
+import java.awt.*;
 import java.util.Arrays;
 
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
-import com.cburch.logisim.tools.key.BitWidthConfigurator;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Shifter extends InstanceFactory {
     static final AttributeOption SHIFT_LOGICAL_LEFT
-        = new AttributeOption("ll", getFromLocale("shiftLogicalLeft"));
+            = new AttributeOption("ll", getFromLocale("shiftLogicalLeft"));
     static final AttributeOption SHIFT_LOGICAL_RIGHT
-        = new AttributeOption("lr", getFromLocale("shiftLogicalRight"));
+            = new AttributeOption("lr", getFromLocale("shiftLogicalRight"));
     static final AttributeOption SHIFT_ARITHMETIC_RIGHT
-        = new AttributeOption("ar", getFromLocale("shiftArithmeticRight"));
+            = new AttributeOption("ar", getFromLocale("shiftArithmeticRight"));
     static final AttributeOption SHIFT_ROLL_LEFT
-        = new AttributeOption("rl", getFromLocale("shiftRollLeft"));
+            = new AttributeOption("rl", getFromLocale("shiftRollLeft"));
     static final AttributeOption SHIFT_ROLL_RIGHT
-        = new AttributeOption("rr", getFromLocale("shiftRollRight"));
+            = new AttributeOption("rr", getFromLocale("shiftRollRight"));
     static final Attribute<AttributeOption> ATTR_SHIFT
-        = Attributes.forOption("shift", getFromLocale("shifterShiftAttr"),
-                new AttributeOption[] { SHIFT_LOGICAL_LEFT, SHIFT_LOGICAL_RIGHT,
-                    SHIFT_ARITHMETIC_RIGHT, SHIFT_ROLL_LEFT, SHIFT_ROLL_RIGHT });
+            = Attributes.forOption("shift", getFromLocale("shifterShiftAttr"),
+            new AttributeOption[]{SHIFT_LOGICAL_LEFT, SHIFT_LOGICAL_RIGHT,
+                    SHIFT_ARITHMETIC_RIGHT, SHIFT_ROLL_LEFT, SHIFT_ROLL_RIGHT});
 
-    private static final int IN0   = 0;
-    private static final int IN1   = 1;
-    private static final int OUT   = 2;
+    private static final int IN0 = 0;
+    private static final int IN1 = 1;
+    private static final int OUT = 2;
 
     public Shifter() {
         super("Shifter", getFromLocale("shifterComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.WIDTH, ATTR_SHIFT
-            }, new Object[] {
+        }, new Object[]{
                 BitWidth.create(8), SHIFT_LOGICAL_LEFT
-            });
+        });
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
         setOffsetBounds(Bounds.create(-40, -20, 40, 40));
         setIconName("shifter.svg");
@@ -75,9 +64,9 @@ public class Shifter extends InstanceFactory {
         while ((1 << shift) < data) shift++;
 
         Port[] ps = new Port[3];
-        ps[IN0]   = new Port(-40, -10, Port.INPUT,  data);
-        ps[IN1]   = new Port(-40,  10, Port.INPUT,  shift);
-        ps[OUT]   = new Port(  0,   0, Port.OUTPUT, data);
+        ps[IN0] = new Port(-40, -10, Port.INPUT, data);
+        ps[IN1] = new Port(-40, 10, Port.INPUT, shift);
+        ps[OUT] = new Port(0, 0, Port.OUTPUT, data);
         ps[IN0].setToolTip(getFromLocale("shifterInputTip"));
         ps[IN1].setToolTip(getFromLocale("shifterDistanceTip"));
         ps[OUT].setToolTip(getFromLocale("shifterOutputTip"));
@@ -121,7 +110,7 @@ public class Shifter extends InstanceFactory {
                     }
 
                     y = (x << d) | (x >>> (bits - d));
-                // SHIFT_LOGICAL_LEFT
+                    // SHIFT_LOGICAL_LEFT
                 } else {
                     y = x << d;
                 }
@@ -157,7 +146,7 @@ public class Shifter extends InstanceFactory {
 
                     System.arraycopy(x, x.length - d, y, 0, d);
                     System.arraycopy(x, 0, y, d, bits - d);
-                // SHIFT_LOGICAL_LEFT
+                    // SHIFT_LOGICAL_LEFT
                 } else {
                     if (d >= bits) {
                         d = bits;
@@ -208,7 +197,7 @@ public class Shifter extends InstanceFactory {
             g.fillRect(x, y - 7, 2, 8);
             g.fillRect(x, y - 7, 10, 2);
             drawArrow(g, x + 3, y, 4);
-        // SHIFT_LOGICAL_LEFT
+            // SHIFT_LOGICAL_LEFT
         } else {
             g.fillRect(x + 2, y - 1, 8, 3);
             drawArrow(g, x, y, 4);
@@ -216,8 +205,8 @@ public class Shifter extends InstanceFactory {
     }
 
     private void drawArrow(Graphics g, int x, int y, int d) {
-        int[] px = { x + d, x, x + d };
-        int[] py = { y + d, y, y - d };
+        int[] px = {x + d, x, x + d};
+        int[] py = {y + d, y, y - d};
         g.fillPolygon(px, py, 3);
     }
 }

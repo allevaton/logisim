@@ -3,10 +3,6 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-
 import com.cburch.draw.canvas.Selection;
 import com.cburch.draw.model.CanvasModel;
 import com.cburch.draw.model.CanvasObject;
@@ -16,6 +12,10 @@ import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.proj.Action;
 import com.cburch.logisim.proj.Project;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 class SelectionAction extends Action {
     private String displayName;
@@ -31,9 +31,9 @@ class SelectionAction extends Action {
     private Direction anchorOldFacing;
 
     public SelectionAction(AppearanceCanvas canvas, String displayName,
-            Collection<CanvasObject> toRemove, Collection<CanvasObject> toAdd,
-            Collection<CanvasObject> newSelection, Location anchorLocation,
-            Direction anchorFacing) {
+                           Collection<CanvasObject> toRemove, Collection<CanvasObject> toAdd,
+                           Collection<CanvasObject> newSelection, Location anchorLocation,
+                           Direction anchorFacing) {
         this.canvas = canvas;
         this.canvasModel = canvas.getModel();
         this.displayName = displayName;

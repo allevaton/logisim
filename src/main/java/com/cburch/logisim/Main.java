@@ -21,26 +21,28 @@
 package com.cburch.logisim;
 
 import com.cburch.logisim.gui.start.Startup;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Main entry point into Logisim.
  *
- * @version 2.7.2
  * @author Carl Burch
+ * @version 2.7.2
  */
 public class Main {
     public static final LogisimVersion VERSION = LogisimVersion.get(2, 7, 2);
     public static final String VERSION_NAME = VERSION.toString();
     public static final int COPYRIGHT_YEAR = 2012;
 
-    /** Logger */
-    public static final Logger logger = LoggerFactory.getLogger( Main.class );
+    /**
+     * Logger
+     */
+    public static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     /**
      * Entry point
+     *
      * @param args Command line arguments
      */
     public static void main(String[] args) {
@@ -48,7 +50,7 @@ public class Main {
         if (startup == null) {
             System.exit(0);
         } else {
-            logger.info( "Starting Logisim" );
+            logger.info("Starting Logisim");
             startup.run();
         }
     }

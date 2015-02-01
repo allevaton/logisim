@@ -3,42 +3,31 @@
 
 package com.cburch.logisim.std.io;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceDataSingleton;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstanceLogger;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Led extends InstanceFactory {
     public Led() {
         super("LED", getFromLocale("ledComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.FACING, Io.ATTR_ON_COLOR, Io.ATTR_OFF_COLOR,
                 Io.ATTR_ACTIVE,
                 StdAttr.LABEL, Io.ATTR_LABEL_LOC,
                 StdAttr.LABEL_FONT, Io.ATTR_LABEL_COLOR
-            }, new Object[] {
+        }, new Object[]{
                 Direction.WEST, new Color(240, 0, 0), Color.DARK_GRAY,
                 Boolean.TRUE,
                 "", Io.LABEL_CENTER,
                 StdAttr.DEFAULT_LABEL_FONT, Color.BLACK
-            });
+        });
         setFacingAttribute(StdAttr.FACING);
         setIconName("led.svg");
-        setPorts(new Port[] { new Port(0, 0, Port.INPUT, 1) });
+        setPorts(new Port[]{new Port(0, 0, Port.INPUT, 1)});
         setInstanceLogger(Logger.class);
     }
 

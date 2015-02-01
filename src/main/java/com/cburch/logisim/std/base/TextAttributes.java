@@ -3,21 +3,21 @@
 
 package com.cburch.logisim.std.base;
 
-import java.awt.Font;
-import java.util.Arrays;
-import java.util.List;
-
 import com.cburch.logisim.data.AbstractAttributeSet;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeOption;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.instance.StdAttr;
 
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+
 class TextAttributes extends AbstractAttributeSet {
     private static final List<Attribute<?>> ATTRIBUTES
-        = Arrays.asList(new Attribute<?>[] {
+            = Arrays.asList(new Attribute<?>[]{
             Text.ATTR_TEXT, Text.ATTR_FONT, Text.ATTR_HALIGN, Text.ATTR_VALIGN
-        });
+    });
 
     private String text;
     private Font font;
@@ -28,7 +28,7 @@ class TextAttributes extends AbstractAttributeSet {
     public TextAttributes() {
         text = "";
         font = StdAttr.DEFAULT_LABEL_FONT;
-		halign = Text.ATTR_HALIGN.parse("left");
+        halign = Text.ATTR_HALIGN.parse("left");
         valign = Text.ATTR_VALIGN.parse("base");
         offsetBounds = null;
     }

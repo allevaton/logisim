@@ -3,13 +3,15 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import com.cburch.logisim.circuit.Circuit;
+import com.cburch.logisim.circuit.CircuitState;
+import com.cburch.logisim.comp.Component;
+import com.cburch.logisim.comp.ComponentDrawContext;
+import com.cburch.logisim.data.Bounds;
+import com.cburch.logisim.proj.Project;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
@@ -18,27 +20,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
-import com.cburch.logisim.circuit.Circuit;
-import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.comp.Component;
-import com.cburch.logisim.comp.ComponentDrawContext;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.proj.Project;
-
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class Print {
-    private Print() { }
+    private Print() {
+    }
 
     public static void doPrint(Project proj) {
         CircuitJList list = new CircuitJList(proj, true);
@@ -137,9 +124,17 @@ public class Print {
             add(comp);
         }
 
-        boolean getRotateToFit() { return rotateToFit.isSelected(); }
-        boolean getPrinterView() { return printerView.isSelected(); }
-        String getHeader() { return header.getText(); }
+        boolean getRotateToFit() {
+            return rotateToFit.isSelected();
+        }
+
+        boolean getPrinterView() {
+            return printerView.isSelected();
+        }
+
+        String getHeader() {
+            return header.getText();
+        }
     }
 
     private static class MyPrintable implements Printable {
@@ -150,7 +145,7 @@ public class Print {
         boolean printerView;
 
         MyPrintable(Project proj, List<Circuit> circuits, String header,
-                boolean rotateToFit, boolean printerView) {
+                    boolean rotateToFit, boolean printerView) {
             this.proj = proj;
             this.circuits = circuits;
             this.header = header;
@@ -171,9 +166,9 @@ public class Print {
             Graphics2D g2 = g instanceof Graphics2D ? (Graphics2D) g : null;
             FontMetrics fm = g.getFontMetrics();
             String head = (header != null && !header.equals(""))
-                ? format(header, pageIndex + 1, circuits.size(),
-                        circ.getName())
-                : null;
+                    ? format(header, pageIndex + 1, circuits.size(),
+                    circ.getName())
+                    : null;
             int headHeight = (head == null ? 0 : fm.getHeight());
 
             // Compute image size
@@ -197,7 +192,7 @@ public class Print {
                         if (imHeight > imWidth) {
                             g2.translate(0, imHeight);
                             g2.rotate(-Math.PI / 2);
-                        // landscape -> portrait
+                            // landscape -> portrait
                         } else {
                             g2.translate(imWidth, 0);
                             g2.rotate(Math.PI / 2);
@@ -251,7 +246,7 @@ public class Print {
     }
 
     private static String format(String header, int index, int max,
-            String circName) {
+                                 String circName) {
         header = header.replace("%n", "%1$s");
         header = header.replace("%p", "%2$d");
         header = header.replace("%P", "%3$d");

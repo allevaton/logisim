@@ -3,13 +3,6 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import com.cburch.draw.toolbar.AbstractToolbarModel;
 import com.cburch.draw.toolbar.ToolbarItem;
 import com.cburch.draw.toolbar.ToolbarSeparator;
@@ -25,6 +18,9 @@ import com.cburch.logisim.proj.ProjectListener;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.InputEventUtil;
 
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +76,7 @@ class LayoutToolbarModel extends AbstractToolbarModel {
 
                 int mask = frame.getToolkit().getMenuShortcutKeyMask();
                 ret += " (" + InputEventUtil.toKeyDisplayString(mask)
-                    + "-" + index + ")";
+                        + "-" + index + ")";
             }
             return ret;
         }
@@ -92,7 +88,7 @@ class LayoutToolbarModel extends AbstractToolbarModel {
     }
 
     private class MyListener implements ProjectListener, AttributeListener,
-                ToolbarData.ToolbarListener, PropertyChangeListener {
+            ToolbarData.ToolbarListener, PropertyChangeListener {
         //
         // ProjectListener methods
         //
@@ -130,7 +126,9 @@ class LayoutToolbarModel extends AbstractToolbarModel {
         // AttributeListener methods
         //
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
+
         @Override
         public void attributeValueChanged(AttributeEvent e) {
             fireToolbarAppearanceChanged();

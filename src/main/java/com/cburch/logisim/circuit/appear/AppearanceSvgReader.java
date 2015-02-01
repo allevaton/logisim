@@ -3,14 +3,13 @@
 
 package com.cburch.logisim.circuit.appear;
 
-import java.util.Map;
-
-import org.w3c.dom.Element;
-
 import com.cburch.draw.model.AbstractCanvasObject;
 import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.instance.Instance;
+import org.w3c.dom.Element;
+
+import java.util.Map;
 
 public class AppearanceSvgReader {
     public static AbstractCanvasObject createShape(Element elt, Map<Location, Instance> pins) {

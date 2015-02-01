@@ -3,38 +3,28 @@
 
 package com.cburch.logisim.std.arith;
 
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.tools.key.IntegerConfigurator;
 import com.cburch.logisim.tools.key.JoinedConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class BitAdder extends InstanceFactory {
     static final Attribute<Integer> NUM_INPUTS
-        = Attributes.forIntegerRange("inputs", getFromLocale("gateInputsAttr"), 1, 32);
+            = Attributes.forIntegerRange("inputs", getFromLocale("gateInputsAttr"), 1, 32);
 
     public BitAdder() {
         super("BitAdder", getFromLocale("bitAdderComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.WIDTH, NUM_INPUTS
-            }, new Object[] {
+        }, new Object[]{
                 BitWidth.create(8), Integer.valueOf(1)
-            });
+        });
         setKeyConfigurator(JoinedConfigurator.create(
                 new IntegerConfigurator(NUM_INPUTS, 1, 32, 0),
                 new BitWidthConfigurator(StdAttr.WIDTH)));
@@ -73,10 +63,18 @@ public class BitAdder extends InstanceFactory {
         int y;
         int dy = 10;
         switch (inputs) {
-        case 1: y = 0; break;
-        case 2: y = -10; dy = 20; break;
-        case 3: y = -10; break;
-        default: y = ((inputs - 1) / 2) * -10;
+            case 1:
+                y = 0;
+                break;
+            case 2:
+                y = -10;
+                dy = 20;
+                break;
+            case 3:
+                y = -10;
+                break;
+            default:
+                y = ((inputs - 1) / 2) * -10;
         }
 
         Port[] ps = new Port[inputs + 1];

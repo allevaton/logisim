@@ -9,36 +9,61 @@ import java.util.Collections;
 import java.util.List;
 
 public class AttributeSets {
-    private AttributeSets() { }
+    private AttributeSets() {
+    }
 
     public static final AttributeSet EMPTY = new AttributeSet() {
         @Override
-        public Object clone() { return this; }
-        @Override
-        public void addAttributeListener(AttributeListener l) { }
-        @Override
-        public void removeAttributeListener(AttributeListener l) { }
+        public Object clone() {
+            return this;
+        }
 
         @Override
-        public List<Attribute<?>> getAttributes() { return Collections.emptyList(); }
-        @Override
-        public boolean containsAttribute(Attribute<?> attr) { return false; }
-        @Override
-        public Attribute<?> getAttribute(String name) { return null; }
+        public void addAttributeListener(AttributeListener l) {
+        }
 
         @Override
-        public boolean isReadOnly(Attribute<?> attr) { return true; }
+        public void removeAttributeListener(AttributeListener l) {
+        }
+
+        @Override
+        public List<Attribute<?>> getAttributes() {
+            return Collections.emptyList();
+        }
+
+        @Override
+        public boolean containsAttribute(Attribute<?> attr) {
+            return false;
+        }
+
+        @Override
+        public Attribute<?> getAttribute(String name) {
+            return null;
+        }
+
+        @Override
+        public boolean isReadOnly(Attribute<?> attr) {
+            return true;
+        }
+
         @Override
         public void setReadOnly(Attribute<?> attr, boolean value) {
             throw new UnsupportedOperationException();
         }
-        @Override
-        public boolean isToSave(Attribute<?> attr) { return true; }
 
         @Override
-        public <V> V getValue(Attribute<V> attr) { return null; }
+        public boolean isToSave(Attribute<?> attr) {
+            return true;
+        }
+
         @Override
-        public <V> void setValue(Attribute<V> attr, V value) { }
+        public <V> V getValue(Attribute<V> attr) {
+            return null;
+        }
+
+        @Override
+        public <V> void setValue(Attribute<V> attr, V value) {
+        }
     };
 
     public static <V> AttributeSet fixedSet(Attribute<V> attr, V initValue) {

@@ -7,7 +7,8 @@ import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.gui.generic.AttributeSetTableModel;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.Tool;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class AttrTableToolModel extends AttributeSetTableModel {
     Project proj;

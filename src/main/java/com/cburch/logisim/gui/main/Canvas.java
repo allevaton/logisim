@@ -3,28 +3,39 @@
 
 package com.cburch.logisim.gui.main;
 
-import static com.cburch.logisim.util.LocaleString.getFromLocale;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
-import java.util.List;
-
-import javax.swing.*;
-import javax.swing.event.*;
-
 import com.cburch.logisim.circuit.*;
-import com.cburch.logisim.comp.*;
 import com.cburch.logisim.comp.Component;
+import com.cburch.logisim.comp.ComponentUserEvent;
 import com.cburch.logisim.data.*;
 import com.cburch.logisim.file.*;
-import com.cburch.logisim.gui.generic.*;
+import com.cburch.logisim.gui.generic.CanvasPane;
+import com.cburch.logisim.gui.generic.CanvasPaneContents;
+import com.cburch.logisim.gui.generic.GridPainter;
 import com.cburch.logisim.prefs.AppPreferences;
-import com.cburch.logisim.proj.*;
+import com.cburch.logisim.proj.Project;
+import com.cburch.logisim.proj.ProjectEvent;
+import com.cburch.logisim.proj.ProjectListener;
 import com.cburch.logisim.tools.*;
 import com.cburch.logisim.tools.SelectTool.ComputingMessage;
-import com.cburch.logisim.util.*;
+import com.cburch.logisim.util.GraphicsUtil;
+import com.cburch.logisim.util.LocaleListener;
+import com.cburch.logisim.util.LocaleManager;
+
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import java.util.Set;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel
@@ -33,12 +44,12 @@ public class Canvas extends JPanel
     public static final Color HALO_COLOR = new Color(192, 255, 255);
 
     private static final int BOUNDS_BUFFER = 70;
-        // pixels shown in canvas beyond outermost boundaries
+    // pixels shown in canvas beyond outermost boundaries
     private static final int THRESH_SIZE_UPDATE = 10;
-        // don't bother to update the size if it hasn't changed more than this
+    // don't bother to update the size if it hasn't changed more than this
     static final double SQRT_2 = Math.sqrt(2.0);
     private static final int BUTTONS_MASK = InputEvent.BUTTON1_DOWN_MASK
-        | InputEvent.BUTTON2_DOWN_MASK | InputEvent.BUTTON3_DOWN_MASK;
+            | InputEvent.BUTTON2_DOWN_MASK | InputEvent.BUTTON3_DOWN_MASK;
     private static final Color DEFAULT_ERROR_COLOR = new Color(192, 0, 0);
 
     private static final Color TICK_RATE_COLOR = new Color(0, 0, 92, 92);
@@ -46,14 +57,15 @@ public class Canvas extends JPanel
 
     private class MyListener
             implements MouseInputListener, KeyListener, PopupMenuListener,
-                PropertyChangeListener {
+            PropertyChangeListener {
         boolean menu_on = false;
 
         //
         // MouseListener methods
         //
         @Override
-        public void mouseClicked(MouseEvent e) { }
+        public void mouseClicked(MouseEvent e) {
+        }
 
         @Override
         public void mouseMoved(MouseEvent e) {
@@ -140,9 +152,7 @@ public class Canvas extends JPanel
             Tool ret = mappings.getToolFor(e);
             if (ret == null) {
                 return proj.getTool();
-            }
-
-            else {
+            } else {
                 return ret;
             }
 
@@ -159,6 +169,7 @@ public class Canvas extends JPanel
             }
 
         }
+
         @Override
         public void keyReleased(KeyEvent e) {
             Tool tool = proj.getTool();
@@ -167,6 +178,7 @@ public class Canvas extends JPanel
             }
 
         }
+
         @Override
         public void keyTyped(KeyEvent e) {
             Tool tool = proj.getTool();
@@ -183,12 +195,15 @@ public class Canvas extends JPanel
         public void popupMenuCanceled(PopupMenuEvent e) {
             menu_on = false;
         }
+
         @Override
         public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
             menu_on = false;
         }
+
         @Override
-        public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
+        public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+        }
 
         @Override
         public void propertyChange(PropertyChangeEvent event) {
@@ -204,7 +219,7 @@ public class Canvas extends JPanel
 
     private class MyProjectListener
             implements ProjectListener, LibraryListener, CircuitListener,
-                AttributeListener, SimulatorListener, Selection.Listener {
+            AttributeListener, SimulatorListener, Selection.Listener {
         @Override
         public void projectChanged(ProjectEvent event) {
             int act = event.getAction();
@@ -231,11 +246,9 @@ public class Canvas extends JPanel
 
                 Tool t = event.getTool();
                 if (t == null) {
-                     setCursor(Cursor.getDefaultCursor());
-                }
-
-                else {
-                               setCursor(t.getCursor());
+                    setCursor(Cursor.getDefaultCursor());
+                } else {
+                    setCursor(t.getCursor());
                 }
 
             } else if (act == ProjectEvent.ACTION_SET_STATE) {
@@ -275,7 +288,7 @@ public class Canvas extends JPanel
 
                 if (proj.getTool() == event.getData()) {
                     Tool next = findTool(proj.getLogisimFile().getOptions()
-                                        .getToolbarData().getContents());
+                            .getToolbarData().getContents());
                     if (next == null) {
                         for (Library lib : proj.getLogisimFile().getLibraries()) {
                             next = findTool(lib.getTools());
@@ -307,7 +320,7 @@ public class Canvas extends JPanel
             for (Tool o : opts) {
                 if (ret == null && o != null) {
                     ret = o;
-                }    else if (o instanceof EditTool) {
+                } else if (o instanceof EditTool) {
                     ret = o;
                 }
 
@@ -349,15 +362,20 @@ public class Canvas extends JPanel
             */
             paintThread.requestRepaint();
         }
+
         @Override
         public void tickCompleted(SimulatorEvent e) {
             waitForRepaintDone();
         }
-        @Override
-        public void simulatorStateChanged(SimulatorEvent e) { }
 
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void simulatorStateChanged(SimulatorEvent e) {
+        }
+
+        @Override
+        public void attributeListChanged(AttributeEvent e) {
+        }
+
         @Override
         public void attributeValueChanged(AttributeEvent e) {
             Attribute<?> attr = e.getAttribute();
@@ -390,7 +408,8 @@ public class Canvas extends JPanel
         boolean isSoutheast = false;
         boolean isSouthwest = false;
 
-        MyViewport() { }
+        MyViewport() {
+        }
 
         void setErrorMessage(String msg, int dx, int dy, Color color) {
             if (errorMessage != msg) {
@@ -413,14 +432,38 @@ public class Canvas extends JPanel
             isSoutheast = false;
             isSouthwest = false;
         }
-        void setNorth(boolean value) { isNorth = value; }
-        void setSouth(boolean value) { isSouth = value; }
-        void setEast(boolean value) { isEast = value; }
-        void setWest(boolean value) { isWest = value; }
-        void setNortheast(boolean value) { isNortheast = value; }
-        void setNorthwest(boolean value) { isNorthwest = value; }
-        void setSoutheast(boolean value) { isSoutheast = value; }
-        void setSouthwest(boolean value) { isSouthwest = value; }
+
+        void setNorth(boolean value) {
+            isNorth = value;
+        }
+
+        void setSouth(boolean value) {
+            isSouth = value;
+        }
+
+        void setEast(boolean value) {
+            isEast = value;
+        }
+
+        void setWest(boolean value) {
+            isWest = value;
+        }
+
+        void setNortheast(boolean value) {
+            isNortheast = value;
+        }
+
+        void setNorthwest(boolean value) {
+            isNorthwest = value;
+        }
+
+        void setSoutheast(boolean value) {
+            isSoutheast = value;
+        }
+
+        void setSouthwest(boolean value) {
+            isSouthwest = value;
+        }
 
         @Override
         public void paintChildren(Graphics g) {
@@ -481,22 +524,22 @@ public class Canvas extends JPanel
             }
 
             GraphicsUtil.switchToWidth(g, 3);
-            if (isNorth)        GraphicsUtil.drawArrow(g, sz.width / 2, 20,
-                                sz.width / 2, 2, 10, 30);
-            if (isSouth)        GraphicsUtil.drawArrow(g, sz.width / 2, sz.height - 20,
-                                sz.width / 2, sz.height -  2, 10, 30);
-            if (isEast)     GraphicsUtil.drawArrow(g, sz.width - 20, sz.height / 2,
-                                sz.width -  2, sz.height / 2, 10, 30);
-            if (isWest)     GraphicsUtil.drawArrow(g, 20, sz.height / 2,
-                                 2, sz.height / 2, 10, 30);
+            if (isNorth) GraphicsUtil.drawArrow(g, sz.width / 2, 20,
+                    sz.width / 2, 2, 10, 30);
+            if (isSouth) GraphicsUtil.drawArrow(g, sz.width / 2, sz.height - 20,
+                    sz.width / 2, sz.height - 2, 10, 30);
+            if (isEast) GraphicsUtil.drawArrow(g, sz.width - 20, sz.height / 2,
+                    sz.width - 2, sz.height / 2, 10, 30);
+            if (isWest) GraphicsUtil.drawArrow(g, 20, sz.height / 2,
+                    2, sz.height / 2, 10, 30);
             if (isNortheast) GraphicsUtil.drawArrow(g, sz.width - 14, 14,
-                                sz.width -  2, 2, 10, 30);
+                    sz.width - 2, 2, 10, 30);
             if (isNorthwest) GraphicsUtil.drawArrow(g, 14, 14,
-                                2,  2, 10, 30);
-            if (isSoutheast)    GraphicsUtil.drawArrow(g, sz.width - 14, sz.height - 14,
-                                sz.width -  2, sz.height -  2, 10, 30);
-            if (isSouthwest)    GraphicsUtil.drawArrow(g, 14, sz.height - 14,
-                                2, sz.height -  2, 10, 30);
+                    2, 2, 10, 30);
+            if (isSoutheast) GraphicsUtil.drawArrow(g, sz.width - 14, sz.height - 14,
+                    sz.width - 2, sz.height - 2, 10, 30);
+            if (isSouthwest) GraphicsUtil.drawArrow(g, 14, sz.height - 14,
+                    2, sz.height - 2, 10, 30);
 
             if (AppPreferences.SHOW_TICK_RATE.getBoolean()) {
                 String hz = tickCounter.getTickRate();
@@ -597,10 +640,8 @@ public class Canvas extends JPanel
     public void repaint() {
         if (inPaint) {
             paintDirty = true;
-        }
-
-        else {
-                   super.repaint();
+        } else {
+            super.repaint();
         }
 
     }
@@ -640,9 +681,13 @@ public class Canvas extends JPanel
         return painter.getGridPainter();
     }
 
-    Tool getDragTool() { return drag_tool; }
+    Tool getDragTool() {
+        return drag_tool;
+    }
 
-    boolean isPopupMenuUp() { return myListener.menu_on; }
+    boolean isPopupMenuUp() {
+        return myListener.menu_on;
+    }
 
     //
     // graphics methods
@@ -706,20 +751,22 @@ public class Canvas extends JPanel
     }
 
     private void waitForRepaintDone() {
-        synchronized(repaintLock) {
+        synchronized (repaintLock) {
             try {
                 while (inPaint) {
                     repaintLock.wait();
                 }
-            } catch (InterruptedException e) { }
+            } catch (InterruptedException e) {
+            }
         }
     }
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
-      
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
         inPaint = true;
         try {
             super.paintComponent(g);
@@ -732,7 +779,7 @@ public class Canvas extends JPanel
 
         } finally {
             inPaint = false;
-            synchronized(repaintLock) {
+            synchronized (repaintLock) {
                 repaintLock.notifyAll();
             }
         }
@@ -800,33 +847,27 @@ public class Canvas extends JPanel
 
                 if (isNorth) {
                     if (isEast) {
-                            viewport.setNortheast(true);
-                    }
-
-                    else if (isWest) {
-                           viewport.setNorthwest(true);
-                    }
-
-                    else {
-                                   viewport.setNorth(true);
+                        viewport.setNortheast(true);
+                    } else if (isWest) {
+                        viewport.setNorthwest(true);
+                    } else {
+                        viewport.setNorth(true);
                     }
 
                 } else if (isSouth) {
                     if (isEast) {
-                            viewport.setSoutheast(true);
-                    }    else if (isWest) {
-                           viewport.setSouthwest(true);
-                    }
-
-                    else {
-                                   viewport.setSouth(true);
+                        viewport.setSoutheast(true);
+                    } else if (isWest) {
+                        viewport.setSouthwest(true);
+                    } else {
+                        viewport.setSouth(true);
                     }
 
                 } else {
                     if (isEast) {
-                            viewport.setEast(true);
-                    }    else if (isWest) {
-                           viewport.setWest(true);
+                        viewport.setEast(true);
+                    } else if (isWest) {
+                        viewport.setWest(true);
                     }
 
                 }
@@ -948,7 +989,7 @@ public class Canvas extends JPanel
 
     @Override
     public int getScrollableBlockIncrement(Rectangle visibleRect,
-            int orientation, int direction) {
+                                           int orientation, int direction) {
         return canvasPane.supportScrollableBlockIncrement(visibleRect, orientation, direction);
     }
 
@@ -964,7 +1005,7 @@ public class Canvas extends JPanel
 
     @Override
     public int getScrollableUnitIncrement(Rectangle visibleRect,
-            int orientation, int direction) {
+                                          int orientation, int direction) {
         return canvasPane.supportScrollableUnitIncrement(visibleRect, orientation, direction);
     }
 
@@ -978,6 +1019,7 @@ public class Canvas extends JPanel
             return ((x + 5) / 10) * 10;
         }
     }
+
     public static int snapYToGrid(int y) {
         if (y < 0) {
             return -((-y + 5) / 10) * 10;
@@ -985,6 +1027,7 @@ public class Canvas extends JPanel
             return ((y + 5) / 10) * 10;
         }
     }
+
     public static void snapToGrid(MouseEvent e) {
         int old_x = e.getX();
         int old_y = e.getY();

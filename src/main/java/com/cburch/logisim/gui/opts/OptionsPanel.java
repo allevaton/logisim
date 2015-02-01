@@ -3,13 +3,12 @@
 
 package com.cburch.logisim.gui.opts;
 
-import java.awt.LayoutManager;
-
-import javax.swing.JPanel;
-
 import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.file.Options;
 import com.cburch.logisim.proj.Project;
+
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 abstract class OptionsPanel extends JPanel {
@@ -26,7 +25,9 @@ abstract class OptionsPanel extends JPanel {
     }
 
     public abstract String getTitle();
+
     public abstract String getHelpText();
+
     public abstract void localeChanged();
 
     OptionsFrame getOptionsFrame() {

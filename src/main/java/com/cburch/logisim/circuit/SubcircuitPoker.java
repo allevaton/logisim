@@ -3,15 +3,14 @@
 
 package com.cburch.logisim.circuit;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.gui.main.Canvas;
 import com.cburch.logisim.instance.InstancePainter;
 import com.cburch.logisim.instance.InstancePoker;
 import com.cburch.logisim.instance.InstanceState;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class SubcircuitPoker extends InstancePoker {
 
@@ -38,8 +37,8 @@ public class SubcircuitPoker extends InstancePoker {
 
             int tx = cx + 3;
             int ty = cy + 3;
-            int[] xp = { tx - 1, cx + 8, cx + 10, tx + 1 };
-            int[] yp = { ty + 1, cy + 10, cy + 8, ty - 1 };
+            int[] xp = {tx - 1, cx + 8, cx + 10, tx + 1};
+            int[] yp = {ty + 1, cy + 10, cy + 8, ty - 1};
             Graphics g = painter.getGraphics();
             if (mouseDown) {
                 g.setColor(MAGNIFYING_INTERIOR_DOWN);

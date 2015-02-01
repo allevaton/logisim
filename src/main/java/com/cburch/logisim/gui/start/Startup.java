@@ -3,33 +3,26 @@
 
 package com.cburch.logisim.gui.start;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.io.File;
-
-import javax.swing.UIManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.cburch.logisim.Main;
 import com.cburch.logisim.file.LoadFailedException;
 import com.cburch.logisim.file.Loader;
 import com.cburch.logisim.gui.main.Print;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.gui.menu.WindowManagers;
-import com.cburch.logisim.gui.start.SplashScreen;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.proj.ProjectActions;
 import com.cburch.logisim.util.LocaleManager;
 import com.cburch.logisim.util.MacCompatibility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static com.cburch.logisim.util.LocaleString.*;
+import javax.swing.*;
+import java.io.File;
+import java.util.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
+import static com.cburch.logisim.util.LocaleString.getFromLocaleOptions;
 
 /**
  * A class to encapsulate the startup process
@@ -37,7 +30,7 @@ import static com.cburch.logisim.util.LocaleString.*;
 public class Startup {
     private static Startup startupTemp = null;
 
-    private static final Logger logger = LoggerFactory.getLogger( Startup.class );
+    private static final Logger logger = LoggerFactory.getLogger(Startup.class);
 
     static void doOpen(File file) {
         if (startupTemp != null) {
@@ -45,6 +38,7 @@ public class Startup {
         }
 
     }
+
     static void doPrint(File file) {
         if (startupTemp != null) {
             startupTemp.doPrintFile(file);
@@ -85,13 +79,13 @@ public class Startup {
             MacOsAdapter.register();
             MacOsAdapter.addListeners(true);
         } catch (ClassNotFoundException e) {
-            logger.warn( "Failed to register handler: " + e.getLocalizedMessage() );
+            logger.warn("Failed to register handler: " + e.getLocalizedMessage());
             return;
         } catch (Exception t) {
             try {
                 MacOsAdapter.addListeners(false);
-            } catch (Exception t2) { 
-                logger.warn( "Failed to register MacOS adapters" );
+            } catch (Exception t2) {
+                logger.warn("Failed to register MacOS adapters");
             }
         }
     }
@@ -104,7 +98,7 @@ public class Startup {
     private ArrayList<File> filesToOpen = new ArrayList<File>();
     private boolean showSplash;
     private File loadFile;
-    private HashMap<File,File> substitutions = new HashMap<File,File>();
+    private HashMap<File, File> substitutions = new HashMap<File, File>();
     private int ttyFormat = 0;
 
     // from other sources
@@ -129,7 +123,7 @@ public class Startup {
         return ttyFormat;
     }
 
-    Map<File,File> getSubstitutions() {
+    Map<File, File> getSubstitutions() {
         return Collections.unmodifiableMap(substitutions);
     }
 
@@ -142,8 +136,8 @@ public class Startup {
                 TtyInterface.run(this);
                 return;
             } catch (Exception e) {
-                logger.error( "Logisim failed to start.\nException: "
-                    + e.getLocalizedMessage() );
+                logger.error("Logisim failed to start.\nException: "
+                        + e.getLocalizedMessage());
                 e.printStackTrace();
                 System.exit(-1);
             }
@@ -159,7 +153,7 @@ public class Startup {
             } catch (Exception e) {
                 monitor = null;
                 showSplash = false;
-                logger.warn( "Not showing the splash screen, for some reason" );
+                logger.warn("Not showing the splash screen, for some reason");
             }
         }
 
@@ -171,11 +165,11 @@ public class Startup {
 
         Loader templLoader = new Loader(monitor);
         int count = templLoader.getBuiltin().getLibrary("Base").getTools().size()
-             + templLoader.getBuiltin().getLibrary("Gates").getTools().size();
+                + templLoader.getBuiltin().getLibrary("Gates").getTools().size();
         if (count < 0) {
             // this will never happen, but the optimizer doesn't know that...
             //OK
-            logger.error( "FATAL - no components were found");
+            logger.error("FATAL - no components were found");
             System.exit(-1);
         }
 
@@ -216,8 +210,8 @@ public class Startup {
                     ProjectActions.doOpen(monitor, fileToOpen, substitutions);
                 } catch (LoadFailedException ex) {
                     //OK
-                    logger.error( "Could not open " 
-                        + fileToOpen.getName() + ": " + ex.getMessage() );
+                    logger.error("Could not open "
+                            + fileToOpen.getName() + ": " + ex.getMessage());
                     System.exit(-1);
                 }
                 if (first) {
@@ -256,7 +250,7 @@ public class Startup {
     }
 
     private void loadTemplate(Loader loader, File templFile,
-            boolean templEmpty) {
+                              boolean templEmpty) {
         if (showSplash) {
             monitor.setProgress(SplashScreen.TEMPLATE_OPEN);
         }
@@ -270,8 +264,10 @@ public class Startup {
             AppPreferences.setTemplateType(AppPreferences.TEMPLATE_PLAIN);
         }
     }
+
     /**
      * Parses the command-line arguments to com.cburch.logisim.Main
+     *
      * @param args command line arguments
      * @return A Startup object or null if it fails
      */
@@ -310,7 +306,8 @@ public class Startup {
 
         try {
             UIManager.setLookAndFeel(AppPreferences.LOOK_AND_FEEL.get());
-        } catch (Exception ex) { }
+        } catch (Exception ex) {
+        }
 
         // parse arguments
         for (int i = 0; i < args.length; i++) {

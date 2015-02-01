@@ -3,25 +3,14 @@
 
 package com.cburch.logisim.std.io;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstancePoker;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Keyboard extends InstanceFactory {
     private static final int CLR = 0;
@@ -41,21 +30,21 @@ public class Keyboard extends InstanceFactory {
     private static final char FORM_FEED = '\u000c';
 
     private static final Attribute<Integer> ATTR_BUFFER
-        = Attributes.forIntegerRange("buflen",
-                getFromLocale("keybBufferLengthAttr"), 1, 256);
+            = Attributes.forIntegerRange("buflen",
+            getFromLocale("keybBufferLengthAttr"), 1, 256);
 
     public Keyboard() {
         super("Keyboard", getFromLocale("keyboardComponent"));
-        setAttributes(new Attribute[] { ATTR_BUFFER, StdAttr.EDGE_TRIGGER },
-                new Object[] { Integer.valueOf(32), StdAttr.TRIG_RISING });
+        setAttributes(new Attribute[]{ATTR_BUFFER, StdAttr.EDGE_TRIGGER},
+                new Object[]{Integer.valueOf(32), StdAttr.TRIG_RISING});
         setOffsetBounds(Bounds.create(0, -15, WIDTH, HEIGHT));
         setIconName("keyboard.svg");
         setInstancePoker(Poker.class);
 
         Port[] ps = new Port[5];
-        ps[CLR] = new Port( 20, 10, Port.INPUT, 1);
-        ps[CK]  = new Port(  0,  0, Port.INPUT, 1);
-        ps[RE]  = new Port( 10, 10, Port.INPUT, 1);
+        ps[CLR] = new Port(20, 10, Port.INPUT, 1);
+        ps[CK] = new Port(0, 0, Port.INPUT, 1);
+        ps[RE] = new Port(10, 10, Port.INPUT, 1);
         ps[AVL] = new Port(130, 10, Port.OUTPUT, 1);
         ps[OUT] = new Port(140, 10, Port.OUTPUT, 7);
         ps[CLR].setToolTip(getFromLocale("keybClearTip"));
@@ -75,7 +64,7 @@ public class Keyboard extends InstanceFactory {
         Value enable = circState.getPort(RE);
         char c;
 
-        synchronized(state) {
+        synchronized (state) {
             Value lastClock = state.setLastClock(clock);
             if (clear == Value.TRUE) {
                 state.clear();
@@ -114,7 +103,7 @@ public class Keyboard extends InstanceFactory {
             ArrayList<Integer> specials = new ArrayList<Integer>();
             FontMetrics fm = null;
             KeyboardData state = getKeyboardState(painter);
-            synchronized(state) {
+            synchronized (state) {
                 str = state.toString();
                 for (int i = state.getNextSpecial(0); i >= 0; i = state.getNextSpecial(i + 1)) {
                     char c = state.getChar(i);
@@ -153,7 +142,7 @@ public class Keyboard extends InstanceFactory {
     }
 
     private void drawBuffer(Graphics g, FontMetrics fm, String str,
-            int dispStart, int dispEnd, ArrayList<Integer> specials, Bounds bds) {
+                            int dispStart, int dispEnd, ArrayList<Integer> specials, Bounds bds) {
         int x = bds.getX();
         int y = bds.getY();
 
@@ -190,8 +179,8 @@ public class Keyboard extends InstanceFactory {
     }
 
     private void drawSpecials(ArrayList<Integer> specials, int x0, int xs, int ys,
-            int asc, Graphics g, FontMetrics fm,
-            String str, int dispStart, int dispEnd) {
+                              int asc, Graphics g, FontMetrics fm,
+                              String str, int dispStart, int dispEnd) {
         int[] px = new int[3];
         int[] py = new int[3];
         for (Integer special : specials) {
@@ -216,19 +205,28 @@ public class Keyboard extends InstanceFactory {
             if (key == '\b') {
                 int y1 = ys - asc / 2;
                 g.drawLine(w0, y1, w1, y1);
-                px[0] = w0 + 3; py[0] = y1 - 3;
-                px[1] = w0;     py[1] = y1;
-                px[2] = w0 + 3; py[2] = y1 + 3;
+                px[0] = w0 + 3;
+                py[0] = y1 - 3;
+                px[1] = w0;
+                py[1] = y1;
+                px[2] = w0 + 3;
+                py[2] = y1 + 3;
                 g.drawPolyline(px, py, 3);
             } else if (key == '\n') {
                 int y1 = ys - 3;
-                px[0] = w1; py[0] = ys - asc;
-                px[1] = w1; py[1] = y1;
-                px[2] = w0; py[2] = y1;
+                px[0] = w1;
+                py[0] = ys - asc;
+                px[1] = w1;
+                py[1] = y1;
+                px[2] = w0;
+                py[2] = y1;
                 g.drawPolyline(px, py, 3);
-                px[0] = w0 + 3; py[0] = y1 - 3;
-                px[1] = w0;     py[1] = y1;
-                px[2] = w0 + 3; py[2] = y1 + 3;
+                px[0] = w0 + 3;
+                py[0] = y1 - 3;
+                px[1] = w0;
+                py[1] = y1;
+                px[2] = w0 + 3;
+                py[2] = y1 + 3;
                 g.drawPolyline(px, py, 3);
             } else if (key == FORM_FEED) {
                 g.drawRect(w0, ys - asc, w1 - w0, asc);
@@ -269,14 +267,25 @@ public class Keyboard extends InstanceFactory {
             KeyboardData data = getKeyboardState(state);
             boolean changed = false;
             boolean used = true;
-            synchronized(data) {
+            synchronized (data) {
                 switch (e.getKeyCode()) {
-                case KeyEvent.VK_DELETE: changed = data.delete(); break;
-                case KeyEvent.VK_LEFT:   data.moveCursorBy(-1); break;
-                case KeyEvent.VK_RIGHT:  data.moveCursorBy(1); break;
-                case KeyEvent.VK_HOME:   data.setCursor(0); break;
-                case KeyEvent.VK_END:    data.setCursor(Integer.MAX_VALUE); break;
-                default: used = false;
+                    case KeyEvent.VK_DELETE:
+                        changed = data.delete();
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        data.moveCursorBy(-1);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        data.moveCursorBy(1);
+                        break;
+                    case KeyEvent.VK_HOME:
+                        data.setCursor(0);
+                        break;
+                    case KeyEvent.VK_END:
+                        data.setCursor(Integer.MAX_VALUE);
+                        break;
+                    default:
+                        used = false;
                 }
             }
             if (used) e.consume();
@@ -291,7 +300,9 @@ public class Keyboard extends InstanceFactory {
             if (ch != KeyEvent.CHAR_UNDEFINED) {
                 if (!Character.isISOControl(ch) || ch == '\b' || ch == '\n'
                         || ch == FORM_FEED) {
-                    synchronized(data) { changed = data.insert(ch); }
+                    synchronized (data) {
+                        changed = data.insert(ch);
+                    }
                     e.consume();
                 }
             }
@@ -307,7 +318,7 @@ public class Keyboard extends InstanceFactory {
             String str;
             int cursor;
             int dispStart;
-            synchronized(data) {
+            synchronized (data) {
                 str = data.toString();
                 cursor = data.getCursorPosition();
                 if (!data.isDisplayValid()) data.updateDisplay(fm);

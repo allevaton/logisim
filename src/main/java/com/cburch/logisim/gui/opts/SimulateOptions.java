@@ -3,22 +3,18 @@
 
 package com.cburch.logisim.gui.opts;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ComboBoxModel;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeEvent;
 import com.cburch.logisim.data.AttributeListener;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.file.Options;
 import com.cburch.logisim.util.TableLayout;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class SimulateOptions extends OptionsPanel {
@@ -50,7 +46,9 @@ class SimulateOptions extends OptionsPanel {
         }
 
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
+
         @Override
         public void attributeValueChanged(AttributeEvent e) {
             Attribute<?> attr = e.getAttribute();
@@ -85,7 +83,7 @@ class SimulateOptions extends OptionsPanel {
     private MyListener myListener = new MyListener();
 
     private JLabel simLimitLabel = new JLabel();
-    private JComboBox simLimit = new JComboBox(new Integer[] {
+    private JComboBox simLimit = new JComboBox(new Integer[]{
             Integer.valueOf(200),
             Integer.valueOf(500),
             Integer.valueOf(1000),
@@ -97,10 +95,10 @@ class SimulateOptions extends OptionsPanel {
     });
     private JCheckBox simRandomness = new JCheckBox();
     private JLabel gateUndefinedLabel = new JLabel();
-    private JComboBox gateUndefined = new JComboBox(new Object[] {
+    private JComboBox gateUndefined = new JComboBox(new Object[]{
             new ComboOption(Options.GATE_UNDEFINED_IGNORE),
             new ComboOption(Options.GATE_UNDEFINED_ERROR)
-        });
+    });
 
     public SimulateOptions(OptionsFrame window) {
         super(window);

@@ -3,26 +3,19 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.List;
-
-import javax.swing.JLabel;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-
 import com.cburch.logisim.circuit.CircuitEvent;
 import com.cburch.logisim.circuit.CircuitListener;
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.SubcircuitFactory;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.instance.StdAttr;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import java.util.*;
 
 @SuppressWarnings("serial")
 class ComponentSelector extends JTree {
@@ -41,7 +34,7 @@ class ComponentSelector extends JTree {
         private ArrayList<TreeNode> children;
 
         public CircuitNode(CircuitNode parent, CircuitState circuitState,
-                Component subcircComp) {
+                           Component subcircComp) {
             this.parent = parent;
             this.circuitState = circuitState;
             this.subcircComp = subcircComp;
@@ -116,9 +109,9 @@ class ComponentSelector extends JTree {
                         if (o2 instanceof ComponentNode) {
                             ComponentNode n = (ComponentNode) o2;
                             if (n.comp == o) {
-                                int[] changed = { i };
+                                int[] changed = {i};
                                 children.remove(i);
-                                model.nodesWereRemoved(this, changed, new Object[] { n });
+                                model.nodesWereRemoved(this, changed, new Object[]{n});
                                 children.add(i, new ComponentNode(this, n.comp));
                                 model.nodesWereInserted(this, changed);
                             }
@@ -143,9 +136,11 @@ class ComponentSelector extends JTree {
                             if (o2 instanceof ComponentNode) {
                                 ComponentNode n = (ComponentNode) o2;
                                 if (n.comp == comp) {
-                                    { toAdd = n;
+                                    {
+                                        toAdd = n;
+                                    }
+                                    break;
                                 }
- break; }
                             }
                         }
                         if (toAdd == null) {
@@ -166,9 +161,11 @@ class ComponentSelector extends JTree {
                     if (o instanceof CircuitNode) {
                         CircuitNode n = (CircuitNode) o;
                         if (n.circuitState == state) {
-                            { toAdd = n;
+                            {
+                                toAdd = n;
+                            }
+                            break;
                         }
- break; }
                     }
                 }
                 if (toAdd == null) {
@@ -330,8 +327,8 @@ class ComponentSelector extends JTree {
     private class MyCellRenderer extends DefaultTreeCellRenderer {
         @Override
         public java.awt.Component getTreeCellRendererComponent(JTree tree,
-                Object value, boolean selected, boolean expanded,
-                boolean leaf, int row, boolean hasFocus) {
+                                                               Object value, boolean selected, boolean expanded,
+                                                               boolean leaf, int row, boolean hasFocus) {
             java.awt.Component ret = super.getTreeCellRendererComponent(tree,
                     value, selected, expanded, leaf, row, hasFocus);
             if (ret instanceof JLabel && value instanceof ComponentNode) {

@@ -3,25 +3,25 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.WeakHashMap;
-
 import com.cburch.logisim.data.AbstractAttributeSet;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.gui.hex.HexFrame;
 import com.cburch.logisim.proj.Project;
 
-class RomAttributes extends AbstractAttributeSet {
-    private static List<Attribute<?>> ATTRIBUTES = Arrays.asList(new Attribute<?>[] {
-            Mem.ADDR_ATTR, Mem.DATA_ATTR, Rom.CONTENTS_ATTR
-        });
+import java.util.Arrays;
+import java.util.List;
+import java.util.WeakHashMap;
 
-    private static WeakHashMap<MemContents,RomContentsListener> listenerRegistry
-        = new WeakHashMap<MemContents,RomContentsListener>();
-    private static WeakHashMap<MemContents,HexFrame> windowRegistry
-        = new WeakHashMap<MemContents,HexFrame>();
+class RomAttributes extends AbstractAttributeSet {
+    private static List<Attribute<?>> ATTRIBUTES = Arrays.asList(new Attribute<?>[]{
+            Mem.ADDR_ATTR, Mem.DATA_ATTR, Rom.CONTENTS_ATTR
+    });
+
+    private static WeakHashMap<MemContents, RomContentsListener> listenerRegistry
+            = new WeakHashMap<MemContents, RomContentsListener>();
+    private static WeakHashMap<MemContents, HexFrame> windowRegistry
+            = new WeakHashMap<MemContents, HexFrame>();
 
     static void register(MemContents value, Project proj) {
         if (proj == null || listenerRegistry.containsKey(value)) return;
@@ -31,7 +31,7 @@ class RomAttributes extends AbstractAttributeSet {
     }
 
     static HexFrame getHexFrame(MemContents value, Project proj) {
-        synchronized(windowRegistry) {
+        synchronized (windowRegistry) {
             HexFrame ret = windowRegistry.get(value);
             if (ret == null) {
                 ret = new HexFrame(proj, value);

@@ -3,24 +3,20 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
 
+import java.util.*;
+
 class CircuitMutatorImpl implements CircuitMutator {
     private ArrayList<CircuitChange> log;
-    private HashMap<Circuit,ReplacementMap> replacements;
+    private HashMap<Circuit, ReplacementMap> replacements;
     private HashSet<Circuit> modified;
 
     public CircuitMutatorImpl() {
         log = new ArrayList<CircuitChange>();
-        replacements = new HashMap<Circuit,ReplacementMap>();
+        replacements = new HashMap<Circuit, ReplacementMap>();
         modified = new HashSet<Circuit>();
     }
 
@@ -92,7 +88,7 @@ class CircuitMutatorImpl implements CircuitMutator {
 
     @Override
     public void set(Circuit circuit, Component comp, Attribute<?> attr,
-            Object newValue) {
+                    Object newValue) {
         if (circuit.contains(comp)) {
             modified.add(circuit);
             @SuppressWarnings("unchecked")
@@ -106,7 +102,7 @@ class CircuitMutatorImpl implements CircuitMutator {
 
     @Override
     public void setForCircuit(Circuit circuit, Attribute<?> attr,
-            Object newValue) {
+                              Object newValue) {
         @SuppressWarnings("unchecked")
         Attribute<Object> a = (Attribute<Object>) attr;
         AttributeSet attrs = circuit.getStaticAttributes();

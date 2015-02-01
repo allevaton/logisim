@@ -3,31 +3,26 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreePath;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class SelectionPanel extends LogPanel {
     private class Listener extends MouseAdapter
             implements ActionListener, TreeSelectionListener,
-                ListSelectionListener {
+            ListSelectionListener {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
@@ -48,9 +43,14 @@ class SelectionPanel extends LogPanel {
                 if (sel != null) {
                     int radix = sel.getRadix();
                     switch (radix) {
-                    case 2:  sel.setRadix(10); break;
-                    case 10: sel.setRadix(16); break;
-                    default: sel.setRadix(2);
+                        case 2:
+                            sel.setRadix(10);
+                            break;
+                        case 10:
+                            sel.setRadix(16);
+                            break;
+                        default:
+                            sel.setRadix(2);
                     }
                 }
             } else if (src == moveUp) {
@@ -165,14 +165,17 @@ class SelectionPanel extends LogPanel {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gridbag.setConstraints(explorerPane, gbc); add(explorerPane);
+        gridbag.setConstraints(explorerPane, gbc);
+        add(explorerPane);
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.weightx = 0.0;
-        gridbag.setConstraints(buttons, gbc); add(buttons);
+        gridbag.setConstraints(buttons, gbc);
+        add(buttons);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
-        gridbag.setConstraints(listPane, gbc); add(listPane);
+        gridbag.setConstraints(listPane, gbc);
+        add(listPane);
     }
 
     @Override

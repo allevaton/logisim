@@ -3,14 +3,10 @@
 
 package com.cburch.draw.tools;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-
-import javax.swing.Icon;
-
 import com.cburch.draw.toolbar.ToolbarItem;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class ToolbarToolItem implements ToolbarItem {
     private AbstractTool tool;

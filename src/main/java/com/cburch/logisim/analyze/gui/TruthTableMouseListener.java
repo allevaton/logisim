@@ -3,11 +3,11 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import com.cburch.logisim.analyze.model.Entry;
 import com.cburch.logisim.analyze.model.TruthTable;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 class TruthTableMouseListener implements MouseListener {
     private int cellX;
@@ -29,19 +29,16 @@ class TruthTableMouseListener implements MouseListener {
 
         oldValue = source.getTruthTable().getOutputEntry(cellY, cellX);
         if (oldValue == Entry.ZERO) {
-                newValue = Entry.ONE;
-        }
-
-        else if (oldValue == Entry.ONE) {
+            newValue = Entry.ONE;
+        } else if (oldValue == Entry.ONE) {
             newValue = Entry.DONT_CARE;
-        }
-
-        else {
-                                      newValue = Entry.ZERO;
+        } else {
+            newValue = Entry.ZERO;
         }
 
         source.setEntryProvisional(cellY, cellX, newValue);
     }
+
     @Override
     public void mouseReleased(MouseEvent event) {
         TruthTablePanel source = (TruthTablePanel) event.getSource();
@@ -65,9 +62,14 @@ class TruthTableMouseListener implements MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+    }
+
     @Override
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+    }
+
     @Override
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) {
+    }
 }

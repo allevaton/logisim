@@ -37,7 +37,9 @@ public class JoinedAction extends Action {
     }
 
     @Override
-    public String getName() { return todo[0].getName(); }
+    public String getName() {
+        return todo[0].getName();
+    }
 
     @Override
     public void doIt(Project proj) {

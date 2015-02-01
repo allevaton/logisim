@@ -3,12 +3,9 @@
 
 package com.cburch.logisim.analyze.gui;
 
+import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JRootPane;
 
 class DefaultRegistry {
     private class MyListener implements FocusListener {

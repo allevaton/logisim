@@ -3,9 +3,9 @@
 
 package com.cburch.logisim.data;
 
-import java.awt.Rectangle;
-
 import com.cburch.logisim.util.Cache;
+
+import java.awt.*;
 
 /**
  * Represents an immutable rectangular bounding box. This is analogous to
@@ -50,13 +50,17 @@ public class Bounds {
         this.wid = wid;
         this.ht = ht;
         if (wid < 0) {
-            { x += wid / 2;
+            {
+                x += wid / 2;
+            }
+            wid = 0;
         }
- wid = 0; }
         if (ht < 0) {
-             { y += ht  / 2;
+            {
+                y += ht / 2;
+            }
+            ht = 0;
         }
- ht = 0;  }
     }
 
     @Override
@@ -67,7 +71,7 @@ public class Bounds {
 
         Bounds other = (Bounds) other_obj;
         return x == other.x && y == other.y
-            && wid == other.wid && ht == other.ht;
+                && wid == other.wid && ht == other.ht;
     }
 
     @Override
@@ -126,7 +130,7 @@ public class Bounds {
 
     public boolean contains(int px, int py, int allowedError) {
         return px >= x - allowedError && px < x + wid + allowedError
-            && py >= y - allowedError && py < y + ht + allowedError;
+                && py >= y - allowedError && py < y + ht + allowedError;
     }
 
     public boolean contains(int x, int y, int wid, int ht) {

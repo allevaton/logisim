@@ -3,7 +3,7 @@
 
 package com.cburch.logisim.gui.prefs;
 
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 class PrefOption {
     private Object value;

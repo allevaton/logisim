@@ -61,7 +61,7 @@ class SplitterParameters {
             textAngle = 90;
             halign = m > 0 ? GraphicsUtil.H_RIGHT : GraphicsUtil.H_LEFT;
             valign = m * justify <= 0 ? GraphicsUtil.V_BASELINE : GraphicsUtil.V_TOP;
-        // > or <
+            // > or <
         } else {
             int m = facing == Direction.WEST ? -1 : 1;
             dxEnd0 = m * width;

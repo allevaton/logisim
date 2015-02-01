@@ -3,15 +3,15 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-
 import com.cburch.draw.toolbar.AbstractToolbarModel;
 import com.cburch.draw.toolbar.ToolbarItem;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
-import static com.cburch.logisim.util.LocaleString.*;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class ToolboxToolbarModel extends AbstractToolbarModel
         implements MenuListener.EnabledListener {
@@ -31,12 +31,12 @@ class ToolboxToolbarModel extends AbstractToolbarModel
         itemDelete = new LogisimToolbarItem(menu, "projdel.svg", LogisimMenuBar.REMOVE_CIRCUIT,
                 getFromLocale("projectRemoveCircuitTip"));
 
-        items = UnmodifiableList.decorate(Arrays.asList(new ToolbarItem[] {
+        items = UnmodifiableList.decorate(Arrays.asList(new ToolbarItem[]{
                 itemAdd,
                 itemUp,
                 itemDown,
                 itemDelete,
-            }));
+        }));
 
         menu.addEnabledListener(this);
     }

@@ -3,15 +3,16 @@
 
 package com.cburch.logisim.comp;
 
-import java.awt.Graphics;
-import java.util.List;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
 
+import java.awt.*;
+import java.util.List;
+
 public abstract class AbstractComponent implements Component {
-    protected AbstractComponent() { }
+    protected AbstractComponent() {
+    }
 
     //
     // basic information methods
@@ -29,7 +30,9 @@ public abstract class AbstractComponent implements Component {
     public abstract Bounds getBounds();
 
     @Override
-    public Bounds getBounds(Graphics g) { return getBounds(); }
+    public Bounds getBounds(Graphics g) {
+        return getBounds();
+    }
 
     @Override
     public boolean contains(Location pt) {

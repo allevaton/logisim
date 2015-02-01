@@ -3,36 +3,10 @@
 
 package com.cburch.logisim.gui.generic;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.Icon;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTree;
-import javax.swing.KeyStroke;
-import javax.swing.ToolTipManager;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.SubcircuitFactory;
-import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.comp.ComponentDrawContext;
+import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.gui.main.Canvas;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.proj.Project;
@@ -43,6 +17,21 @@ import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
+
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 @SuppressWarnings("serial")
 public class ProjectExplorer extends JTree implements LocaleListener {
@@ -76,7 +65,7 @@ public class ProjectExplorer extends JTree implements LocaleListener {
 
         @Override
         public void paintIcon(java.awt.Component c, Graphics g,
-                int x, int y) {
+                              int x, int y) {
             // draw halo if appropriate
             if (tool == haloedTool && AppPreferences.ATTRIBUTE_HALO.getBoolean()) {
                 g.setColor(Canvas.HALO_COLOR);
@@ -94,8 +83,8 @@ public class ProjectExplorer extends JTree implements LocaleListener {
             if (circ == proj.getCurrentCircuit()) {
                 int tx = x + 13;
                 int ty = y + 13;
-                int[] xp = { tx - 1, x + 18, x + 20, tx + 1 };
-                int[] yp = { ty + 1, y + 20, y + 18, ty - 1 };
+                int[] xp = {tx - 1, x + 18, x + 20, tx + 1};
+                int[] yp = {ty + 1, y + 20, y + 18, ty - 1};
                 g.setColor(MAGNIFYING_INTERIOR);
                 g.fillOval(x + 5, y + 5, 10, 10);
                 g.setColor(Color.BLACK);
@@ -113,7 +102,7 @@ public class ProjectExplorer extends JTree implements LocaleListener {
                 boolean hasFocus) {
             java.awt.Component ret;
             ret = super.getTreeCellRendererComponent(tree, value,
-                selected, expanded, leaf, row, hasFocus);
+                    selected, expanded, leaf, row, hasFocus);
 
             if (ret instanceof JComponent) {
                 JComponent comp = (JComponent) ret;
@@ -226,23 +215,29 @@ public class ProjectExplorer extends JTree implements LocaleListener {
 
     private class MyListener
             implements MouseListener, TreeSelectionListener,
-                ProjectListener, PropertyChangeListener {
+            ProjectListener, PropertyChangeListener {
         //
         // MouseListener methods
         //
         @Override
-        public void mouseEntered(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) {
+        }
+
         @Override
-        public void mouseExited(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) {
+        }
+
         @Override
         public void mousePressed(MouseEvent e) {
             ProjectExplorer.this.requestFocus();
             checkForPopup(e);
         }
+
         @Override
         public void mouseReleased(MouseEvent e) {
             checkForPopup(e);
         }
+
         private void checkForPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 TreePath path = getPathForLocation(e.getX(), e.getY());
@@ -254,6 +249,7 @@ public class ProjectExplorer extends JTree implements LocaleListener {
                 }
             }
         }
+
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {

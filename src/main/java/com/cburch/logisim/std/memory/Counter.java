@@ -3,27 +3,15 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.StringUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Counter extends InstanceFactory {
     static final AttributeOption ON_GOAL_WRAP = new AttributeOption("wrap",
@@ -39,16 +27,16 @@ public class Counter extends InstanceFactory {
             getFromLocale("counterMaxAttr"));
     static final Attribute<AttributeOption> ATTR_ON_GOAL = Attributes.forOption("ongoal",
             getFromLocale("counterGoalAttr"),
-            new AttributeOption[] { ON_GOAL_WRAP, ON_GOAL_STAY, ON_GOAL_CONT,
-                ON_GOAL_LOAD });
+            new AttributeOption[]{ON_GOAL_WRAP, ON_GOAL_STAY, ON_GOAL_CONT,
+                    ON_GOAL_LOAD});
 
     private static final int DELAY = 8;
     private static final int OUT = 0;
-    private static final int IN  = 1;
-    private static final int CK  = 2;
+    private static final int IN = 1;
+    private static final int CK = 2;
     private static final int CLR = 3;
-    private static final int LD  = 4;
-    private static final int CT  = 5;
+    private static final int LD = 4;
+    private static final int CT = 5;
     private static final int CARRY = 6;
 
     public Counter() {
@@ -60,13 +48,13 @@ public class Counter extends InstanceFactory {
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
 
         Port[] ps = new Port[7];
-        ps[OUT] = new Port(  0,   0, Port.OUTPUT, StdAttr.WIDTH);
-        ps[IN]  = new Port(-30,   0, Port.INPUT, StdAttr.WIDTH);
-        ps[CK]  = new Port(-20,  20, Port.INPUT, 1);
-        ps[CLR] = new Port(-10,  20, Port.INPUT, 1);
-        ps[LD]  = new Port(-30, -10, Port.INPUT, 1);
-        ps[CT]  = new Port(-30,  10, Port.INPUT, 1);
-        ps[CARRY] = new Port(0,  10, Port.OUTPUT, 1);
+        ps[OUT] = new Port(0, 0, Port.OUTPUT, StdAttr.WIDTH);
+        ps[IN] = new Port(-30, 0, Port.INPUT, StdAttr.WIDTH);
+        ps[CK] = new Port(-20, 20, Port.INPUT, 1);
+        ps[CLR] = new Port(-10, 20, Port.INPUT, 1);
+        ps[LD] = new Port(-30, -10, Port.INPUT, 1);
+        ps[CT] = new Port(-30, 10, Port.INPUT, 1);
+        ps[CARRY] = new Port(0, 10, Port.OUTPUT, 1);
         ps[OUT].setToolTip(getFromLocale("counterQTip"));
         ps[IN].setToolTip(getFromLocale("counterDataTip"));
         ps[CK].setToolTip(getFromLocale("counterClockTip"));
@@ -116,7 +104,7 @@ public class Counter extends InstanceFactory {
             int newVal;
             if (!triggered) {
                 newVal = oldVal;
-            // trigger, enable = 1: should increment or decrement
+                // trigger, enable = 1: should increment or decrement
             } else if (ct) {
                 int goal = ld ? 0 : max;
                 if (oldVal == goal) {
@@ -142,7 +130,7 @@ public class Counter extends InstanceFactory {
                 } else {
                     newVal = ld ? oldVal - 1 : oldVal + 1;
                 }
-            // trigger, enable = 0, load = 1: should load
+                // trigger, enable = 0, load = 1: should load
             } else if (ld) {
                 Value in = state.getPort(IN);
                 newVal = in.isFullyDefined() ? in.toIntValue() : 0;
@@ -150,7 +138,7 @@ public class Counter extends InstanceFactory {
                     newVal &= max;
                 }
 
-            // trigger, enable = 0, load = 0: no change
+                // trigger, enable = 0, load = 0: no change
             } else {
                 newVal = oldVal;
             }
@@ -207,7 +195,7 @@ public class Counter extends InstanceFactory {
 
         // draw input and output ports
         if (b == null) {
-            painter.drawPort(IN,  "D", Direction.EAST);
+            painter.drawPort(IN, "D", Direction.EAST);
             painter.drawPort(OUT, "Q", Direction.WEST);
         } else {
             painter.drawPort(IN);

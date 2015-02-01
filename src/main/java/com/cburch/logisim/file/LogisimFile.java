@@ -3,26 +3,6 @@
 
 package com.cburch.logisim.file;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.xml.sax.SAXException;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.SubcircuitFactory;
 import com.cburch.logisim.comp.Component;
@@ -32,7 +12,18 @@ import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.EventSourceWeakSupport;
-import static com.cburch.logisim.util.LocaleString.*;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class LogisimFile extends Library implements LibraryEventSource {
     private static class WritingThread extends Thread {
@@ -60,7 +51,7 @@ public class LogisimFile extends Library implements LibraryEventSource {
     }
 
     private EventSourceWeakSupport<LibraryListener> listeners
-        = new EventSourceWeakSupport<LibraryListener>();
+            = new EventSourceWeakSupport<LibraryListener>();
     private Loader loader;
     private LinkedList<String> messages = new LinkedList<String>();
     private Options options = new Options();
@@ -89,10 +80,14 @@ public class LogisimFile extends Library implements LibraryEventSource {
     // access methods
     //
     @Override
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     @Override
-    public boolean isDirty() { return dirty; }
+    public boolean isDirty() {
+        return dirty;
+    }
 
     public String getMessage() {
         if (messages.size() == 0) {
@@ -406,7 +401,8 @@ public class LogisimFile extends Library implements LibraryEventSource {
             } finally {
                 try {
                     in.close();
-                } catch (Exception t) { }
+                } catch (Exception t) {
+                }
             }
         }
 

@@ -3,10 +3,8 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 class ScrollPanel extends LogPanel {

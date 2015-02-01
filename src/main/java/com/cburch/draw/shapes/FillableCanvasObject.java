@@ -3,12 +3,12 @@
 
 package com.cburch.draw.shapes;
 
-import java.awt.Color;
-
-import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.AbstractCanvasObject;
+import com.cburch.draw.model.CanvasObject;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeOption;
+
+import java.awt.*;
 
 abstract class FillableCanvasObject extends AbstractCanvasObject {
     private AttributeOption paintType;
@@ -30,7 +30,7 @@ abstract class FillableCanvasObject extends AbstractCanvasObject {
             boolean ret = this.paintType == that.paintType;
             if (ret && this.paintType != DrawAttr.PAINT_FILL) {
                 ret = ret && this.strokeWidth == that.strokeWidth
-                    && this.strokeColor.equals(that.strokeColor);
+                        && this.strokeColor.equals(that.strokeColor);
             }
             if (ret && this.paintType != DrawAttr.PAINT_STROKE) {
                 ret = ret && this.fillColor.equals(that.fillColor);

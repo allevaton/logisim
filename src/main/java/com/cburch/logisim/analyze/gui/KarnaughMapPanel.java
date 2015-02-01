@@ -3,44 +3,31 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import com.cburch.logisim.analyze.model.*;
+import com.cburch.logisim.util.GraphicsUtil;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JPanel;
-
-import com.cburch.logisim.analyze.model.AnalyzerModel;
-import com.cburch.logisim.analyze.model.OutputExpressionsEvent;
-import com.cburch.logisim.analyze.model.OutputExpressionsListener;
-import com.cburch.logisim.analyze.model.Entry;
-import com.cburch.logisim.analyze.model.Implicant;
-import com.cburch.logisim.analyze.model.TruthTable;
-import com.cburch.logisim.analyze.model.TruthTableEvent;
-import com.cburch.logisim.analyze.model.TruthTableListener;
-import com.cburch.logisim.analyze.model.VariableList;
-import com.cburch.logisim.util.GraphicsUtil;
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class KarnaughMapPanel extends JPanel implements TruthTablePanel {
     private static final Font HEAD_FONT = new Font("Serif", Font.BOLD, 14);
     private static final Font BODY_FONT = new Font("Serif", Font.PLAIN, 14);
-    private static final Color[] IMP_COLORS = new Color[] {
-        new Color(255, 0, 0, 128),
-        new Color(0, 150, 0, 128),
-        new Color(0, 0, 255, 128),
-        new Color(255, 0, 255, 128),
+    private static final Color[] IMP_COLORS = new Color[]{
+            new Color(255, 0, 0, 128),
+            new Color(0, 150, 0, 128),
+            new Color(0, 0, 255, 128),
+            new Color(255, 0, 255, 128),
     };
 
     private static final int MAX_VARS = 4;
 
-    private static final int[] ROW_VARS = { 0, 0, 1, 1, 2 };
-    private static final int[] COL_VARS = { 0, 1, 1, 2, 2 };
+    private static final int[] ROW_VARS = {0, 0, 1, 1, 2};
+    private static final int[] COL_VARS = {0, 1, 1, 2, 2};
     private static final int CELL_HORZ_SEP = 10;
     private static final int CELL_VERT_SEP = 10;
     private static final int IMP_INSET = 4;
@@ -92,9 +79,7 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
         output = value;
         if (recompute) {
             computePreferredSize();
-        }
-
-        else {
+        } else {
             repaint();
         }
 
@@ -244,7 +229,7 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
             int headX = x + (headHeight - headerWidth) / 2;
             int headY = y + (tableHeight + headHeight + cellHeight + headFm.getAscent()) / 2;
             g.drawString(rowHeader, headX, headY);
-        } else if (g instanceof Graphics2D){
+        } else if (g instanceof Graphics2D) {
             Graphics2D g2 = (Graphics2D) g.create();
             int yoffs = (tableHeight + headHeight + cellHeight + headerWidth) / 2;
             int headX = x + headFm.getAscent();
@@ -262,14 +247,14 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
         for (int i = 0; i < cols; i++) {
             String label = label(i, cols);
             g.drawString(label,
-                x + (i + 1) * cellWidth + (cellWidth - fm.stringWidth(label)) / 2,
-                y + dy);
+                    x + (i + 1) * cellWidth + (cellWidth - fm.stringWidth(label)) / 2,
+                    y + dy);
         }
         for (int i = 0; i < rows; i++) {
             String label = label(i, rows);
             g.drawString(label,
-                x + (cellWidth - fm.stringWidth(label)) / 2,
-                y + (i + 1) * cellHeight + dy);
+                    x + (cellWidth - fm.stringWidth(label)) / 2,
+                    y + (i + 1) * cellHeight + dy);
         }
 
         int outputColumn = table.getOutputIndex(output);
@@ -336,7 +321,7 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
     }
 
     private void paintImplicant(Graphics g, Implicant imp, int x, int y,
-            int rows, int cols) {
+                                int rows, int cols) {
         int rowMax = -1;
         int rowMin = rows;
         int colMax = -1;
@@ -386,23 +371,23 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
                 int h = cellHeight - IMP_INSET;
                 int x1 = x + 3 * cellWidth + IMP_INSET;
                 int y1 = y + 3 * cellHeight + IMP_INSET;
-                g.fillRoundRect(x,  y,  w, h, d, d);
-                g.fillRoundRect(x1, y,  w, h, d, d);
-                g.fillRoundRect(x,  y1, w, h, d, d);
+                g.fillRoundRect(x, y, w, h, d, d);
+                g.fillRoundRect(x1, y, w, h, d, d);
+                g.fillRoundRect(x, y1, w, h, d, d);
                 g.fillRoundRect(x1, y1, w, h, d, d);
-            // first and last columns
+                // first and last columns
             } else if (oneRowFound) {
                 int w = cellWidth - IMP_INSET;
                 int h = 4 * cellHeight - 2 * IMP_INSET;
                 int x1 = x + 3 * cellWidth + IMP_INSET;
-                g.fillRoundRect(x,  y + IMP_INSET, w, h, d, d);
+                g.fillRoundRect(x, y + IMP_INSET, w, h, d, d);
                 g.fillRoundRect(x1, y + IMP_INSET, w, h, d, d);
-            // first and last rows
+                // first and last rows
             } else {
                 int w = 4 * cellWidth - 2 * IMP_INSET;
                 int h = cellHeight - IMP_INSET;
                 int y1 = y + 3 * cellHeight + IMP_INSET;
-                g.fillRoundRect(x + IMP_INSET, y,  w, h, d, d);
+                g.fillRoundRect(x + IMP_INSET, y, w, h, d, d);
                 g.fillRoundRect(x + IMP_INSET, y1, w, h, d, d);
             }
         } else if (numCols == 4) {
@@ -435,7 +420,7 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
             g.fillArc(x1, y0, d, d, 180, 90);
             g.fillArc(x1, y1 - d, d, d, 180, -90);
             */
-        // numRows == 4
+            // numRows == 4
         } else {
             int left = x + colMin * cellWidth + IMP_INSET;
             int w = numCols * cellWidth - 2 * IMP_INSET;
@@ -463,15 +448,21 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
 
     private String label(int row, int rows) {
         switch (rows) {
-        case 2: return "" + row;
-        case 4:
-            switch (row) {
-            case 0: return "00";
-            case 1: return "01";
-            case 2: return "11";
-            case 3: return "10";
-            }
-        default: return "";
+            case 2:
+                return "" + row;
+            case 4:
+                switch (row) {
+                    case 0:
+                        return "00";
+                    case 1:
+                        return "01";
+                    case 2:
+                        return "11";
+                    case 3:
+                        return "10";
+                }
+            default:
+                return "";
         }
     }
 
@@ -482,9 +473,12 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
     private int toRow(int row, int rows) {
         if (rows == 4) {
             switch (row) {
-            case 2: return 3;
-            case 3: return 2;
-            default: return row;
+                case 2:
+                    return 3;
+                case 3:
+                    return 2;
+                default:
+                    return row;
             }
         } else {
             return row;
@@ -494,18 +488,24 @@ class KarnaughMapPanel extends JPanel implements TruthTablePanel {
     private int getRow(int tableRow, int rows, int cols) {
         int ret = tableRow / cols;
         switch (ret) {
-        case 2: return 3;
-        case 3: return 2;
-        default: return ret;
+            case 2:
+                return 3;
+            case 3:
+                return 2;
+            default:
+                return ret;
         }
     }
 
     private int getCol(int tableRow, int rows, int cols) {
         int ret = tableRow % cols;
         switch (ret) {
-        case 2: return 3;
-        case 3: return 2;
-        default: return ret;
+            case 2:
+                return 3;
+            case 3:
+                return 2;
+            default:
+                return ret;
         }
     }
 

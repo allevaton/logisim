@@ -3,20 +3,6 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.Simulator;
 import com.cburch.logisim.circuit.SimulatorEvent;
@@ -31,7 +17,16 @@ import com.cburch.logisim.proj.ProjectListener;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
 import com.cburch.logisim.util.WindowMenuItemManager;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class LogFrame extends LFrame {
@@ -73,7 +68,7 @@ public class LogFrame extends LFrame {
 
     private class MyListener
             implements ActionListener, ProjectListener, LibraryListener,
-                SimulatorListener, LocaleListener {
+            SimulatorListener, LocaleListener {
         @Override
         public void actionPerformed(ActionEvent event) {
             Object src = event.getSource();
@@ -121,16 +116,18 @@ public class LogFrame extends LFrame {
         }
 
         @Override
-        public void tickCompleted(SimulatorEvent e) { }
+        public void tickCompleted(SimulatorEvent e) {
+        }
 
         @Override
-        public void simulatorStateChanged(SimulatorEvent e) { }
+        public void simulatorStateChanged(SimulatorEvent e) {
+        }
     }
 
     private Project project;
     private Simulator curSimulator = null;
     private Model curModel;
-    private Map<CircuitState,Model> modelMap = new HashMap<CircuitState,Model>();
+    private Map<CircuitState, Model> modelMap = new HashMap<CircuitState, Model>();
     private MyListener myListener = new MyListener();
     private WindowMenuManager windowManager;
 
@@ -147,7 +144,7 @@ public class LogFrame extends LFrame {
         setJMenuBar(new LogisimMenuBar(this, project));
         setSimulator(project.getSimulator(), project.getCircuitState());
 
-        panels = new LogPanel[] {
+        panels = new LogPanel[]{
                 new SelectionPanel(this),
                 new ScrollPanel(this),
                 new FilePanel(this),

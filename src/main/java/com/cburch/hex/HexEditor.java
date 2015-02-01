@@ -3,16 +3,8 @@
 
 package com.cburch.hex;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-
-import javax.swing.JComponent;
-import javax.swing.Scrollable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * HexEditor is a GUI component for editing Hex values.
@@ -27,12 +19,13 @@ public class HexEditor extends JComponent implements Scrollable {
             measures.recompute();
             repaint();
         }
+
         @Override
         public void bytesChanged(HexModel source, long start, long numBytes,
-                int[] oldValues) {
+                                 int[] oldValues) {
             repaint(0, measures.toY(start),
                     getWidth(), measures.toY(start + numBytes) +
-                        measures.getCellHeight());
+                            measures.getCellHeight());
         }
     }
 
@@ -44,6 +37,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Constructs a hex editor object, based on a model
+     *
      * @param model The model to base the editor on
      */
     public HexEditor(HexModel model) {
@@ -54,7 +48,7 @@ public class HexEditor extends JComponent implements Scrollable {
         this.highlighter = new Highlighter(this);
 
         // Nick A: change the font here
-        this.setFont( new Font( "Dialog", Font.PLAIN, 16 ) );
+        this.setFont(new Font("Dialog", Font.PLAIN, 16));
 
         setOpaque(true);
         setBackground(Color.WHITE);
@@ -65,12 +59,17 @@ public class HexEditor extends JComponent implements Scrollable {
         measures.recompute();
     }
 
-    Measures getMeasures() { return measures; }
+    Measures getMeasures() {
+        return measures;
+    }
 
-    Highlighter getHighlighter() { return highlighter; }
+    Highlighter getHighlighter() {
+        return highlighter;
+    }
 
     /**
      * Return the editor's base model
+     *
      * @return the model
      */
     public HexModel getModel() {
@@ -79,6 +78,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Get the caret object (cursor)
+     *
      * @return the caret object
      */
     public Caret getCaret() {
@@ -87,8 +87,9 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Extends the current highlighted regions.
+     *
      * @param start where to begin
-     * @param end where to end
+     * @param end   where to end
      * @param color the color of the highlight
      * @return the highlighted region's handle
      */
@@ -98,6 +99,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Removes the highlighted region.
+     *
      * @param tag the highlighted object
      */
     public void removeHighlight(Object tag) {
@@ -106,6 +108,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Sets the model, if one doesn't exist or wants to be changed
+     *
      * @param value the new model
      */
     public void setModel(HexModel value) {
@@ -129,8 +132,9 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Scroll to the visible address (location of the caret).
+     *
      * @param start where to begin
-     * @param end where to end
+     * @param end   where to end
      */
     public void scrollAddressToVisible(int start, int end) {
         if (start < 0 || end < 0) {
@@ -151,6 +155,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Sets the current font and updates metrics
+     *
      * @param value the new font object
      */
     @Override
@@ -161,9 +166,10 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Sets the bounds of the hex fields.
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param width the width to adjust the metrics by
+     *
+     * @param x      the x coordinate
+     * @param y      the y coordinate
+     * @param width  the width to adjust the metrics by
      * @param height the height to adjust the metrics by
      */
     @Override
@@ -174,6 +180,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Repaints the objects
+     *
      * @param g the graphics handle
      */
     @Override
@@ -197,9 +204,9 @@ public class HexEditor extends JComponent implements Scrollable {
         long xaddr1 = measures.toAddress(getWidth(), clip.y + clip.height) + 1;
         highlighter.paint(g, xaddr0, xaddr1);
 
-        int newSize = (int)(Math.log10(clip.width*clip.height)*4);
+        int newSize = (int) (Math.log10(clip.width * clip.height) * 4);
 
-        this.setFont( new Font( "Dialog", Font.PLAIN, newSize ) );
+        this.setFont(new Font("Dialog", Font.PLAIN, newSize));
 
         g.setColor(getForeground());
         Font baseFont = g.getFont();
@@ -216,13 +223,13 @@ public class HexEditor extends JComponent implements Scrollable {
         int cellWidth = measures.getCellWidth();
         int cellChars = measures.getCellChars();
 
-        for(long a = xaddr0; a < xaddr1; a += cols, baseY += dy) {
+        for (long a = xaddr0; a < xaddr1; a += cols, baseY += dy) {
             String label = toHex(a, labelChars);
             g.setFont(labelFont);
             g.drawString(label, baseX - labelWidth + (labelWidth - labelFm.stringWidth(label)) / 2, baseY);
             g.setFont(baseFont);
             long b = a;
-            for(int j = 0; j < cols; j++, b++) {
+            for (int j = 0; j < cols; j++, b++) {
                 if (b >= addr0 && b <= addr1) {
                     String val = toHex(model.get(b), cellChars);
                     int x = measures.toX(b) + (cellWidth - baseFm.stringWidth(val)) / 2;
@@ -236,6 +243,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Convert a value to hex
+     *
      * @param value the long value
      * @param chars the characters value
      * @return the converted hex string
@@ -245,7 +253,7 @@ public class HexEditor extends JComponent implements Scrollable {
         int retLen = ret.length();
         if (retLen < chars) {
             ret = "0" + ret;
-            for(int i = retLen + 1; i < chars; i++) {
+            for (int i = retLen + 1; i < chars; i++) {
                 ret = "0" + ret;
             }
             return ret;
@@ -262,6 +270,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Is there a selection?
+     *
      * @return if it exists
      */
     public boolean selectionExists() {
@@ -287,7 +296,9 @@ public class HexEditor extends JComponent implements Scrollable {
         }
 
         if (p0 > p1) {
-            long t = p0; p0 = p1; p1 = t;
+            long t = p0;
+            p0 = p1;
+            p1 = t;
         }
         model.fill(p0, p1 - p0 + 1, 0);
     }
@@ -298,6 +309,7 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Returns the preferred size of the viewport
+     *
      * @return the dimensions object
      */
     @Override
@@ -307,11 +319,12 @@ public class HexEditor extends JComponent implements Scrollable {
 
     /**
      * Get the increment in which to scroll
+     *
      * @return the scrolling increment
      */
     @Override
     public int getScrollableUnitIncrement(Rectangle vis,
-            int orientation, int direction) {
+                                          int orientation, int direction) {
         if (orientation == SwingConstants.VERTICAL) {
             int ret = measures.getCellHeight();
             if (ret < 1) {
@@ -333,7 +346,7 @@ public class HexEditor extends JComponent implements Scrollable {
      */
     @Override
     public int getScrollableBlockIncrement(Rectangle vis,
-            int orientation, int direction) {
+                                           int orientation, int direction) {
         if (orientation == SwingConstants.VERTICAL) {
             int height = measures.getCellHeight();
             if (height < 1) {

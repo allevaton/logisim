@@ -3,29 +3,18 @@
 
 package com.cburch.logisim.circuit;
 
-import javax.swing.JPopupMenu;
-
-import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.circuit.CircuitWires;
-import com.cburch.logisim.comp.ComponentEvent;
-import com.cburch.logisim.comp.ComponentFactory;
-import com.cburch.logisim.comp.ComponentDrawContext;
-import com.cburch.logisim.comp.ComponentUserEvent;
-import com.cburch.logisim.comp.EndData;
-import com.cburch.logisim.comp.ManagedComponent;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
+import com.cburch.logisim.comp.*;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.MenuExtender;
 import com.cburch.logisim.tools.ToolTipMaker;
 import com.cburch.logisim.tools.WireRepair;
 import com.cburch.logisim.tools.WireRepairData;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Splitter extends ManagedComponent
         implements WireRepair, ToolTipMaker, MenuExtender, AttributeListener {
@@ -63,10 +52,10 @@ public class Splitter extends ManagedComponent
             Direction facing = getAttributeSet().getValue(StdAttr.FACING);
             if (facing == Direction.EAST || facing == Direction.WEST) {
                 return Math.abs(loc.getX() - myLoc.getX()) > 5
-                    || loc.manhattanDistanceTo(myLoc) <= 5;
+                        || loc.manhattanDistanceTo(myLoc) <= 5;
             } else {
                 return Math.abs(loc.getY() - myLoc.getY()) > 5
-                    || loc.manhattanDistanceTo(myLoc) <= 5;
+                        || loc.manhattanDistanceTo(myLoc) <= 5;
             }
         } else {
             return false;
@@ -142,9 +131,7 @@ public class Splitter extends ManagedComponent
 
         if (key == MenuExtender.class) {
             return this;
-        }
-
-        else {
+        } else {
             return super.getFeature(key);
         }
 
@@ -167,7 +154,7 @@ public class Splitter extends ManagedComponent
 
         if (end == 0) {
             return getFromLocale("splitterCombinedTip");
-        } else if (end > 0){
+        } else if (end > 0) {
             int bits = 0;
             StringBuilder buf = new StringBuilder();
             SplitterAttributes attrs = (SplitterAttributes) getAttributeSet();
@@ -194,15 +181,22 @@ public class Splitter extends ManagedComponent
 
             String base;
             switch (bits) {
-            case 0:  base = "splitterSplit0Tip"; break;
-            case 1:  base = "splitterSplit1Tip"; break;
-            default: base = "splitterSplitManyTip"; break;
+                case 0:
+                    base = "splitterSplit0Tip";
+                    break;
+                case 1:
+                    base = "splitterSplit1Tip";
+                    break;
+                default:
+                    base = "splitterSplitManyTip";
+                    break;
             }
             return getFromLocale(base, buf.toString());
         } else {
             return null;
         }
     }
+
     private static void appendBuf(StringBuilder buf, int start, int end) {
         if (buf.length() > 0) {
             buf.append(",");
@@ -226,7 +220,8 @@ public class Splitter extends ManagedComponent
     // AttributeListener methods
     //
     @Override
-    public void attributeListChanged(AttributeEvent e) { }
+    public void attributeListChanged(AttributeEvent e) {
+    }
 
     @Override
     public void attributeValueChanged(AttributeEvent e) {

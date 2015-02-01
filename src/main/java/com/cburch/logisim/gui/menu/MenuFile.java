@@ -3,21 +3,20 @@
 
 package com.cburch.logisim.gui.menu;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-
 import com.cburch.logisim.gui.main.Frame;
 import com.cburch.logisim.gui.opts.OptionsFrame;
 import com.cburch.logisim.gui.prefs.PreferencesFrame;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.proj.ProjectActions;
 import com.cburch.logisim.util.MacCompatibility;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class MenuFile extends Menu implements ActionListener {
@@ -40,17 +39,17 @@ class MenuFile extends Menu implements ActionListener {
         int menuMask = getToolkit().getMenuShortcutKeyMask();
 
         newi.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_N, menuMask));
+                KeyEvent.VK_N, menuMask));
         open.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_O, menuMask));
+                KeyEvent.VK_O, menuMask));
         close.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_W, menuMask | InputEvent.SHIFT_MASK));
+                KeyEvent.VK_W, menuMask | InputEvent.SHIFT_MASK));
         save.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_S, menuMask));
+                KeyEvent.VK_S, menuMask));
         saveAs.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_S, menuMask | InputEvent.SHIFT_MASK));
+                KeyEvent.VK_S, menuMask | InputEvent.SHIFT_MASK));
         print.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_P, menuMask));
+                KeyEvent.VK_P, menuMask));
         quit.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Q, menuMask));
 

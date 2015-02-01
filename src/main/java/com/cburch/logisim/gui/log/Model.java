@@ -3,20 +3,19 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import javax.swing.JFrame;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.data.Value;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 
+import javax.swing.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+
 class Model {
     private EventSourceWeakSupport<ModelListener> listeners;
     private Selection selection;
-    private HashMap<SelectionItem,ValueLog> log;
+    private HashMap<SelectionItem, ValueLog> log;
     private boolean fileEnabled = false;
     private File file = null;
     private boolean fileHeader = true;
@@ -26,15 +25,20 @@ class Model {
     public Model(CircuitState circuitState) {
         listeners = new EventSourceWeakSupport<ModelListener>();
         selection = new Selection(circuitState, this);
-        log = new HashMap<SelectionItem,ValueLog>();
+        log = new HashMap<SelectionItem, ValueLog>();
     }
 
     public boolean isSelected() {
         return selected;
     }
 
-    public void addModelListener(ModelListener l) { listeners.add(l); }
-    public void removeModelListener(ModelListener l) { listeners.remove(l); }
+    public void addModelListener(ModelListener l) {
+        listeners.add(l);
+    }
+
+    public void removeModelListener(ModelListener l) {
+        listeners.remove(l);
+    }
 
     public CircuitState getCircuitState() {
         return selection.getCircuitState();

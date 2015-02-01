@@ -3,45 +3,35 @@
 
 package com.cburch.logisim.std.arith;
 
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class BitFinder extends InstanceFactory {
     static final AttributeOption LOW_ONE
-        = new AttributeOption("low1", getFromLocale("bitFinderLowOption", "1"));
+            = new AttributeOption("low1", getFromLocale("bitFinderLowOption", "1"));
     static final AttributeOption HIGH_ONE
-    = new AttributeOption("high1", getFromLocale("bitFinderHighOption", "1"));
+            = new AttributeOption("high1", getFromLocale("bitFinderHighOption", "1"));
     static final AttributeOption LOW_ZERO
-        = new AttributeOption("low0", getFromLocale("bitFinderLowOption", "0"));
+            = new AttributeOption("low0", getFromLocale("bitFinderLowOption", "0"));
     static final AttributeOption HIGH_ZERO
-        = new AttributeOption("high0", getFromLocale("bitFinderHighOption", "0"));
+            = new AttributeOption("high0", getFromLocale("bitFinderHighOption", "0"));
     static final Attribute<AttributeOption> TYPE
-        = Attributes.forOption("type", getFromLocale("bitFinderTypeAttr"),
-                new AttributeOption[] { LOW_ONE, HIGH_ONE, LOW_ZERO, HIGH_ZERO });
+            = Attributes.forOption("type", getFromLocale("bitFinderTypeAttr"),
+            new AttributeOption[]{LOW_ONE, HIGH_ONE, LOW_ZERO, HIGH_ZERO});
 
     public BitFinder() {
         super("BitFinder", getFromLocale("bitFinderComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.WIDTH, TYPE
-            }, new Object[] {
+        }, new Object[]{
                 BitWidth.create(8), LOW_ONE
-            });
+        });
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
         setIconName("bitfindr.svg");
     }
@@ -71,9 +61,9 @@ public class BitFinder extends InstanceFactory {
         int outWidth = computeOutputBits(inWidth.getWidth() - 1);
 
         Port[] ps = new Port[3];
-        ps[0] = new Port(-20,  20, Port.OUTPUT, BitWidth.ONE);
-        ps[1] = new Port(  0,   0, Port.OUTPUT, BitWidth.create(outWidth));
-        ps[2] = new Port(-40,   0, Port.INPUT,  inWidth);
+        ps[0] = new Port(-20, 20, Port.OUTPUT, BitWidth.ONE);
+        ps[1] = new Port(0, 0, Port.OUTPUT, BitWidth.create(outWidth));
+        ps[2] = new Port(-40, 0, Port.INPUT, inWidth);
 
         Object type = instance.getAttributeValue(TYPE);
         if (type == HIGH_ZERO) {
@@ -110,16 +100,20 @@ public class BitFinder extends InstanceFactory {
         int i;
         if (type == HIGH_ZERO) {
             want = Value.FALSE;
-            for (i = bits.length - 1; i >= 0 && bits[i] == Value.TRUE; i--) { }
+            for (i = bits.length - 1; i >= 0 && bits[i] == Value.TRUE; i--) {
+            }
         } else if (type == LOW_ZERO) {
             want = Value.FALSE;
-            for (i = 0; i < bits.length && bits[i] == Value.TRUE; i++) { }
+            for (i = 0; i < bits.length && bits[i] == Value.TRUE; i++) {
+            }
         } else if (type == HIGH_ONE) {
             want = Value.TRUE;
-            for (i = bits.length - 1; i >= 0 && bits[i] == Value.FALSE; i--) { }
+            for (i = bits.length - 1; i >= 0 && bits[i] == Value.FALSE; i--) {
+            }
         } else {
             want = Value.TRUE;
-            for (i = 0; i < bits.length && bits[i] == Value.FALSE; i++) { }
+            for (i = 0; i < bits.length && bits[i] == Value.FALSE; i++) {
+            }
         }
 
         Value present;

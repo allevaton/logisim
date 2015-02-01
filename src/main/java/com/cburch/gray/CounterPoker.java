@@ -3,11 +3,6 @@
 
 package com.cburch.gray;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Value;
@@ -16,25 +11,35 @@ import com.cburch.logisim.instance.InstancePoker;
 import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.instance.StdAttr;
 
-/** When the user clicks a counter using the Poke Tool, a CounterPoker object
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+/**
+ * When the user clicks a counter using the Poke Tool, a CounterPoker object
  * is created, and that object will handle all user events. Note that
  * CounterPoker is a class specific to GrayCounter, and that it must be a
- * subclass of InstancePoker in the com.cburch.logisim.instance package. */
+ * subclass of InstancePoker in the com.cburch.logisim.instance package.
+ */
 public class CounterPoker extends InstancePoker {
-    public CounterPoker() { }
+    public CounterPoker() {
+    }
 
-    /** Determines whether the location the mouse was pressed should result
+    /**
+     * Determines whether the location the mouse was pressed should result
      * in initiating a poke.
      */
     @Override
     public boolean init(InstanceState state, MouseEvent e) {
         return state.getInstance().getBounds().contains(e.getX(), e.getY());
-            // Anywhere in the main rectangle initiates the poke. The user might
-            // have clicked within a label, but that will be outside the bounds.
+        // Anywhere in the main rectangle initiates the poke. The user might
+        // have clicked within a label, but that will be outside the bounds.
     }
 
-    /** Draws an indicator that the caret is being selected. Here, we'll draw
-     * a red rectangle around the value. */
+    /**
+     * Draws an indicator that the caret is being selected. Here, we'll draw
+     * a red rectangle around the value.
+     */
     @Override
     public void paint(InstancePainter painter) {
         Bounds bds = painter.getBounds();
@@ -52,7 +57,9 @@ public class CounterPoker extends InstancePoker {
         g.setColor(Color.BLACK);
     }
 
-    /** Processes a key by just adding it onto the end of the current value. */
+    /**
+     * Processes a key by just adding it onto the end of the current value.
+     */
     @Override
     public void keyTyped(InstanceState state, KeyEvent e) {
         // convert it to a hex digit; if it isn't a hex digit, abort.

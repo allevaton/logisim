@@ -3,20 +3,22 @@
 
 package com.cburch.logisim;
 
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles everything involving Logisim's version number
- * @author Carl Burch, Ryan Steinmetz
  *
+ * @author Carl Burch, Ryan Steinmetz
  */
 public class LogisimVersion implements Comparable<LogisimVersion> {
     private static final int FINAL_REVISION = Integer.MAX_VALUE / 4;
 
-    private static final Logger logger = LoggerFactory.getLogger( LogisimVersion.class );
+    private static final Logger logger = LoggerFactory.getLogger(LogisimVersion.class);
 
     /**
      * Creates a new LogisimVersion object without a revision number
+     *
      * @param major
      * @param minor
      * @param release
@@ -28,6 +30,7 @@ public class LogisimVersion implements Comparable<LogisimVersion> {
 
     /**
      * Creates a new LogisimVersion object with a revision number
+     *
      * @param major
      * @param minor
      * @param release
@@ -41,6 +44,7 @@ public class LogisimVersion implements Comparable<LogisimVersion> {
     /**
      * Breaks up a single string containing the version number into several integers.
      * Uses "." as delimiter.
+     *
      * @param versionString
      * @return a LogisimVersion object
      */
@@ -68,7 +72,7 @@ public class LogisimVersion implements Comparable<LogisimVersion> {
             }
 
         } catch (NumberFormatException e) {
-            logger.warn( "Something went wrong when parsing the version string." );
+            logger.warn("Something went wrong when parsing the version string.");
         }
 
         return new LogisimVersion(major, minor, release, revision);
@@ -82,6 +86,7 @@ public class LogisimVersion implements Comparable<LogisimVersion> {
 
     /**
      * Logisim version number constructor. Versions have the form: major.minor.release.revision
+     *
      * @param major
      * @param minor
      * @param release
@@ -95,20 +100,20 @@ public class LogisimVersion implements Comparable<LogisimVersion> {
         this.repr = null;
     }
 
-	@Override
-	public int hashCode() {
-		return this.major
-			 + this.minor
-			 + this.release
-			 + this.revision;
-	}
+    @Override
+    public int hashCode() {
+        return this.major
+                + this.minor
+                + this.release
+                + this.revision;
+    }
 
     @Override
     public boolean equals(Object other) {
         if (other instanceof LogisimVersion) {
             LogisimVersion o = (LogisimVersion) other;
             return this.major == o.major && this.minor == o.minor
-                && this.release == o.release && this.revision == o.revision;
+                    && this.release == o.release && this.revision == o.revision;
         } else {
             return false;
         }
@@ -136,6 +141,7 @@ public class LogisimVersion implements Comparable<LogisimVersion> {
 
     /**
      * converts version number into a string
+     *
      * @return ret
      */
     @Override

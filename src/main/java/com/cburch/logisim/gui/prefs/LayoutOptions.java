@@ -3,12 +3,13 @@
 
 package com.cburch.logisim.gui.prefs;
 
-import javax.swing.JPanel;
-
 import com.cburch.logisim.circuit.RadixOption;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.util.TableLayout;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class LayoutOptions extends OptionsPanel {
@@ -20,7 +21,7 @@ class LayoutOptions extends OptionsPanel {
     public LayoutOptions(PreferencesFrame window) {
         super(window);
 
-        checks = new PrefBoolean[] {
+        checks = new PrefBoolean[]{
                 new PrefBoolean(AppPreferences.PRINTER_VIEW,
                         getFromLocale("layoutPrinterView")),
                 new PrefBoolean(AppPreferences.ATTRIBUTE_HALO,
@@ -31,7 +32,7 @@ class LayoutOptions extends OptionsPanel {
                         getFromLocale("layoutMoveKeepConnect")),
                 new PrefBoolean(AppPreferences.ADD_SHOW_GHOSTS,
                         getFromLocale("layoutAddShowGhosts")),
-            };
+        };
 
         for (int i = 0; i < 2; i++) {
             RadixOption[] opts = RadixOption.OPTIONS;
@@ -49,11 +50,11 @@ class LayoutOptions extends OptionsPanel {
         }
         afterAdd = new PrefOptionList(AppPreferences.ADD_AFTER,
                 getFromLocale("layoutAddAfter"),
-                new PrefOption[] {
-                    new PrefOption(AppPreferences.ADD_AFTER_UNCHANGED,
-                            getFromLocale("layoutAddAfterUnchanged")),
-                    new PrefOption(AppPreferences.ADD_AFTER_EDIT,
-                            getFromLocale("layoutAddAfterEdit")) });
+                new PrefOption[]{
+                        new PrefOption(AppPreferences.ADD_AFTER_UNCHANGED,
+                                getFromLocale("layoutAddAfterUnchanged")),
+                        new PrefOption(AppPreferences.ADD_AFTER_EDIT,
+                                getFromLocale("layoutAddAfterEdit"))});
 
         JPanel panel = new JPanel(new TableLayout(2));
         panel.add(afterAdd.getJLabel());

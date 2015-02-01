@@ -3,15 +3,6 @@
 
 package com.cburch.logisim.circuit.appear;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 import com.cburch.draw.model.CanvasModelEvent;
 import com.cburch.draw.model.CanvasModelListener;
 import com.cburch.draw.model.CanvasObject;
@@ -22,6 +13,10 @@ import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.util.EventSourceWeakSupport;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class CircuitAppearance extends Drawing {
     private class MyListener implements CanvasModelListener {
@@ -74,7 +69,7 @@ public class CircuitAppearance extends Drawing {
     }
 
     void replaceAutomatically(List<AppearancePort> removes,
-            List<AppearancePort> adds) {
+                              List<AppearancePort> adds) {
         // this should be called only when substituting ports via PortManager
         boolean oldSuppress = suppressRecompute;
         try {

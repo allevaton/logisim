@@ -3,20 +3,6 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.swing.JViewport;
-import javax.swing.Popup;
-import javax.swing.PopupFactory;
-
 import com.cburch.draw.canvas.SelectionEvent;
 import com.cburch.draw.canvas.SelectionListener;
 import com.cburch.draw.model.CanvasObject;
@@ -25,6 +11,16 @@ import com.cburch.logisim.circuit.appear.AppearancePort;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.gui.generic.CanvasPane;
 import com.cburch.logisim.instance.Instance;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 class LayoutPopupManager implements SelectionListener, MouseListener, MouseMotionListener {
     private CanvasPane canvasPane;
@@ -135,7 +131,8 @@ class LayoutPopupManager implements SelectionListener, MouseListener, MouseMotio
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+    }
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -162,7 +159,8 @@ class LayoutPopupManager implements SelectionListener, MouseListener, MouseMotio
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {
+    }
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -173,7 +171,8 @@ class LayoutPopupManager implements SelectionListener, MouseListener, MouseMotio
     }
 
     @Override
-    public void mouseMoved(MouseEvent arg0) { }
+    public void mouseMoved(MouseEvent arg0) {
+    }
 
 
 }

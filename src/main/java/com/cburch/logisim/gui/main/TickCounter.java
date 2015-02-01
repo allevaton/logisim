@@ -6,7 +6,8 @@ package com.cburch.logisim.gui.main;
 import com.cburch.logisim.circuit.Simulator;
 import com.cburch.logisim.circuit.SimulatorEvent;
 import com.cburch.logisim.circuit.SimulatorListener;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class TickCounter implements SimulatorListener {
     private static final int QUEUE_LENGTH = 1000;
@@ -64,7 +65,7 @@ class TickCounter implements SimulatorListener {
                 }
                 curSize++;
                 queueSize = curSize;
-            // new sample replaces oldest value in queue
+                // new sample replaces oldest value in queue
             } else {
                 end = queueStart;
                 if (end + 1 >= maxSize) {
@@ -184,7 +185,7 @@ class TickCounter implements SimulatorListener {
         // nothing after decimal point
         if (i >= 0) {
             return "" + (int) Math.round(a * Math.round(bv));
-        // keep some after decimal point
+            // keep some after decimal point
         } else {
             return String.format("%." + (-i) + "f", Double.valueOf(a * bv));
         }

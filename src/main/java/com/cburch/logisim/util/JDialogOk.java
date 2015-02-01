@@ -3,20 +3,14 @@
 
 package com.cburch.logisim.util;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Frame;
-import java.awt.Dialog;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.Box;
-import javax.swing.BorderFactory;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public abstract class JDialogOk extends JDialog {
@@ -76,10 +70,13 @@ public abstract class JDialogOk extends JDialog {
     }
 
     @Override
-    public Container getContentPane() { return contents; }
+    public Container getContentPane() {
+        return contents;
+    }
 
     public abstract void okClicked();
 
-    public void cancelClicked() { }
+    public void cancelClicked() {
+    }
 
 }

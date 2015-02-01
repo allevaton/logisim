@@ -3,10 +3,6 @@
 
 package com.cburch.logisim.instance;
 
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.comp.ComponentDrawContext;
 import com.cburch.logisim.comp.ComponentUserEvent;
@@ -15,6 +11,10 @@ import com.cburch.logisim.gui.main.Canvas;
 import com.cburch.logisim.tools.AbstractCaret;
 import com.cburch.logisim.tools.Caret;
 import com.cburch.logisim.tools.Pokable;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 class InstancePokerAdapter extends AbstractCaret implements Pokable {
     private InstanceComponent comp;
@@ -74,57 +74,71 @@ class InstancePokerAdapter extends AbstractCaret implements Pokable {
     @Override
     public void mousePressed(MouseEvent e) {
         if (poker != null) {
-            { poker.mousePressed(state, e);
+            {
+                poker.mousePressed(state, e);
+            }
+            checkCurrent();
         }
- checkCurrent(); }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         if (poker != null) {
-            { poker.mouseDragged(state, e);
+            {
+                poker.mouseDragged(state, e);
+            }
+            checkCurrent();
         }
- checkCurrent(); }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         if (poker != null) {
-            { poker.mouseReleased(state, e);
+            {
+                poker.mouseReleased(state, e);
+            }
+            checkCurrent();
         }
- checkCurrent(); }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if (poker != null) {
-            { poker.keyPressed(state, e);
+            {
+                poker.keyPressed(state, e);
+            }
+            checkCurrent();
         }
- checkCurrent(); }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (poker != null) {
-            { poker.keyReleased(state, e);
+            {
+                poker.keyReleased(state, e);
+            }
+            checkCurrent();
         }
- checkCurrent(); }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
         if (poker != null) {
-            { poker.keyTyped(state, e);
+            {
+                poker.keyTyped(state, e);
+            }
+            checkCurrent();
         }
- checkCurrent(); }
     }
 
     @Override
     public void stopEditing() {
         if (poker != null) {
-            { poker.stopEditing(state);
+            {
+                poker.stopEditing(state);
+            }
+            checkCurrent();
         }
- checkCurrent(); }
     }
 
     @Override

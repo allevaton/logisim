@@ -3,11 +3,10 @@
 
 package com.cburch.logisim.gui.generic;
 
+import com.cburch.logisim.prefs.PrefMonitor;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
-import com.cburch.logisim.gui.generic.ZoomModel;
-import com.cburch.logisim.prefs.PrefMonitor;
 
 public class BasicZoomModel implements ZoomModel {
     private double[] zoomOptions;
@@ -17,7 +16,7 @@ public class BasicZoomModel implements ZoomModel {
     private boolean showGrid;
 
     public BasicZoomModel(PrefMonitor<Boolean> gridPref,
-            PrefMonitor<Double> zoomPref, double[] zoomOpts) {
+                          PrefMonitor<Double> zoomPref, double[] zoomOpts) {
         zoomOptions = zoomOpts;
         support = new PropertyChangeSupport(this);
         zoomFactor = 1.0;
@@ -34,7 +33,7 @@ public class BasicZoomModel implements ZoomModel {
 
     @Override
     public void removePropertyChangeListener(String prop,
-            PropertyChangeListener l) {
+                                             PropertyChangeListener l) {
         support.removePropertyChangeListener(prop, l);
     }
 

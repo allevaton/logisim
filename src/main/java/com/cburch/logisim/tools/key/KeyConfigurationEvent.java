@@ -3,9 +3,9 @@
 
 package com.cburch.logisim.tools.key;
 
-import java.awt.event.KeyEvent;
-
 import com.cburch.logisim.data.AttributeSet;
+
+import java.awt.event.KeyEvent;
 
 public class KeyConfigurationEvent {
     public static final int KEY_PRESSED = 0;

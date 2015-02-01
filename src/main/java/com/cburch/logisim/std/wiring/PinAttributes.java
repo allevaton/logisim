@@ -3,29 +3,30 @@
 
 package com.cburch.logisim.std.wiring;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.cburch.logisim.comp.EndData;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.instance.StdAttr;
 
+import java.util.Arrays;
+import java.util.List;
+
 class PinAttributes extends ProbeAttributes {
     public static PinAttributes instance = new PinAttributes();
 
     private static final List<Attribute<?>> ATTRIBUTES
-        = Arrays.asList(new Attribute<?>[] {
+            = Arrays.asList(new Attribute<?>[]{
             StdAttr.FACING, Pin.ATTR_TYPE, StdAttr.WIDTH, Pin.ATTR_TRISTATE,
             Pin.ATTR_PULL, StdAttr.LABEL, Pin.ATTR_LABEL_LOC, StdAttr.LABEL_FONT
-        });
+    });
 
     BitWidth width = BitWidth.ONE;
     boolean threeState = true;
     int type = EndData.INPUT_ONLY;
     Object pull = Pin.PULL_NONE;
 
-    public PinAttributes() { }
+    public PinAttributes() {
+    }
 
     @Override
     public List<Attribute<?>> getAttributes() {

@@ -3,21 +3,15 @@
 
 package com.cburch.draw.model;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.cburch.draw.canvas.Selection;
 import com.cburch.draw.shapes.Text;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.util.EventSourceWeakSupport;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class Drawing implements CanvasModel {
     private EventSourceWeakSupport<CanvasModelListener> listeners;
@@ -148,7 +142,7 @@ public class Drawing implements CanvasModel {
 
     @Override
     public void translateObjects(Collection<? extends CanvasObject> shapes,
-            int dx, int dy) {
+                                 int dx, int dy) {
         List<CanvasObject> found = restrict(shapes);
         CanvasModelEvent e = CanvasModelEvent.forTranslate(this, found, dx, dy);
         if (!found.isEmpty() && (dx != 0 || dy != 0) && isChangeAllowed(e)) {

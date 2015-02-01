@@ -3,47 +3,47 @@
 
 package com.cburch.logisim.std.gates;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.HashMap;
-
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.data.Value;
 import com.cburch.logisim.instance.InstancePainter;
 import com.cburch.logisim.util.GraphicsUtil;
 
+import java.awt.*;
+import java.util.HashMap;
+
 class PainterDin {
-    private PainterDin() { }
+    private PainterDin() {
+    }
 
     static final int AND = 0;
     static final int OR = 1;
     static final int XOR = 2;
     static final int XNOR = 3;
 
-    private static HashMap<Integer,int[]> orLenArrays = new HashMap<Integer,int[]>();
+    private static HashMap<Integer, int[]> orLenArrays = new HashMap<Integer, int[]>();
 
     static void paintAnd(InstancePainter painter, int width, int height,
-            boolean drawBubble) {
+                         boolean drawBubble) {
         paint(painter, width, height, drawBubble, AND);
     }
 
     static void paintOr(InstancePainter painter, int width, int height,
-            boolean drawBubble) {
+                        boolean drawBubble) {
         paint(painter, width, height, drawBubble, OR);
     }
 
     static void paintXor(InstancePainter painter, int width, int height,
-            boolean drawBubble) {
+                         boolean drawBubble) {
         paint(painter, width, height, drawBubble, XOR);
     }
 
     static void paintXnor(InstancePainter painter, int width, int height,
-            boolean drawBubble) {
+                          boolean drawBubble) {
         paint(painter, width, height, drawBubble, XNOR);
     }
 
     private static void paint(InstancePainter painter, int width, int height,
-            boolean drawBubble, int dinType) {
+                              boolean drawBubble, int dinType) {
         Graphics g = painter.getGraphics();
         int x = 0;
         int xMid = -width;
@@ -100,7 +100,7 @@ class PainterDin {
     }
 
     private static void paintOrLines(InstancePainter painter,
-            int width, int height, boolean hasBubble) {
+                                     int width, int height, boolean hasBubble) {
         GateAttributes baseAttrs = (GateAttributes) painter.getAttributeSet();
         int inputs = baseAttrs.inputs;
         GateAttributes attrs = (GateAttributes) OrGate.FACTORY.createAttributeSet();

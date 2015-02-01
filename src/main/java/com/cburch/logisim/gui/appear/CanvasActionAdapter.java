@@ -3,9 +3,6 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.cburch.draw.actions.ModelAction;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.undo.Action;
@@ -14,6 +11,9 @@ import com.cburch.logisim.circuit.CircuitMutator;
 import com.cburch.logisim.circuit.CircuitTransaction;
 import com.cburch.logisim.circuit.appear.AppearanceElement;
 import com.cburch.logisim.proj.Project;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CanvasActionAdapter extends com.cburch.logisim.proj.Action {
     private Circuit circuit;

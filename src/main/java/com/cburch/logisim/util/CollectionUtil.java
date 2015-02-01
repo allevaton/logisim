@@ -3,11 +3,11 @@
 
 package com.cburch.logisim.util;
 
+import org.apache.commons.collections15.iterators.IteratorChain;
+
 import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import org.apache.commons.collections15.iterators.IteratorChain;
 
 public class CollectionUtil {
     private static class UnionSet<E> extends AbstractSet<E> {
@@ -30,10 +30,11 @@ public class CollectionUtil {
         }
     }
 
-    private CollectionUtil() { }
+    private CollectionUtil() {
+    }
 
     public static <E> Set<E> createUnmodifiableSetUnion(Set<? extends E> a,
-            Set<? extends E> b) {
+                                                        Set<? extends E> b) {
         return new UnionSet<E>(a, b);
     }
 }

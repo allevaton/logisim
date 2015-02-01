@@ -3,47 +3,38 @@
 
 package com.cburch.logisim.std.arith;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Divider extends InstanceFactory {
     static final int PER_DELAY = 1;
 
-    private static final int IN0   = 0;
-    private static final int IN1   = 1;
-    private static final int OUT   = 2;
+    private static final int IN0 = 0;
+    private static final int IN1 = 1;
+    private static final int OUT = 2;
     private static final int UPPER = 3;
-    private static final int REM   = 4;
+    private static final int REM = 4;
 
     public Divider() {
         super("Divider", getFromLocale("dividerComponent"));
-        setAttributes(new Attribute[] { StdAttr.WIDTH },
-                new Object[] { BitWidth.create(8) });
+        setAttributes(new Attribute[]{StdAttr.WIDTH},
+                new Object[]{BitWidth.create(8)});
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
         setOffsetBounds(Bounds.create(-40, -20, 40, 40));
         setIconName("divider.svg");
 
         Port[] ps = new Port[5];
-        ps[IN0]   = new Port(-40, -10, Port.INPUT,  StdAttr.WIDTH);
-        ps[IN1]   = new Port(-40,  10, Port.INPUT,  StdAttr.WIDTH);
-        ps[OUT]   = new Port(  0,   0, Port.OUTPUT, StdAttr.WIDTH);
-        ps[UPPER] = new Port(-20, -20, Port.INPUT,  StdAttr.WIDTH);
-        ps[REM]   = new Port(-20,  20, Port.OUTPUT, StdAttr.WIDTH);
+        ps[IN0] = new Port(-40, -10, Port.INPUT, StdAttr.WIDTH);
+        ps[IN1] = new Port(-40, 10, Port.INPUT, StdAttr.WIDTH);
+        ps[OUT] = new Port(0, 0, Port.OUTPUT, StdAttr.WIDTH);
+        ps[UPPER] = new Port(-20, -20, Port.INPUT, StdAttr.WIDTH);
+        ps[REM] = new Port(-20, 20, Port.OUTPUT, StdAttr.WIDTH);
         ps[IN0].setToolTip(getFromLocale("dividerDividendLowerTip"));
         ps[IN1].setToolTip(getFromLocale("dividerDivisorTip"));
         ps[OUT].setToolTip(getFromLocale("dividerOutputTip"));
@@ -78,7 +69,7 @@ public class Divider extends InstanceFactory {
         painter.drawPort(IN0);
         painter.drawPort(IN1);
         painter.drawPort(OUT);
-        painter.drawPort(UPPER, getFromLocale("dividerUpperInput"),  Direction.NORTH);
+        painter.drawPort(UPPER, getFromLocale("dividerUpperInput"), Direction.NORTH);
         painter.drawPort(REM, getFromLocale("dividerRemainderOutput"), Direction.SOUTH);
 
         Location loc = painter.getLocation();
@@ -100,7 +91,7 @@ public class Divider extends InstanceFactory {
 
         if (a.isFullyDefined() && b.isFullyDefined() && upper.isFullyDefined()) {
             long num = ((long) upper.toIntValue() << w)
-                | (a.toIntValue() & 0xFFFFFFFFL);
+                    | (a.toIntValue() & 0xFFFFFFFFL);
             long den = b.toIntValue() & 0xFFFFFFFFL;
             if (den == 0) {
                 den = 1;
@@ -117,12 +108,12 @@ public class Divider extends InstanceFactory {
                     result++;
                 }
             }
-            return new Value[] { Value.createKnown(width, (int) result),
-                    Value.createKnown(width, (int) rem) };
+            return new Value[]{Value.createKnown(width, (int) result),
+                    Value.createKnown(width, (int) rem)};
         } else if (a.isErrorValue() || b.isErrorValue() || upper.isErrorValue()) {
-            return new Value[] { Value.createError(width), Value.createError(width) };
+            return new Value[]{Value.createError(width), Value.createError(width)};
         } else {
-            return new Value[] { Value.createUnknown(width), Value.createUnknown(width) };
+            return new Value[]{Value.createUnknown(width), Value.createUnknown(width)};
         }
     }
 }

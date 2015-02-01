@@ -3,28 +3,20 @@
 
 package com.cburch.logisim.instance;
 
-import java.awt.Font;
-import java.awt.Graphics;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.comp.Component;
-import com.cburch.logisim.comp.ComponentDrawContext;
-import com.cburch.logisim.comp.ComponentUserEvent;
+import com.cburch.logisim.comp.*;
 import com.cburch.logisim.comp.TextField;
-import com.cburch.logisim.comp.TextFieldEvent;
-import com.cburch.logisim.comp.TextFieldListener;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.gui.main.Canvas;
 import com.cburch.logisim.proj.Action;
 import com.cburch.logisim.tools.Caret;
 import com.cburch.logisim.tools.SetAttributeAction;
 import com.cburch.logisim.tools.TextEditable;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class InstanceTextField implements AttributeListener, TextFieldListener,
         TextEditable {
@@ -46,7 +38,7 @@ public class InstanceTextField implements AttributeListener, TextFieldListener,
     }
 
     void update(Attribute<String> labelAttr, Attribute<Font> fontAttr,
-            int x, int y, int halign, int valign) {
+                int x, int y, int halign, int valign) {
         boolean wasReg = shouldRegister();
         this.labelAttr = labelAttr;
         this.fontAttr = fontAttr;
@@ -105,7 +97,8 @@ public class InstanceTextField implements AttributeListener, TextFieldListener,
     }
 
     @Override
-    public void attributeListChanged(AttributeEvent e) { }
+    public void attributeListChanged(AttributeEvent e) {
+    }
 
     @Override
     public void attributeValueChanged(AttributeEvent e) {
@@ -128,7 +121,7 @@ public class InstanceTextField implements AttributeListener, TextFieldListener,
 
     @Override
     public Action getCommitAction(Circuit circuit, String oldText,
-            String newText) {
+                                  String newText) {
         SetAttributeAction act = new SetAttributeAction(circuit,
                 getFromLocale("changeLabelAction"));
         act.set(comp, labelAttr, newText);
@@ -156,7 +149,7 @@ public class InstanceTextField implements AttributeListener, TextFieldListener,
         int y = event.getY();
         if (bds.contains(x, y)) return field.getCaret(g, x, y);
         else {
-                               return null;
+            return null;
         }
 
     }

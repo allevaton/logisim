@@ -3,28 +3,12 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPopupMenu;
-
 import com.cburch.draw.actions.ModelAddAction;
 import com.cburch.draw.actions.ModelReorderAction;
 import com.cburch.draw.canvas.ActionDispatcher;
 import com.cburch.draw.canvas.Canvas;
 import com.cburch.draw.canvas.CanvasTool;
-import com.cburch.draw.model.CanvasModel;
-import com.cburch.draw.model.CanvasModelEvent;
-import com.cburch.draw.model.CanvasModelListener;
-import com.cburch.draw.model.CanvasObject;
-import com.cburch.draw.model.ReorderRequest;
+import com.cburch.draw.model.*;
 import com.cburch.draw.undo.Action;
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitState;
@@ -35,13 +19,21 @@ import com.cburch.logisim.gui.generic.CanvasPaneContents;
 import com.cburch.logisim.gui.generic.GridPainter;
 import com.cburch.logisim.proj.Project;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("serial")
 public class AppearanceCanvas extends Canvas
         implements CanvasPaneContents, ActionDispatcher {
     private static final int BOUNDS_BUFFER = 70;
-        // pixels shown in canvas beyond outermost boundaries
+    // pixels shown in canvas beyond outermost boundaries
     private static final int THRESH_SIZE_UPDATE = 10;
-        // don't bother to update the size if it hasn't changed more than this
+    // don't bother to update the size if it hasn't changed more than this
 
     private class Listener
             implements CanvasModelListener, PropertyChangeListener {
@@ -345,7 +337,7 @@ public class AppearanceCanvas extends Canvas
 
     @Override
     public int getScrollableBlockIncrement(Rectangle visibleRect,
-            int orientation, int direction) {
+                                           int orientation, int direction) {
         return canvasPane.supportScrollableBlockIncrement(visibleRect, orientation, direction);
     }
 
@@ -361,7 +353,7 @@ public class AppearanceCanvas extends Canvas
 
     @Override
     public int getScrollableUnitIncrement(Rectangle visibleRect,
-            int orientation, int direction) {
+                                          int orientation, int direction) {
         return canvasPane.supportScrollableUnitIncrement(visibleRect, orientation, direction);
     }
 

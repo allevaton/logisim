@@ -4,16 +4,16 @@
 package com.cburch.logisim.file;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
 import com.cburch.logisim.data.AttributeListener;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.data.AttributeSets;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.EventSourceWeakSupport;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 public class ToolbarData {
     public static interface ToolbarListener {
@@ -177,7 +177,7 @@ public class ToolbarData {
     //
     // package-protected methods
     //
-    void replaceAll(Map<Tool,Tool> toolMap) {
+    void replaceAll(Map<Tool, Tool> toolMap) {
         boolean changed = false;
         for (ListIterator<Tool> it = contents.listIterator(); it.hasNext(); ) {
             Object old = it.next();

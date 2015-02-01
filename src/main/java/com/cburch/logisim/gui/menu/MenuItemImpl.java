@@ -3,10 +3,9 @@
 
 package com.cburch.logisim.gui.menu;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
 class MenuItemImpl extends JMenuItem implements MenuItem {

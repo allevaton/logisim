@@ -3,10 +3,10 @@
 
 package com.cburch.logisim.analyze.model;
 
-import java.util.List;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.proj.Project;
+
+import java.util.List;
 
 public class AnalyzerModel {
     public static final int MAX_INPUTS = 12;

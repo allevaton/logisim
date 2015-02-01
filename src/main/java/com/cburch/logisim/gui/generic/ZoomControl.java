@@ -3,27 +3,17 @@
 
 package com.cburch.logisim.gui.generic;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import com.cburch.logisim.util.CustomAction;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.AbstractSpinnerModel;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.KeyStroke;
-
-import com.cburch.logisim.util.CustomAction;
-
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class ZoomControl extends JPanel {
@@ -50,7 +40,7 @@ public class ZoomControl extends JPanel {
             }
             return null;
         }
-        
+
         @Override
         public Object getValue() {
             double zoom = model.getZoomFactor();
@@ -76,7 +66,8 @@ public class ZoomControl extends JPanel {
                 try {
                     double zoom = Double.parseDouble(s) / 100.0;
                     model.setZoomFactor(zoom);
-                } catch (NumberFormatException e) { }
+                } catch (NumberFormatException e) {
+                }
             }
         }
 
@@ -126,13 +117,20 @@ public class ZoomControl extends JPanel {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) { }
+        public void mouseClicked(MouseEvent e) {
+        }
+
         @Override
-        public void mouseEntered(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) {
+        }
+
         @Override
-        public void mouseExited(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) {
+        }
+
         @Override
-        public void mouseReleased(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) {
+        }
 
         @Override
         public void mousePressed(MouseEvent e) {
@@ -151,13 +149,13 @@ public class ZoomControl extends JPanel {
     private GridIcon grid;
 
     public void zoomIn() {
-    	spinnerModel.setValue(spinnerModel.getNextValue());
+        spinnerModel.setValue(spinnerModel.getNextValue());
     }
-    
+
     public void zoomOut() {
-    	spinnerModel.setValue(spinnerModel.getPreviousValue());
+        spinnerModel.setValue(spinnerModel.getPreviousValue());
     }
-    
+
     public ZoomControl(ZoomModel model) {
         super(new BorderLayout());
         this.model = model;
@@ -165,7 +163,7 @@ public class ZoomControl extends JPanel {
         spinnerModel = new SpinnerModel();
         spinner = new JSpinner();
         spinner.setModel(spinnerModel);
-        
+
         //Zooming with CTRL+/-
         InputMap im = this.getInputMap(ZoomControl.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = this.getActionMap();
@@ -178,7 +176,7 @@ public class ZoomControl extends JPanel {
         am.put("CTRL-", new CustomAction("CTRL-", this));
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, mask), "CTRL-");
         am.put("CTRL-", new CustomAction("CTRL-", this));
-        
+
         this.add(spinner, BorderLayout.CENTER);
 
         grid = new GridIcon();

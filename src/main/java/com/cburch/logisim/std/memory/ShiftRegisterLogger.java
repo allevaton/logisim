@@ -8,7 +8,8 @@ import com.cburch.logisim.data.Value;
 import com.cburch.logisim.instance.InstanceLogger;
 import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.instance.StdAttr;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ShiftRegisterLogger extends InstanceLogger {
     @Override
@@ -26,7 +27,7 @@ public class ShiftRegisterLogger extends InstanceLogger {
         String inName = state.getAttributeValue(StdAttr.LABEL);
         if (inName == null || inName.equals("")) {
             inName = getFromLocale("shiftRegisterComponent")
-                + state.getInstance().getLocation();
+                    + state.getInstance().getLocation();
         }
         if (option instanceof Integer) {
             return inName + "[" + option + "]";

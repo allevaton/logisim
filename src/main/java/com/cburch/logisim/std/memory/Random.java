@@ -3,45 +3,34 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceData;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstanceLogger;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.StringUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Random extends InstanceFactory {
     private static final Attribute<Integer> ATTR_SEED
-        = Attributes.forInteger("seed", getFromLocale("randomSeedAttr"));
+            = Attributes.forInteger("seed", getFromLocale("randomSeedAttr"));
 
     private static final int OUT = 0;
-    private static final int CK  = 1;
+    private static final int CK = 1;
     private static final int NXT = 2;
     private static final int RST = 3;
 
     public Random() {
         super("Random", getFromLocale("randomComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.WIDTH, ATTR_SEED, StdAttr.EDGE_TRIGGER,
                 StdAttr.LABEL, StdAttr.LABEL_FONT
-            }, new Object[] {
+        }, new Object[]{
                 BitWidth.create(8), Integer.valueOf(0), StdAttr.TRIG_RISING,
                 "", StdAttr.DEFAULT_LABEL_FONT
-            });
+        });
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
 
         setOffsetBounds(Bounds.create(-30, -20, 30, 40));
@@ -49,10 +38,10 @@ public class Random extends InstanceFactory {
         setInstanceLogger(Logger.class);
 
         Port[] ps = new Port[4];
-        ps[OUT] = new Port(  0,   0, Port.OUTPUT, StdAttr.WIDTH);
-        ps[CK]  = new Port(-30, -10, Port.INPUT, 1);
-        ps[NXT] = new Port(-30,  10, Port.INPUT, 1);
-        ps[RST] = new Port(-20,  20, Port.INPUT, 1);
+        ps[OUT] = new Port(0, 0, Port.OUTPUT, StdAttr.WIDTH);
+        ps[CK] = new Port(-30, -10, Port.INPUT, 1);
+        ps[NXT] = new Port(-30, 10, Port.INPUT, 1);
+        ps[RST] = new Port(-20, 20, Port.INPUT, 1);
         ps[OUT].setToolTip(getFromLocale("randomQTip"));
         ps[CK].setToolTip(getFromLocale("randomClockTip"));
         ps[NXT].setToolTip(getFromLocale("randomNextTip"));

@@ -3,15 +3,6 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.Collection;
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-
 import com.cburch.logisim.circuit.Propagator.SetData;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentDrawContext;
@@ -26,6 +17,9 @@ import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.std.wiring.Clock;
 import com.cburch.logisim.std.wiring.Pin;
+
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class CircuitState implements InstanceData {
     private class MyCircuitListener implements CircuitListener {
@@ -137,11 +131,11 @@ public class CircuitState implements InstanceData {
     private HashSet<CircuitState> substates = new HashSet<CircuitState>();
 
     private CircuitWires.State wireData = null;
-    private HashMap<Component,Object> componentData = new HashMap<Component,Object>();
-    private Map<Location,Value> values = new HashMap<Location,Value>();
+    private HashMap<Component, Object> componentData = new HashMap<Component, Object>();
+    private Map<Location, Value> values = new HashMap<Location, Value>();
     private CopyOnWriteArraySet<Component> dirtyComponents = new CopyOnWriteArraySet<Component>();
     private CopyOnWriteArraySet<Location> dirtyPoints = new CopyOnWriteArraySet<Location>();
-    HashMap<Location,SetData> causes = new HashMap<Location,SetData>();
+    HashMap<Location, SetData> causes = new HashMap<Location, SetData>();
 
     private static int lastId = 0;
     private int id = lastId++;
@@ -177,7 +171,7 @@ public class CircuitState implements InstanceData {
         this.base = base;
         this.parentComp = src.parentComp;
         this.parentState = src.parentState;
-        HashMap<CircuitState,CircuitState> substateData = new HashMap<CircuitState,CircuitState>();
+        HashMap<CircuitState, CircuitState> substateData = new HashMap<CircuitState, CircuitState>();
         this.substates = new HashSet<CircuitState>();
         for (CircuitState oldSub : src.substates) {
             CircuitState newSub = new CircuitState(src.proj, oldSub.circuit);
@@ -192,9 +186,7 @@ public class CircuitState implements InstanceData {
                 Object newValue = substateData.get(oldValue);
                 if (newValue != null) {
                     this.componentData.put(key, newValue);
-                }
-
-                else {
+                } else {
                     this.componentData.remove(key);
                 }
 
@@ -400,7 +392,10 @@ public class CircuitState implements InstanceData {
                     break;
                 } catch (ConcurrentModificationException e) {
                     // try again...
-                    try { Thread.sleep(1); } catch (InterruptedException e2) { }
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e2) {
+                    }
                     if (i == 0) {
                         e.printStackTrace();
                     }

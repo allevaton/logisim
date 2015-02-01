@@ -3,15 +3,16 @@
 
 package com.cburch.draw.shapes;
 
-import java.awt.Graphics;
-import java.util.List;
-import java.util.Random;
-
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.util.List;
+import java.util.Random;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class RoundRectangle extends Rectangular {
     private int radius;
@@ -84,13 +85,9 @@ public class RoundRectangle extends Rectangular {
         } else if (qx < x + rx) {
             if (qy < y + ry) {
                 return inCircle(qx, qy, x + rx, y + ry, rx, ry);
-            }
-
-            else if (qy < y + h - ry) {
+            } else if (qy < y + h - ry) {
                 return true;
-            }
-
-            else {
+            } else {
                 return inCircle(qx, qy, x + rx, y + h - ry, rx, ry);
             }
 
@@ -99,13 +96,9 @@ public class RoundRectangle extends Rectangular {
         } else {
             if (qy < y + ry) {
                 return inCircle(qx, qy, x + w - rx, y + ry, rx, ry);
-            }
-
-            else if (qy < y + h - ry) {
+            } else if (qy < y + h - ry) {
                 return true;
-            }
-
-            else {
+            } else {
                 return inCircle(qx, qy, x + w - rx, y + h - ry, rx, ry);
             }
 

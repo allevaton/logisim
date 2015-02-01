@@ -3,25 +3,13 @@
 
 package com.cburch.logisim.std.io;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Tty extends InstanceFactory {
     private static final int CLR = 0;
@@ -37,28 +25,28 @@ public class Tty extends InstanceFactory {
     private static final Font DEFAULT_FONT = new Font("monospaced", Font.PLAIN, 12);
 
     private static final Attribute<Integer> ATTR_COLUMNS
-        = Attributes.forIntegerRange("cols",
+            = Attributes.forIntegerRange("cols",
             getFromLocale("ttyColsAttr"), 1, 120);
     private static final Attribute<Integer> ATTR_ROWS
-        = Attributes.forIntegerRange("rows",
+            = Attributes.forIntegerRange("rows",
             getFromLocale("ttyRowsAttr"), 1, 48);
 
     public Tty() {
         super("TTY", getFromLocale("ttyComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 ATTR_ROWS, ATTR_COLUMNS, StdAttr.EDGE_TRIGGER,
                 Io.ATTR_COLOR, Io.ATTR_BACKGROUND
-            }, new Object[] {
+        }, new Object[]{
                 Integer.valueOf(8), Integer.valueOf(32), StdAttr.TRIG_RISING,
                 Color.BLACK, DEFAULT_BACKGROUND
-            });
+        });
         setIconName("tty.svg");
 
         Port[] ps = new Port[4];
-        ps[CLR] = new Port(20,  10, Port.INPUT, 1);
-        ps[CK]  = new Port( 0,   0, Port.INPUT, 1);
-        ps[WE]  = new Port(10,  10, Port.INPUT, 1);
-        ps[IN]  = new Port( 0, -10, Port.INPUT, 7);
+        ps[CLR] = new Port(20, 10, Port.INPUT, 1);
+        ps[CK] = new Port(0, 0, Port.INPUT, 1);
+        ps[WE] = new Port(10, 10, Port.INPUT, 1);
+        ps[IN] = new Port(0, -10, Port.INPUT, 7);
         ps[CLR].setToolTip(getFromLocale("ttyClearTip"));
         ps[CK].setToolTip(getFromLocale("ttyClockTip"));
         ps[WE].setToolTip(getFromLocale("ttyEnableTip"));
@@ -98,7 +86,7 @@ public class Tty extends InstanceFactory {
         Value enable = circState.getPort(WE);
         Value in = circState.getPort(IN);
 
-        synchronized(state) {
+        synchronized (state) {
             Value lastClock = state.setLastClock(clock);
             if (clear == Value.TRUE) {
                 state.clear();
@@ -151,7 +139,7 @@ public class Tty extends InstanceFactory {
             int curRow;
             int curCol;
             TtyState state = getTtyState(painter);
-            synchronized(state) {
+            synchronized (state) {
                 for (int i = 0; i < rows; i++) {
                     rowData[i] = state.getRowString(i);
                 }

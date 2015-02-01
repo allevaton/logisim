@@ -3,7 +3,7 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.Rectangle;
+import java.awt.*;
 
 class CanvasPaintThread extends Thread {
     // 50 ms between repaints
@@ -25,7 +25,7 @@ class CanvasPaintThread extends Thread {
     }
 
     public void requestStop() {
-        synchronized(lock) {
+        synchronized (lock) {
             alive = false;
             lock.notifyAll();
         }
@@ -68,7 +68,8 @@ class CanvasPaintThread extends Thread {
                         } else {
                             lock.wait();
                         }
-                    } catch (InterruptedException e) { }
+                    } catch (InterruptedException e) {
+                    }
                     now = System.currentTimeMillis();
                     wait = nextRepaint - now;
                 }

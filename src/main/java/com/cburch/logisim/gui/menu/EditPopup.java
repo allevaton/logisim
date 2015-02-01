@@ -3,14 +3,13 @@
 
 package com.cburch.logisim.gui.menu;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public abstract class EditPopup extends JPopupMenu {
@@ -44,18 +43,29 @@ public abstract class EditPopup extends JPopupMenu {
         boolean x = false;
         x |= add(LogisimMenuBar.CUT, getFromLocale("editCutItem"));
         x |= add(LogisimMenuBar.COPY, getFromLocale("editCopyItem"));
-        if (x) { addSeparator(); x = false; }
+        if (x) {
+            addSeparator();
+            x = false;
+        }
         x |= add(LogisimMenuBar.DELETE, getFromLocale("editClearItem"));
         x |= add(LogisimMenuBar.DUPLICATE, getFromLocale("editDuplicateItem"));
-        if (x) { addSeparator(); x = false; }
+        if (x) {
+            addSeparator();
+            x = false;
+        }
         x |= add(LogisimMenuBar.RAISE, getFromLocale("editRaiseItem"));
         x |= add(LogisimMenuBar.LOWER, getFromLocale("editLowerItem"));
         x |= add(LogisimMenuBar.RAISE_TOP, getFromLocale("editRaiseTopItem"));
         x |= add(LogisimMenuBar.LOWER_BOTTOM, getFromLocale("editLowerBottomItem"));
-        if (x) { addSeparator(); x = false; }
+        if (x) {
+            addSeparator();
+            x = false;
+        }
         x |= add(LogisimMenuBar.ADD_CONTROL, getFromLocale("editAddControlItem"));
         x |= add(LogisimMenuBar.REMOVE_CONTROL, getFromLocale("editRemoveControlItem"));
-        if (!x && getComponentCount() > 0) { remove(getComponentCount() - 1); }
+        if (!x && getComponentCount() > 0) {
+            remove(getComponentCount() - 1);
+        }
     }
 
     private boolean add(LogisimMenuItem item, String display) {

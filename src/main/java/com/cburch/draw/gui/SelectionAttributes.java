@@ -3,25 +3,13 @@
 
 package com.cburch.draw.gui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.cburch.draw.canvas.Selection;
 import com.cburch.draw.canvas.SelectionEvent;
 import com.cburch.draw.canvas.SelectionListener;
 import com.cburch.draw.model.CanvasObject;
-import com.cburch.logisim.data.AbstractAttributeSet;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
+import com.cburch.logisim.data.*;
+
+import java.util.*;
 
 public class SelectionAttributes extends AbstractAttributeSet {
     private class Listener implements SelectionListener, AttributeListener {
@@ -83,7 +71,7 @@ public class SelectionAttributes extends AbstractAttributeSet {
             SelectionAttributes.this.selAttrs = attrs;
             SelectionAttributes.this.selValues = values;
             SelectionAttributes.this.attrsView
-                = Collections.unmodifiableList(Arrays.asList(attrs));
+                    = Collections.unmodifiableList(Arrays.asList(attrs));
             fireAttributeListChanged();
         }
 
@@ -153,7 +141,7 @@ public class SelectionAttributes extends AbstractAttributeSet {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public <V> V getValue(Attribute<V> attr) {
         Attribute<?>[] attrs = this.selAttrs;
         Object[] values = this.selValues;
@@ -184,7 +172,7 @@ public class SelectionAttributes extends AbstractAttributeSet {
     }
 
     private static Object getSelectionValue(Attribute<?> attr,
-            Set<AttributeSet> sel) {
+                                            Set<AttributeSet> sel) {
         Object ret = null;
         for (AttributeSet attrs : sel) {
             if (attrs.containsAttribute(attr)) {

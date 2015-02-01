@@ -3,10 +3,10 @@
 
 package com.cburch.logisim.gui.main;
 
+import com.cburch.logisim.comp.Component;
+
 import java.util.Collection;
 import java.util.HashSet;
-
-import com.cburch.logisim.comp.Component;
 
 class SelectionSave {
     public static SelectionSave create(Selection sel) {
@@ -28,7 +28,8 @@ class SelectionSave {
     private Component[] floating;
     private Component[] anchored;
 
-    private SelectionSave() { }
+    private SelectionSave() {
+    }
 
     public Component[] getFloatingComponents() {
         return floating;
@@ -40,7 +41,7 @@ class SelectionSave {
 
     public boolean isSame(Selection sel) {
         return isSame(floating, sel.getFloatingComponents())
-            && isSame(anchored, sel.getAnchoredComponents());
+                && isSame(anchored, sel.getAnchoredComponents());
     }
 
     @Override
@@ -48,7 +49,7 @@ class SelectionSave {
         if (other instanceof SelectionSave) {
             SelectionSave o = (SelectionSave) other;
             return isSame(this.floating, o.floating)
-                && isSame(this.anchored, o.anchored);
+                    && isSame(this.anchored, o.anchored);
         } else {
             return false;
         }

@@ -3,19 +3,14 @@
 
 package com.cburch.logisim.gui.generic;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Rectangle;
+import com.cburch.logisim.util.MacCompatibility;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-
-import com.cburch.logisim.util.MacCompatibility;
 
 @SuppressWarnings("serial")
 public class CanvasPane extends JScrollPane {
@@ -30,11 +25,16 @@ public class CanvasPane extends JScrollPane {
         }
 
         @Override
-        public void componentMoved(ComponentEvent e) { }
+        public void componentMoved(ComponentEvent e) {
+        }
+
         @Override
-        public void componentShown(ComponentEvent e) { }
+        public void componentShown(ComponentEvent e) {
+        }
+
         @Override
-        public void componentHidden(ComponentEvent e) { }
+        public void componentHidden(ComponentEvent e) {
+        }
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
@@ -98,9 +98,9 @@ public class CanvasPane extends JScrollPane {
     }
 
     public int supportScrollableBlockIncrement(Rectangle visibleRect,
-            int orientation, int direction) {
+                                               int orientation, int direction) {
         int unit = supportScrollableUnitIncrement(visibleRect, orientation,
-            direction);
+                direction);
         if (direction == SwingConstants.VERTICAL) {
             return visibleRect.height / unit * unit;
         } else {
@@ -109,7 +109,7 @@ public class CanvasPane extends JScrollPane {
     }
 
     public int supportScrollableUnitIncrement(Rectangle visibleRect,
-            int orientation, int direction) {
+                                              int orientation, int direction) {
         double zoom = getZoomFactor();
         return (int) Math.round(10 * zoom);
     }

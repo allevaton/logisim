@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 class WireThread {
     private WireThread parent;
     private CopyOnWriteArraySet<CircuitWires.ThreadBundle> bundles
-        = new CopyOnWriteArraySet<CircuitWires.ThreadBundle>();
+            = new CopyOnWriteArraySet<CircuitWires.ThreadBundle>();
 
     WireThread() {
         parent = this;

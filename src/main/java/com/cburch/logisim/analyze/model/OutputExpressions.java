@@ -3,11 +3,7 @@
 
 package com.cburch.logisim.analyze.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class OutputExpressions {
     private class OutputData {
@@ -130,6 +126,7 @@ public class OutputExpressions {
         }
 
         private boolean invalidating = false;
+
         private void invalidate(boolean initializing, boolean formatChanged) {
             if (invalidating) {
                 return;
@@ -178,9 +175,7 @@ public class OutputExpressions {
         public void listChanged(VariableListEvent event) {
             if (event.getSource() == model.getInputs()) {
                 inputsChanged(event);
-            }
-
-            else {
+            } else {
                 outputsChanged(event);
             }
 
@@ -254,9 +249,9 @@ public class OutputExpressions {
 
     private MyListener myListener = new MyListener();
     private AnalyzerModel model;
-    private HashMap<String,OutputData> outputData = new HashMap<String,OutputData>();
+    private HashMap<String, OutputData> outputData = new HashMap<String, OutputData>();
     private ArrayList<OutputExpressionsListener> listeners
-        = new ArrayList<OutputExpressionsListener>();
+            = new ArrayList<OutputExpressionsListener>();
     private boolean updatingTable = false;
 
     public OutputExpressions(AnalyzerModel model) {
@@ -414,7 +409,7 @@ public class OutputExpressions {
         for (int i = 0; i < a.length; i++) {
             if (a[i] != b[i]) {
                 boolean bothDefined = (a[i] == Entry.ZERO || a[i] == Entry.ONE)
-                                    && (b[i] == Entry.ZERO || b[i] == Entry.ONE);
+                        && (b[i] == Entry.ZERO || b[i] == Entry.ONE);
                 if (bothDefined) {
                     return false;
                 }

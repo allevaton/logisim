@@ -3,19 +3,12 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Composite;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
-import javax.swing.Icon;
-
 import com.cburch.draw.toolbar.ToolbarItem;
 import com.cburch.logisim.gui.menu.LogisimMenuItem;
 import com.cburch.logisim.util.Icons;
+
+import javax.swing.*;
+import java.awt.*;
 
 class LogisimToolbarItem implements ToolbarItem {
     private MenuListener menu;
@@ -24,7 +17,7 @@ class LogisimToolbarItem implements ToolbarItem {
     private String toolTip;
 
     public LogisimToolbarItem(MenuListener menu, String iconName,
-            LogisimMenuItem action, String toolTip) {
+                              LogisimMenuItem action, String toolTip) {
         this.menu = menu;
         this.icon = Icons.getIcon(iconName);
         this.action = action;

@@ -3,29 +3,22 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.file.FileStatistics;
 import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.util.TableSorter;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Comparator;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class StatisticsDialog extends JDialog implements ActionListener {
@@ -61,13 +54,19 @@ public class StatisticsDialog extends JDialog implements ActionListener {
         @Override
         public String getColumnName(int column) {
             switch (column) {
-            case 0: return getFromLocale("statsComponentColumn");
-            case 1: return getFromLocale("statsLibraryColumn");
-            case 2: return getFromLocale("statsSimpleCountColumn");
-            case 3: return getFromLocale("statsUniqueCountColumn");
-            case 4: return getFromLocale("statsRecursiveCountColumn");
-            // should never happen
-            default: return "??";
+                case 0:
+                    return getFromLocale("statsComponentColumn");
+                case 1:
+                    return getFromLocale("statsLibraryColumn");
+                case 2:
+                    return getFromLocale("statsSimpleCountColumn");
+                case 3:
+                    return getFromLocale("statsUniqueCountColumn");
+                case 4:
+                    return getFromLocale("statsRecursiveCountColumn");
+                // should never happen
+                default:
+                    return "??";
             }
         }
 
@@ -80,33 +79,35 @@ public class StatisticsDialog extends JDialog implements ActionListener {
             if (row < countsLen) count = counts.get(row);
             else if (row == countsLen) {
                 count = stats.getTotalWithoutSubcircuits();
-            }
-
-            else {
+            } else {
                 count = stats.getTotalWithSubcircuits();
             }
 
             switch (column) {
-            case 0:
-                if (row < countsLen) {
-                    return count.getFactory().getDisplayName();
-                } else if (row == countsLen) {
-                    return getFromLocale("statsTotalWithout");
-                } else {
-                    return getFromLocale("statsTotalWith");
-                }
-            case 1:
-                if (row < countsLen) {
-                    Library lib = count.getLibrary();
-                    return lib == null ? "-" : lib.getDisplayName();
-                } else {
+                case 0:
+                    if (row < countsLen) {
+                        return count.getFactory().getDisplayName();
+                    } else if (row == countsLen) {
+                        return getFromLocale("statsTotalWithout");
+                    } else {
+                        return getFromLocale("statsTotalWith");
+                    }
+                case 1:
+                    if (row < countsLen) {
+                        Library lib = count.getLibrary();
+                        return lib == null ? "-" : lib.getDisplayName();
+                    } else {
+                        return "";
+                    }
+                case 2:
+                    return Integer.valueOf(count.getSimpleCount());
+                case 3:
+                    return Integer.valueOf(count.getUniqueCount());
+                case 4:
+                    return Integer.valueOf(count.getRecursiveCount());
+                // should never happen
+                default:
                     return "";
-                }
-            case 2: return Integer.valueOf(count.getSimpleCount());
-            case 3: return Integer.valueOf(count.getUniqueCount());
-            case 4: return Integer.valueOf(count.getRecursiveCount());
-            // should never happen
-            default: return "";
             }
         }
     }
@@ -133,7 +134,7 @@ public class StatisticsDialog extends JDialog implements ActionListener {
         @Override
         public void setBounds(int x, int y, int width, int height) {
             super.setBounds(x, y, width, height);
-            setPreferredColumnWidths(new double[] { 0.45, 0.25, 0.1, 0.1, 0.1 });
+            setPreferredColumnWidths(new double[]{0.45, 0.25, 0.1, 0.1, 0.1});
         }
 
         protected void setPreferredColumnWidths(double[] percentages) {
@@ -153,7 +154,7 @@ public class StatisticsDialog extends JDialog implements ActionListener {
     }
 
     private StatisticsDialog(JFrame parent, String circuitName,
-            StatisticsTableModel model) {
+                             StatisticsTableModel model) {
         super(parent, true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle(getFromLocale("statsDialogTitle", circuitName));

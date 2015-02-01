@@ -3,16 +3,16 @@
 
 package com.cburch.draw.actions;
 
+import com.cburch.draw.model.CanvasModel;
+import com.cburch.draw.model.CanvasObject;
+import com.cburch.draw.undo.Action;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.cburch.draw.model.CanvasModel;
-import com.cburch.draw.model.CanvasObject;
-import com.cburch.draw.undo.Action;
-
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ModelTranslateAction extends ModelAction {
     private Set<CanvasObject> moved;
@@ -20,7 +20,7 @@ public class ModelTranslateAction extends ModelAction {
     private int dy;
 
     public ModelTranslateAction(CanvasModel model,
-            Collection<CanvasObject> moved, int dx, int dy) {
+                                Collection<CanvasObject> moved, int dx, int dy) {
         super(model);
         this.moved = new HashSet<CanvasObject>(moved);
         this.dx = dx;

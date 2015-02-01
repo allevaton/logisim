@@ -3,19 +3,15 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
+import com.cburch.logisim.analyze.model.Entry;
+import com.cburch.logisim.analyze.model.TruthTable;
+
+import javax.swing.*;
+import java.awt.datatransfer.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.StringTokenizer;
 
-import javax.swing.JOptionPane;
-
-import com.cburch.logisim.analyze.model.Entry;
-import com.cburch.logisim.analyze.model.TruthTable;
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
@@ -33,7 +29,7 @@ class TableTabClip implements ClipboardOwner {
 
         @Override
         public DataFlavor[] getTransferDataFlavors() {
-            return new DataFlavor[] { binaryFlavor, DataFlavor.stringFlavor };
+            return new DataFlavor[]{binaryFlavor, DataFlavor.stringFlavor};
         }
 
         @Override
@@ -76,8 +72,16 @@ class TableTabClip implements ClipboardOwner {
         int r0 = caret.getCursorRow();
         int c1 = caret.getMarkCol();
         int r1 = caret.getMarkRow();
-        if (c1 < c0) { int t = c0; c0 = c1; c1 = t; }
-        if (r1 < r0) { int t = r0; r0 = r1; r1 = t; }
+        if (c1 < c0) {
+            int t = c0;
+            c0 = c1;
+            c1 = t;
+        }
+        if (r1 < r0) {
+            int t = r0;
+            r0 = r1;
+            r1 = t;
+        }
 
         TruthTable t = table.getTruthTable();
         int inputs = t.getInputColumnCount();
@@ -115,7 +119,7 @@ class TableTabClip implements ClipboardOwner {
         Transferable xfer;
         try {
             xfer = clip.getContents(this);
-        } catch (IllegalStateException|ArrayIndexOutOfBoundsException e ) {
+        } catch (IllegalStateException | ArrayIndexOutOfBoundsException e) {
             // I don't know - the above was observed to throw an odd ArrayIndexOutOfBounds
             // exception on a Linux computer using Sun's Java 5 JVM
             JOptionPane.showMessageDialog(table.getRootPane(),
@@ -181,9 +185,9 @@ class TableTabClip implements ClipboardOwner {
             }
         } else {
             JOptionPane.showMessageDialog(table.getRootPane(),
-                getFromLocale("clipPasteSupportedError"),
-                getFromLocale("clipPasteErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                    getFromLocale("clipPasteSupportedError"),
+                    getFromLocale("clipPasteErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -207,8 +211,16 @@ class TableTabClip implements ClipboardOwner {
                 return;
             }
         } else {
-            if (r0 > r1) { int t = r0; r0 = r1; r1 = t; }
-            if (c0 > c1) { int t = c0; c0 = c1; c1 = t; }
+            if (r0 > r1) {
+                int t = r0;
+                r0 = r1;
+                r1 = t;
+            }
+            if (c0 > c1) {
+                int t = c0;
+                c0 = c1;
+                c1 = t;
+            }
 
             if (r1 - r0 + 1 != entries.length
                     || c1 - c0 + 1 != entries[0].length) {
@@ -230,6 +242,7 @@ class TableTabClip implements ClipboardOwner {
     }
 
     @Override
-    public void lostOwnership(Clipboard clip, Transferable transfer) { }
+    public void lostOwnership(Clipboard clip, Transferable transfer) {
+    }
 
 }

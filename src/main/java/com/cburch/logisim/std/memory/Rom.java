@@ -3,18 +3,6 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Window;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-import java.util.WeakHashMap;
-
-import javax.swing.JLabel;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
@@ -27,19 +15,31 @@ import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.instance.Port;
 import com.cburch.logisim.proj.Project;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+import java.util.WeakHashMap;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Rom extends Mem {
     public static Attribute<MemContents> CONTENTS_ATTR = new ContentsAttribute();
 
     // The following is so that instance's MemListeners aren't freed by the
     // garbage collector until the instance itself is ready to be freed.
-    private WeakHashMap<Instance,MemListener> memListeners;
+    private WeakHashMap<Instance, MemListener> memListeners;
 
     public Rom() {
         super("ROM", getFromLocale("romComponent"), 0);
         setIconName("rom.svg");
-        memListeners = new WeakHashMap<Instance,MemListener>();
+        memListeners = new WeakHashMap<Instance, MemListener>();
     }
 
     @Override
@@ -150,7 +150,8 @@ public class Rom extends Mem {
             ret.write("addr/data: " + addr + " " + data + "\n");
             try {
                 HexFile.save(ret, state);
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
             return ret.toString();
         }
 
@@ -181,7 +182,7 @@ public class Rom extends Mem {
         }
     }
 
-	@SuppressWarnings("serial")
+    @SuppressWarnings("serial")
     private static class ContentsCell extends JLabel
             implements MouseListener {
         Window source;
@@ -207,15 +208,19 @@ public class Rom extends Mem {
         }
 
         @Override
-        public void mousePressed(MouseEvent e) { }
+        public void mousePressed(MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) {
+        }
 
         @Override
-        public void mouseEntered(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) {
+        }
 
         @Override
-        public void mouseExited(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) {
+        }
     }
 }

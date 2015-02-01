@@ -3,21 +3,21 @@
 
 package com.cburch.draw.shapes;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.AbstractCanvasObject;
+import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.Handle;
 import com.cburch.draw.model.HandleGesture;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
-import static com.cburch.logisim.util.LocaleString.*;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Line extends AbstractCanvasObject {
     static final int ON_LINE_THRESH = 2;
@@ -45,11 +45,11 @@ public class Line extends AbstractCanvasObject {
         if (other instanceof Line) {
             Line that = (Line) other;
             return this.x0 == that.x0
-                && this.y0 == that.x1
-                && this.x1 == that.y0
-                && this.y1 == that.y1
-                && this.strokeWidth == that.strokeWidth
-                && this.strokeColor.equals(that.strokeColor);
+                    && this.y0 == that.x1
+                    && this.x1 == that.y0
+                    && this.y1 == that.y1
+                    && this.strokeWidth == that.strokeWidth
+                    && this.strokeColor.equals(that.strokeColor);
         } else {
             return false;
         }
@@ -145,8 +145,8 @@ public class Line extends AbstractCanvasObject {
     @Override
     public List<Handle> getHandles(HandleGesture gesture) {
         if (gesture == null) {
-            return UnmodifiableList.decorate(Arrays.asList(new Handle[] {
-                    new Handle(this, x0, y0), new Handle(this, x1, y1) }));
+            return UnmodifiableList.decorate(Arrays.asList(new Handle[]{
+                    new Handle(this, x0, y0), new Handle(this, x1, y1)}));
         } else {
             Handle h = gesture.getHandle();
             int dx = gesture.getDeltaX();

@@ -3,9 +3,6 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.file.LibraryEvent;
 import com.cburch.logisim.file.LibraryListener;
@@ -17,6 +14,9 @@ import com.cburch.logisim.proj.ProjectListener;
 import com.cburch.logisim.std.base.Base;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class LayoutEditHandler extends EditHandler
         implements ProjectListener, LibraryListener, PropertyChangeListener {
@@ -49,7 +49,7 @@ public class LayoutEditHandler extends EditHandler
         setEnabled(LogisimMenuBar.CUT, !selEmpty && selectAvailable && canChange);
         setEnabled(LogisimMenuBar.COPY, !selEmpty && selectAvailable);
         setEnabled(LogisimMenuBar.PASTE, selectAvailable && canChange
-            && !Clipboard.isEmpty());
+                && !Clipboard.isEmpty());
         setEnabled(LogisimMenuBar.DELETE, !selEmpty && selectAvailable && canChange);
         setEnabled(LogisimMenuBar.DUPLICATE, !selEmpty && selectAvailable && canChange);
         setEnabled(LogisimMenuBar.SELECT_ALL, selectAvailable);

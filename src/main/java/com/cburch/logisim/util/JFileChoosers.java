@@ -3,12 +3,11 @@
 
 package com.cburch.logisim.util;
 
+import com.cburch.logisim.prefs.AppPreferences;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.JFileChooser;
-
-import com.cburch.logisim.prefs.AppPreferences;
 
 @SuppressWarnings("serial")
 public class JFileChoosers {
@@ -37,11 +36,12 @@ public class JFileChoosers {
     }
 
     private static final String[] PROP_NAMES = {
-        null, "user.home", "user.dir", "java.home", "java.io.tmpdir" };
+            null, "user.home", "user.dir", "java.home", "java.io.tmpdir"};
 
     private static String currentDirectory = "";
 
-    private JFileChoosers() { }
+    private JFileChoosers() {
+    }
 
     public static String getCurrentDirectory() {
         return currentDirectory;
@@ -90,13 +90,15 @@ public class JFileChoosers {
         }
 
         try {
-        	return new LogisimFileChooser(openDirectory);
+            return new LogisimFileChooser(openDirectory);
         } catch (RuntimeException t) {
-        	if (t.getCause() instanceof IOException) {
-        		try { return create(); }
-        		catch (RuntimeException u) {}
-        	}
-        	throw t;
+            if (t.getCause() instanceof IOException) {
+                try {
+                    return create();
+                } catch (RuntimeException u) {
+                }
+            }
+            throw t;
         }
     }
 
@@ -104,7 +106,7 @@ public class JFileChoosers {
         if (selected == null) {
             return create();
         }
-        
+
         JFileChooser ret = createAt(selected.getParentFile());
         ret.setSelectedFile(selected);
         return ret;

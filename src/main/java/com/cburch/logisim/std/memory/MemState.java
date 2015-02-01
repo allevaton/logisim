@@ -3,15 +3,14 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import com.cburch.hex.HexModel;
 import com.cburch.hex.HexModelListener;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.instance.InstanceData;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.StringUtil;
+
+import java.awt.*;
 
 class MemState implements InstanceData, Cloneable, HexModelListener {
     // rows in memory display
@@ -55,7 +54,9 @@ class MemState implements InstanceData, Cloneable, HexModelListener {
             ret.contents = contents.clone();
             ret.contents.addHexModelListener(ret);
             return ret;
-        } catch (CloneNotSupportedException e) { return null; }
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 
     //
@@ -292,5 +293,6 @@ class MemState implements InstanceData, Cloneable, HexModelListener {
     }
 
     @Override
-    public void bytesChanged(HexModel source, long start, long numBytes, int[] oldValues) { }
+    public void bytesChanged(HexModel source, long start, long numBytes, int[] oldValues) {
+    }
 }

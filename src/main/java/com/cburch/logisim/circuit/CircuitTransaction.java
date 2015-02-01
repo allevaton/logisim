@@ -3,23 +3,23 @@
 
 package com.cburch.logisim.circuit;
 
+import com.cburch.logisim.circuit.appear.CircuitPins;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
-
-import com.cburch.logisim.circuit.appear.CircuitPins;
 
 public abstract class CircuitTransaction {
     public static final Integer READ_ONLY = Integer.valueOf(1);
     public static final Integer READ_WRITE = Integer.valueOf(2);
 
-    protected abstract Map<Circuit,Integer> getAccessedCircuits();
+    protected abstract Map<Circuit, Integer> getAccessedCircuits();
 
     protected abstract void run(CircuitMutator mutator);
 
     public final CircuitTransactionResult execute() {
         CircuitMutatorImpl mutator = new CircuitMutatorImpl();
-        Map<Circuit,Lock> locks = CircuitLocker.acquireLocks(this, mutator);
+        Map<Circuit, Lock> locks = CircuitLocker.acquireLocks(this, mutator);
         CircuitTransactionResult result;
         try {
             this.run(mutator);

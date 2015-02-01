@@ -3,26 +3,16 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.tools.key.IntegerConfigurator;
 import com.cburch.logisim.tools.key.JoinedConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ShiftRegister extends InstanceFactory {
     static final Attribute<Integer> ATTR_LENGTH = Attributes.forIntegerRange("length",
@@ -30,22 +20,22 @@ public class ShiftRegister extends InstanceFactory {
     static final Attribute<Boolean> ATTR_LOAD = Attributes.forBoolean("parallel",
             getFromLocale("shiftRegParallelAttr"));
 
-    private static final int IN  = 0;
-    private static final int SH  = 1;
-    private static final int CK  = 2;
+    private static final int IN = 0;
+    private static final int SH = 1;
+    private static final int CK = 2;
     private static final int CLR = 3;
     private static final int OUT = 4;
-    private static final int LD  = 5;
+    private static final int LD = 5;
 
     public ShiftRegister() {
         super("Shift Register", getFromLocale("shiftRegisterComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.WIDTH, ATTR_LENGTH, ATTR_LOAD, StdAttr.EDGE_TRIGGER,
                 StdAttr.LABEL, StdAttr.LABEL_FONT
-            }, new Object[] {
+        }, new Object[]{
                 BitWidth.ONE, Integer.valueOf(8), Boolean.TRUE,
                 StdAttr.TRIG_RISING, "", StdAttr.DEFAULT_LABEL_FONT
-            });
+        });
         setKeyConfigurator(JoinedConfigurator.create(
                 new IntegerConfigurator(ATTR_LENGTH, 1, 32, 0),
                 new BitWidthConfigurator(StdAttr.WIDTH)));
@@ -93,17 +83,17 @@ public class ShiftRegister extends InstanceFactory {
             ps[LD] = new Port(10, -20, Port.INPUT, 1);
             ps[LD].setToolTip(getFromLocale("shiftRegLoadTip"));
             for (int i = 0; i < len; i++) {
-                ps[6 + 2 * i]     = new Port(20 + 10 * i, -20, Port.INPUT, width);
-                ps[6 + 2 * i + 1] = new Port(20 + 10 * i,  20, Port.OUTPUT, width);
+                ps[6 + 2 * i] = new Port(20 + 10 * i, -20, Port.INPUT, width);
+                ps[6 + 2 * i + 1] = new Port(20 + 10 * i, 20, Port.OUTPUT, width);
             }
         } else {
             ps = new Port[5];
         }
         ps[OUT] = new Port(bds.getWidth(), 0, Port.OUTPUT, width);
-        ps[SH]  = new Port( 0, -10, Port.INPUT, 1);
-        ps[IN]  = new Port( 0,   0, Port.INPUT, width);
-        ps[CK]  = new Port( 0,  10, Port.INPUT, 1);
-        ps[CLR] = new Port(10,  20, Port.INPUT, 1);
+        ps[SH] = new Port(0, -10, Port.INPUT, 1);
+        ps[IN] = new Port(0, 0, Port.INPUT, width);
+        ps[CK] = new Port(0, 10, Port.INPUT, 1);
+        ps[CLR] = new Port(10, 20, Port.INPUT, 1);
         ps[OUT].setToolTip(getFromLocale("shiftRegOutTip"));
         ps[SH].setToolTip(getFromLocale("shiftRegShiftTip"));
         ps[IN].setToolTip(getFromLocale("shiftRegInTip"));

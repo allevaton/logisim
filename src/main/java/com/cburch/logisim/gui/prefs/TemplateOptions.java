@@ -3,9 +3,15 @@
 
 package com.cburch.logisim.gui.prefs;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import com.cburch.logisim.file.Loader;
+import com.cburch.logisim.file.LoaderException;
+import com.cburch.logisim.file.LogisimFile;
+import com.cburch.logisim.prefs.AppPreferences;
+import com.cburch.logisim.prefs.Template;
+import com.cburch.logisim.util.JFileChoosers;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -15,21 +21,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
-import com.cburch.logisim.file.Loader;
-import com.cburch.logisim.file.LoaderException;
-import com.cburch.logisim.file.LogisimFile;
-import com.cburch.logisim.prefs.AppPreferences;
-import com.cburch.logisim.prefs.Template;
-import com.cburch.logisim.util.JFileChoosers;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class TemplateOptions extends OptionsPanel {
@@ -67,26 +59,24 @@ class TemplateOptions extends OptionsPanel {
                                 reader.close();
                             }
 
-                        } catch (IOException ex) { }
+                        } catch (IOException ex) {
+                        }
                         try {
                             if (reader != null) {
                                 reader2.close();
                             }
 
-                        } catch (IOException ex) { }
+                        } catch (IOException ex) {
+                        }
                     }
                 }
             } else {
                 int value = AppPreferences.TEMPLATE_UNKNOWN;
                 if (plain.isSelected()) {
                     value = AppPreferences.TEMPLATE_PLAIN;
-                }
-
-                else if (empty.isSelected()) {
+                } else if (empty.isSelected()) {
                     value = AppPreferences.TEMPLATE_EMPTY;
-                }
-
-                else if (custom.isSelected()) {
+                } else if (custom.isSelected()) {
                     value = AppPreferences.TEMPLATE_CUSTOM;
                 }
 
@@ -154,9 +144,12 @@ class TemplateOptions extends OptionsPanel {
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.gridwidth = 3;
         gbc.anchor = GridBagConstraints.LINE_START;
-        gridbag.setConstraints(plain, gbc); add(plain);
-        gridbag.setConstraints(empty, gbc); add(empty);
-        gridbag.setConstraints(custom, gbc); add(custom);
+        gridbag.setConstraints(plain, gbc);
+        add(plain);
+        gridbag.setConstraints(empty, gbc);
+        add(empty);
+        gridbag.setConstraints(custom, gbc);
+        add(custom);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = 1;
         gbc.gridy = 3;
@@ -164,16 +157,28 @@ class TemplateOptions extends OptionsPanel {
         JPanel strut = new JPanel();
         strut.setMinimumSize(new Dimension(50, 1));
         strut.setPreferredSize(new Dimension(50, 1));
-        gbc.weightx = 0.0; gridbag.setConstraints(strut, gbc); add(strut);
-        gbc.weightx = 1.0; gridbag.setConstraints(templateField, gbc); add(templateField);
-        gbc.weightx = 0.0; gridbag.setConstraints(templateButton, gbc); add(templateButton);
+        gbc.weightx = 0.0;
+        gridbag.setConstraints(strut, gbc);
+        add(strut);
+        gbc.weightx = 1.0;
+        gridbag.setConstraints(templateField, gbc);
+        add(templateField);
+        gbc.weightx = 0.0;
+        gridbag.setConstraints(templateButton, gbc);
+        add(templateButton);
 
         AppPreferences.addPropertyChangeListener(AppPreferences.TEMPLATE_TYPE, myListener);
         AppPreferences.addPropertyChangeListener(AppPreferences.TEMPLATE_FILE, myListener);
         switch (AppPreferences.getTemplateType()) {
-        case AppPreferences.TEMPLATE_PLAIN: plain.setSelected(true); break;
-        case AppPreferences.TEMPLATE_EMPTY: empty.setSelected(true); break;
-        case AppPreferences.TEMPLATE_CUSTOM: custom.setSelected(true); break;
+            case AppPreferences.TEMPLATE_PLAIN:
+                plain.setSelected(true);
+                break;
+            case AppPreferences.TEMPLATE_EMPTY:
+                empty.setSelected(true);
+                break;
+            case AppPreferences.TEMPLATE_CUSTOM:
+                custom.setSelected(true);
+                break;
         }
         myListener.setTemplateField(AppPreferences.getTemplateFile());
     }

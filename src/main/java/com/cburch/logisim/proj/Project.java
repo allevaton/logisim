@@ -3,21 +3,8 @@
 
 package com.cburch.logisim.proj;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-
-import javax.swing.JFileChooser;
-
-import com.cburch.logisim.circuit.Circuit;
-import com.cburch.logisim.circuit.CircuitListener;
-import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.circuit.Simulator;
-import com.cburch.logisim.circuit.SubcircuitFactory;
-import com.cburch.logisim.file.Loader;
-import com.cburch.logisim.file.LogisimFile;
-import com.cburch.logisim.file.LibraryEvent;
-import com.cburch.logisim.file.LibraryListener;
-import com.cburch.logisim.file.Options;
+import com.cburch.logisim.circuit.*;
+import com.cburch.logisim.file.*;
 import com.cburch.logisim.gui.log.LogFrame;
 import com.cburch.logisim.gui.main.Canvas;
 import com.cburch.logisim.gui.main.Frame;
@@ -29,6 +16,10 @@ import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 import com.cburch.logisim.util.JFileChoosers;
+
+import javax.swing.*;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Project {
     private static final int MAX_UNDO_SIZE = 64;
@@ -75,22 +66,22 @@ public class Project {
     private Simulator simulator = new Simulator();
     private LogisimFile file;
     private CircuitState circuitState;
-    private HashMap<Circuit,CircuitState> stateMap
-        = new HashMap<Circuit,CircuitState>();
+    private HashMap<Circuit, CircuitState> stateMap
+            = new HashMap<Circuit, CircuitState>();
     private Frame frame = null;
     private OptionsFrame optionsFrame = null;
     private LogFrame logFrame = null;
     private Tool tool = null;
     private LinkedList<ActionData> undoLog = new LinkedList<ActionData>();
     private int undoMods = 0;
-	private LinkedList<ActionData> redoLog = new LinkedList<ActionData>();
-	private int redoMods = 0;
+    private LinkedList<ActionData> redoLog = new LinkedList<ActionData>();
+    private int redoMods = 0;
     private EventSourceWeakSupport<ProjectListener> projectListeners
-        = new EventSourceWeakSupport<ProjectListener>();
+            = new EventSourceWeakSupport<ProjectListener>();
     private EventSourceWeakSupport<LibraryListener> fileListeners
-        = new EventSourceWeakSupport<LibraryListener>();
+            = new EventSourceWeakSupport<LibraryListener>();
     private EventSourceWeakSupport<CircuitListener> circuitListeners
-        = new EventSourceWeakSupport<CircuitListener>();
+            = new EventSourceWeakSupport<CircuitListener>();
     private Dependencies depends;
     private MyListener myListener = new MyListener();
     private boolean startupScreen = false;
@@ -138,9 +129,7 @@ public class Project {
         if (optionsFrame == null || optionsFrame.getLogisimFile() != file) {
             if (create) {
                 optionsFrame = new OptionsFrame(this);
-            }
-
-            else {
+            } else {
                 optionsFrame = null;
             }
 
@@ -179,19 +168,20 @@ public class Project {
         }
     }
 
-	/** Decide whether or not you can redo
-	 * @return if we can redo
-	 */
-	public boolean getCanRedo()
-	{
-		// If there's a redo option found...
-		if( redoLog.size() > 0 )
-			// We can redo
-			return true;
-		else
-			// Otherwise we can't.
-			return false;
-	}
+    /**
+     * Decide whether or not you can redo
+     *
+     * @return if we can redo
+     */
+    public boolean getCanRedo() {
+        // If there's a redo option found...
+        if (redoLog.size() > 0)
+            // We can redo
+            return true;
+        else
+            // Otherwise we can't.
+            return false;
+    }
 
     public Action getLastAction() {
         if (undoLog.size() == 0) {
@@ -201,16 +191,17 @@ public class Project {
         }
     }
 
-	/** Returns the action of the last entry in the redo log
-	 * @return last action in redo log
-	 */
-	public Action getLastRedoAction()
-	{
-		if( redoLog.size() == 0 )
-			return null;
-		else
-			return redoLog.getLast().action;
-	}
+    /**
+     * Returns the action of the last entry in the redo log
+     *
+     * @return last action in redo log
+     */
+    public Action getLastRedoAction() {
+        if (redoLog.size() == 0)
+            return null;
+        else
+            return redoLog.getLast().action;
+    }
 
     public Tool getTool() {
         return tool;
@@ -438,17 +429,15 @@ public class Project {
 
         Action toAdd = act;
         startupScreen = false;
-		
-		if (!undoLog.isEmpty() && act.shouldAppendTo(getLastAction()))
-		{
+
+        if (!undoLog.isEmpty() && act.shouldAppendTo(getLastAction())) {
             ActionData firstData = undoLog.removeLast();
             Action first = firstData.action;
-			
-			if (first.isModification())
-			{
-				--undoMods;
-			}
-			
+
+            if (first.isModification()) {
+                --undoMods;
+            }
+
             toAdd = first.append(act);
             if (toAdd != null) {
                 undoLog.add(new ActionData(circuitState, toAdd));
@@ -478,12 +467,10 @@ public class Project {
         fireEvent(new ProjectEvent(ProjectEvent.ACTION_COMPLETE, this, act));
     }
 
-	public void undoAction()
-	{
-		if( undoLog != null && undoLog.size() > 0 )
-		{
-			redoLog.addLast( undoLog.getLast() );
-			++redoMods;
+    public void undoAction() {
+        if (undoLog != null && undoLog.size() > 0) {
+            redoLog.addLast(undoLog.getLast());
+            ++redoMods;
             ActionData data = undoLog.removeLast();
             setCircuitState(data.circuitState);
             Action action = data.action;
@@ -495,41 +482,40 @@ public class Project {
             action.undo(this);
             file.setDirty(isFileDirty());
             fireEvent(new ProjectEvent(ProjectEvent.UNDO_COMPLETE, this, action));
-		}
-	}
+        }
+    }
 
-	/** Redo actions that were previously undone
-	 */
-	public void redoAction()
-	{
-		// If there ARE things to undo...
-		if( redoLog != null && redoLog.size() > 0 )
-		{
-			// Add the last element of the undo log to the redo log
-			undoLog.addLast( redoLog.getLast() );
-			
-			// Remove the last item in the redo log, but keep the data
-			ActionData data = redoLog.removeLast();
+    /**
+     * Redo actions that were previously undone
+     */
+    public void redoAction() {
+        // If there ARE things to undo...
+        if (redoLog != null && redoLog.size() > 0) {
+            // Add the last element of the undo log to the redo log
+            undoLog.addLast(redoLog.getLast());
 
-			// Restore the circuit state to the redo's state
-			setCircuitState( data.circuitState );
+            // Remove the last item in the redo log, but keep the data
+            ActionData data = redoLog.removeLast();
 
-			// Get the actions required to make that state change happen
-			Action action = data.action;
+            // Restore the circuit state to the redo's state
+            setCircuitState(data.circuitState);
 
-			// Is this action a modification?
-			if( action.isModification() )
-				// Yes? Then get rid of the mod
-				--redoMods;
-			
-			// Call the event
-			fireEvent( new ProjectEvent( ProjectEvent.REDO_START, this, action ) );
+            // Get the actions required to make that state change happen
+            Action action = data.action;
 
-			// Redo the action
-			action.doIt( this );
+            // Is this action a modification?
+            if (action.isModification())
+                // Yes? Then get rid of the mod
+                --redoMods;
 
-			// Complete the redo
-			fireEvent( new ProjectEvent( ProjectEvent.REDO_COMPLETE, this, action ) );
+            // Call the event
+            fireEvent(new ProjectEvent(ProjectEvent.REDO_START, this, action));
+
+            // Redo the action
+            action.doIt(this);
+
+            // Complete the redo
+            fireEvent(new ProjectEvent(ProjectEvent.REDO_COMPLETE, this, action));
         }
     }
 

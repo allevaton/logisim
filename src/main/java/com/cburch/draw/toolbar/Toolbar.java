@@ -3,11 +3,8 @@
 
 package com.cburch.draw.toolbar;
 
-import java.awt.BorderLayout;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class Toolbar extends JPanel {

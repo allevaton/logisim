@@ -3,21 +3,7 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
-import com.cburch.logisim.analyze.model.AnalyzerModel;
-import com.cburch.logisim.analyze.model.Entry;
-import com.cburch.logisim.analyze.model.Expression;
-import com.cburch.logisim.analyze.model.Expressions;
-import com.cburch.logisim.analyze.model.TruthTable;
+import com.cburch.logisim.analyze.model.*;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.data.Location;
@@ -27,18 +13,24 @@ import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.std.wiring.Pin;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class Analyze {
     private static final int MAX_ITERATIONS = 100;
 
-    private Analyze() { }
+    private Analyze() {
+    }
 
     //
     // getPinLabels
     //
-    /** Returns a sorted map from Pin objects to String objects,
+
+    /**
+     * Returns a sorted map from Pin objects to String objects,
      * listed in canonical order (top-down order, with ties
      * broken left-right).
      */
@@ -53,7 +45,7 @@ public class Analyze {
                 }
 
                 if (a.getY() > b.getY()) {
-                    return  1;
+                    return 1;
                 }
 
                 if (a.getX() < b.getX()) {
@@ -61,7 +53,7 @@ public class Analyze {
                 }
 
                 if (a.getX() > b.getX()) {
-                    return  1;
+                    return 1;
                 }
 
                 return a.hashCode() - b.hashCode();
@@ -187,12 +179,14 @@ public class Analyze {
     //
     // computeExpression
     //
-    /** Computes the expression corresponding to the given
+
+    /**
+     * Computes the expression corresponding to the given
      * circuit, or raises ComputeException if difficulties
      * arise.
      */
     public static void computeExpression(AnalyzerModel model, Circuit circuit,
-            Map<Instance, String> pinNames) throws AnalyzeException {
+                                         Map<Instance, String> pinNames) throws AnalyzeException {
         ExpressionMap expressionMap = new ExpressionMap(circuit);
 
         ArrayList<String> inputNames = new ArrayList<String>();
@@ -240,7 +234,7 @@ public class Analyze {
         }
     }
 
-    private static class ExpressionMap extends HashMap<Location,Expression> {
+    private static class ExpressionMap extends HashMap<Location, Expression> {
         private Circuit circuit;
         private Set<Location> dirtyPoints = new HashSet<Location>();
         private Map<Location, Component> causes = new HashMap<Location, Component>();
@@ -266,7 +260,7 @@ public class Analyze {
 
     // propagates expressions down wires
     private static void propagateWires(ExpressionMap expressionMap,
-            HashSet<Location> pointsToProcess) throws AnalyzeException {
+                                       HashSet<Location> pointsToProcess) throws AnalyzeException {
         expressionMap.currentCause = null;
         for (Location p : pointsToProcess) {
             Expression e = expressionMap.get(p);
@@ -294,7 +288,7 @@ public class Analyze {
 
     // computes outputs of affected components
     private static HashSet<Component> getDirtyComponents(Circuit circuit,
-            Set<Location> pointsToProcess) throws AnalyzeException {
+                                                         Set<Location> pointsToProcess) throws AnalyzeException {
         HashSet<Component> dirtyComponents = new HashSet<Component>();
         for (Location point : pointsToProcess) {
             for (Component comp : circuit.getNonWires(point)) {
@@ -305,10 +299,10 @@ public class Analyze {
     }
 
     private static void propagateComponents(ExpressionMap expressionMap,
-            Collection<Component> components) throws AnalyzeException {
+                                            Collection<Component> components) throws AnalyzeException {
         for (Component comp : components) {
             ExpressionComputer computer
-                = (ExpressionComputer) comp.getFeature(ExpressionComputer.class);
+                    = (ExpressionComputer) comp.getFeature(ExpressionComputer.class);
             if (computer != null) {
                 try {
                     expressionMap.currentCause = comp;
@@ -326,8 +320,10 @@ public class Analyze {
         }
     }
 
-    /** Checks whether any of the recently placed expressions in the
-     * expression map are self-referential; if so, return it. */
+    /**
+     * Checks whether any of the recently placed expressions in the
+     * expression map are self-referential; if so, return it.
+     */
     private static Expression checkForCircularExpressions(ExpressionMap expressionMap)
             throws AnalyzeException {
         for (Location point : expressionMap.dirtyPoints) {
@@ -343,9 +339,12 @@ public class Analyze {
     //
     // ComputeTable
     //
-    /** Returns a truth table corresponding to the circuit. */
+
+    /**
+     * Returns a truth table corresponding to the circuit.
+     */
     public static void computeTable(AnalyzerModel model, Project proj,
-            Circuit circuit, Map<Instance, String> pinLabels) {
+                                    Circuit circuit, Map<Instance, String> pinLabels) {
         ArrayList<Instance> inputPins = new ArrayList<Instance>();
         ArrayList<String> inputNames = new ArrayList<String>();
         ArrayList<Instance> outputPins = new ArrayList<Instance>();
@@ -394,17 +393,11 @@ public class Analyze {
                     Value outValue = Pin.FACTORY.getValue(pinState).get(0);
                     if (outValue == Value.TRUE) {
                         out = Entry.ONE;
-                    }
-
-                    else if (outValue == Value.FALSE) {
+                    } else if (outValue == Value.FALSE) {
                         out = Entry.ZERO;
-                    }
-
-                    else if (outValue == Value.ERROR) {
+                    } else if (outValue == Value.ERROR) {
                         out = Entry.BUS_ERROR;
-                    }
-
-                    else {
+                    } else {
                         out = Entry.DONT_CARE;
                     }
 

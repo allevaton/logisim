@@ -3,17 +3,17 @@
 
 package com.cburch.logisim.gui.generic;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeEvent;
 import com.cburch.logisim.data.AttributeListener;
 import com.cburch.logisim.data.AttributeSet;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public abstract class AttributeSetTableModel
         implements AttrTableModel, AttributeListener {
@@ -71,7 +71,7 @@ public abstract class AttributeSetTableModel
                 setValueRequested(attr, value);
             } catch (ClassCastException e) {
                 String msg = getFromLocale("attributeChangeInvalidError")
-                    + ": " + e;
+                        + ": " + e;
                 throw new AttrTableSetException(msg);
             } catch (NumberFormatException e) {
                 String msg = getFromLocale("attributeChangeInvalidError");
@@ -173,7 +173,7 @@ public abstract class AttributeSetTableModel
     }
 
     protected abstract void setValueRequested(Attribute<Object> attr, Object value)
-        throws AttrTableSetException;
+            throws AttrTableSetException;
 
     //
     // AttributeListener methods

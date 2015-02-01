@@ -8,7 +8,8 @@ import com.cburch.logisim.analyze.model.Expressions;
 import com.cburch.logisim.data.Value;
 import com.cburch.logisim.instance.InstancePainter;
 import com.cburch.logisim.instance.InstanceState;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class EvenParityGate extends AbstractGate {
     public static EvenParityGate FACTORY = new EvenParityGate();
@@ -31,7 +32,7 @@ class EvenParityGate extends AbstractGate {
 
     @Override
     protected void paintDinShape(InstancePainter painter, int width, int height,
-            int inputs) {
+                                 int inputs) {
         paintRectangular(painter, width, height);
     }
 
@@ -50,5 +51,7 @@ class EvenParityGate extends AbstractGate {
     }
 
     @Override
-    protected Value getIdentity() { return Value.FALSE; }
+    protected Value getIdentity() {
+        return Value.FALSE;
+    }
 }

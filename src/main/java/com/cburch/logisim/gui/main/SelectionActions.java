@@ -3,24 +3,7 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import com.cburch.logisim.circuit.Circuit;
-import com.cburch.logisim.circuit.CircuitMutation;
-import com.cburch.logisim.circuit.CircuitTransaction;
-import com.cburch.logisim.circuit.CircuitTransactionResult;
-import com.cburch.logisim.circuit.ReplacementMap;
-import com.cburch.logisim.circuit.SubcircuitFactory;
-import com.cburch.logisim.circuit.Wire;
+import com.cburch.logisim.circuit.*;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.data.AttributeSet;
@@ -32,10 +15,15 @@ import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.util.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class SelectionActions {
-    private SelectionActions() { }
+    private SelectionActions() {
+    }
 
     // anchors all floating elements, keeping elements in selection
     public static Action anchorAll(Selection sel) {
@@ -303,7 +291,9 @@ public class SelectionActions {
         }
 
         @Override
-        public boolean isModification() { return false; }
+        public boolean isModification() {
+            return false;
+        }
 
         @Override
         public String getName() {
@@ -353,9 +343,9 @@ public class SelectionActions {
                 } else {
                     String msg = getFromLocale("pasteCloneQuery",
                             compFactory.getName());
-                    Object[] opts = { getFromLocale("pasteCloneReplace"),
+                    Object[] opts = {getFromLocale("pasteCloneReplace"),
                             getFromLocale("pasteCloneIgnore"),
-                            getFromLocale("pasteCloneCancel") };
+                            getFromLocale("pasteCloneCancel")};
                     int select = JOptionPane.showOptionDialog(proj.getFrame(),
                             msg, getFromLocale("pasteCloneTitle"), 0,
                             JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
@@ -419,7 +409,7 @@ public class SelectionActions {
     }
 
     private static ComponentFactory findComponentFactory(ComponentFactory factory,
-            ArrayList<Library> libs, boolean acceptNameMatch) {
+                                                         ArrayList<Library> libs, boolean acceptNameMatch) {
         String name = factory.getName();
         for (Library lib : libs) {
             for (Tool tool : lib.getTools()) {
@@ -446,7 +436,7 @@ public class SelectionActions {
         private Selection sel;
         private CircuitTransaction xnReverse;
         private SelectionSave after;
-        private HashMap<Component,Component> componentReplacements;
+        private HashMap<Component, Component> componentReplacements;
 
         Paste(Selection sel, HashMap<Component, Component> replacements) {
             this.sel = sel;

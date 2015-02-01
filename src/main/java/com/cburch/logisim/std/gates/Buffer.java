@@ -3,45 +3,33 @@
 
 package com.cburch.logisim.std.gates;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.Map;
-
 import com.cburch.logisim.analyze.model.Expression;
 import com.cburch.logisim.circuit.ExpressionComputer;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.file.Options;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.Icons;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class Buffer extends InstanceFactory {
     public static InstanceFactory FACTORY = new Buffer();
 
     private Buffer() {
         super("Buffer", getFromLocale("bufferComponent"));
-        setAttributes(new Attribute[] { StdAttr.FACING, StdAttr.WIDTH,
-                    GateAttributes.ATTR_OUTPUT, StdAttr.LABEL, StdAttr.LABEL_FONT },
-                new Object[] { Direction.EAST, BitWidth.ONE,
-                    GateAttributes.OUTPUT_01, "", StdAttr.DEFAULT_LABEL_FONT });
+        setAttributes(new Attribute[]{StdAttr.FACING, StdAttr.WIDTH,
+                        GateAttributes.ATTR_OUTPUT, StdAttr.LABEL, StdAttr.LABEL_FONT},
+                new Object[]{Direction.EAST, BitWidth.ONE,
+                        GateAttributes.OUTPUT_01, "", StdAttr.DEFAULT_LABEL_FONT});
         setIcon(Icons.getIcon("bufferGate.svg"));
         setFacingAttribute(StdAttr.FACING);
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
-        setPorts(new Port[] {
+        setPorts(new Port[]{
                 new Port(0, 0, Port.OUTPUT, StdAttr.WIDTH),
                 new Port(0, -20, Port.INPUT, StdAttr.WIDTH),
         });
@@ -106,7 +94,7 @@ class Buffer extends InstanceFactory {
         if (key == ExpressionComputer.class) {
             return new ExpressionComputer() {
                 @Override
-                public void computeExpression(Map<Location,Expression> expressionMap) {
+                public void computeExpression(Map<Location, Expression> expressionMap) {
                     Expression e = expressionMap.get(instance.getPortLocation(1));
                     if (e != null) {
                         expressionMap.put(instance.getPortLocation(0), e);
@@ -150,10 +138,14 @@ class Buffer extends InstanceFactory {
         GraphicsUtil.switchToWidth(g, 2);
         int[] xp = new int[4];
         int[] yp = new int[4];
-        xp[0] = 0;   yp[0] =  0;
-        xp[1] = -19; yp[1] = -7;
-        xp[2] = -19; yp[2] =  7;
-        xp[3] = 0;   yp[3] =  0;
+        xp[0] = 0;
+        yp[0] = 0;
+        xp[1] = -19;
+        yp[1] = -7;
+        xp[2] = -19;
+        yp[2] = 7;
+        xp[3] = 0;
+        yp[3] = 0;
         g.drawPolyline(xp, yp, 4);
 
         if (rotate != 0.0) {

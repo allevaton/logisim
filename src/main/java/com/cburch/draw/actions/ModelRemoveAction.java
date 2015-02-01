@@ -3,14 +3,15 @@
 
 package com.cburch.draw.actions;
 
+import com.cburch.draw.model.CanvasModel;
+import com.cburch.draw.model.CanvasObject;
+import com.cburch.draw.util.ZOrder;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import com.cburch.draw.model.CanvasModel;
-import com.cburch.draw.model.CanvasObject;
-import com.cburch.draw.util.ZOrder;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ModelRemoveAction extends ModelAction {
     private Map<CanvasObject, Integer> removed;

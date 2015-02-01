@@ -3,34 +3,27 @@
 
 package com.cburch.logisim.std.arith;
 
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Negator extends InstanceFactory {
-    private static final int IN    = 0;
-    private static final int OUT   = 1;
+    private static final int IN = 0;
+    private static final int OUT = 1;
 
     public Negator() {
         super("Negator", getFromLocale("negatorComponent"));
-        setAttributes(new Attribute[] { StdAttr.WIDTH },
-                    new Object[] { BitWidth.create(8) });
+        setAttributes(new Attribute[]{StdAttr.WIDTH},
+                new Object[]{BitWidth.create(8)});
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
         setOffsetBounds(Bounds.create(-40, -20, 40, 40));
         setIconName("negator.svg");
 
         Port[] ps = new Port[2];
-        ps[IN]  = new Port(-40,  0, Port.INPUT,  StdAttr.WIDTH);
-        ps[OUT] = new Port(  0,  0, Port.OUTPUT, StdAttr.WIDTH);
+        ps[IN] = new Port(-40, 0, Port.INPUT, StdAttr.WIDTH);
+        ps[OUT] = new Port(0, 0, Port.OUTPUT, StdAttr.WIDTH);
         ps[IN].setToolTip(getFromLocale("negatorInputTip"));
         ps[OUT].setToolTip(getFromLocale("negatorOutputTip"));
         setPorts(ps);
@@ -65,9 +58,7 @@ public class Negator extends InstanceFactory {
                 } else {
                     if (fill == Value.FALSE) {
                         fill = bits[pos];
-                    }
-
-                    else {
+                    } else {
                         bits[pos] = fill;
                     }
 

@@ -3,20 +3,11 @@
 
 package com.cburch.logisim.util;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.LayoutManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class HorizontalSplitPane extends JPanel {
@@ -24,7 +15,7 @@ public class HorizontalSplitPane extends JPanel {
     private static final Color DRAG_COLOR = new Color(0, 0, 0, 128);
 
     abstract static class Dragbar extends JComponent
-        implements MouseListener, MouseMotionListener {
+            implements MouseListener, MouseMotionListener {
         private boolean dragging = false;
         private int curValue;
 
@@ -34,6 +25,7 @@ public class HorizontalSplitPane extends JPanel {
         }
 
         abstract int getDragValue(MouseEvent e);
+
         abstract void setDragValue(int value);
 
         @Override
@@ -45,7 +37,8 @@ public class HorizontalSplitPane extends JPanel {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) { }
+        public void mouseClicked(MouseEvent e) {
+        }
 
         @Override
         public void mousePressed(MouseEvent e) {
@@ -70,10 +63,12 @@ public class HorizontalSplitPane extends JPanel {
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) {
+        }
 
         @Override
-        public void mouseExited(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) {
+        }
 
         @Override
         public void mouseDragged(MouseEvent e) {
@@ -87,15 +82,19 @@ public class HorizontalSplitPane extends JPanel {
         }
 
         @Override
-        public void mouseMoved(MouseEvent e) { }
+        public void mouseMoved(MouseEvent e) {
+        }
     }
 
 
     private class MyLayout implements LayoutManager {
         @Override
-        public void addLayoutComponent(String name, Component comp) { }
+        public void addLayoutComponent(String name, Component comp) {
+        }
+
         @Override
-        public void removeLayoutComponent(Component comp) { }
+        public void removeLayoutComponent(Component comp) {
+        }
 
         @Override
         public Dimension preferredLayoutSize(Container parent) {
@@ -184,7 +183,7 @@ public class HorizontalSplitPane extends JPanel {
     }
 
     public HorizontalSplitPane(JComponent comp0, JComponent comp1,
-            double fraction) {
+                               double fraction) {
         this.comp0 = comp0;
         this.comp1 = comp1;
         // above the other components
@@ -205,8 +204,7 @@ public class HorizontalSplitPane extends JPanel {
     public void setFraction(double value) {
         if (value < 0.0) {
             value = 0.0;
-        }
-        else if (value > 1.0) {
+        } else if (value > 1.0) {
             value = 1.0;
         }
 

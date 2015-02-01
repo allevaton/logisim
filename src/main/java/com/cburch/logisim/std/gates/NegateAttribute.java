@@ -6,7 +6,8 @@ package com.cburch.logisim.std.gates;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.Attributes;
 import com.cburch.logisim.data.Direction;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class NegateAttribute extends Attribute<Boolean> {
     private static Attribute<Boolean> BOOLEAN_ATTR = Attributes.forBoolean("negateDummy");

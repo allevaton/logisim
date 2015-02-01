@@ -3,14 +3,13 @@
 
 package com.cburch.logisim.gui.prefs;
 
+import com.cburch.logisim.prefs.PrefMonitor;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.JCheckBox;
-
-import com.cburch.logisim.prefs.PrefMonitor;
 
 @SuppressWarnings("serial")
 class PrefBoolean extends JCheckBox

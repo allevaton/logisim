@@ -3,9 +3,9 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.Iterator;
-
 import com.cburch.logisim.data.Location;
+
+import java.util.Iterator;
 
 class WireIterator implements Iterator<Location> {
     private int curX;
@@ -24,25 +24,17 @@ class WireIterator implements Iterator<Location> {
         destReturned = false;
         if (curX < destX) {
             deltaX = 10;
-        }
-
-        else if (curX > destX) {
+        } else if (curX > destX) {
             deltaX = -10;
-        }
-
-        else {
+        } else {
             deltaX = 0;
         }
 
         if (curY < destY) {
             deltaY = 10;
-        }
-
-        else if (curY > destY) {
+        } else if (curY > destY) {
             deltaY = -10;
-        }
-
-        else {
+        } else {
             deltaY = 0;
         }
 

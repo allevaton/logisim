@@ -9,10 +9,12 @@ import com.cburch.logisim.file.MouseMappings;
 import com.cburch.logisim.proj.Action;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.Tool;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class OptionsActions {
-    private OptionsActions() { }
+    private OptionsActions() {
+    }
 
     public static Action setAttribute(AttributeSet attrs, Attribute<?> attr, Object value) {
         Object oldValue = attrs.getValue(attr);
@@ -24,7 +26,7 @@ class OptionsActions {
     }
 
     public static Action setMapping(MouseMappings mm, Integer mods,
-            Tool tool) {
+                                    Tool tool) {
         return new SetMapping(mm, mods, tool);
     }
 
@@ -39,7 +41,7 @@ class OptionsActions {
         private Object oldval;
 
         SetAction(AttributeSet attrs, Attribute<?> attr,
-                Object value) {
+                  Object value) {
             @SuppressWarnings("unchecked")
             Attribute<Object> a = (Attribute<Object>) attr;
             this.attrs = attrs;

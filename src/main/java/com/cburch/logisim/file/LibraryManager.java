@@ -3,6 +3,8 @@
 
 package com.cburch.logisim.file;
 
+import com.cburch.logisim.tools.Library;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -11,8 +13,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.WeakHashMap;
 
-import com.cburch.logisim.tools.Library;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class LibraryManager {
     public static final LibraryManager instance = new LibraryManager();
@@ -21,9 +22,11 @@ class LibraryManager {
 
     private static abstract class LibraryDescriptor {
         abstract boolean concernsFile(File query);
+
         abstract String toDescriptor(Loader loader);
+
         abstract void setBase(Loader loader, LoadedLibrary lib)
-            throws LoadFailedException;
+                throws LoadFailedException;
     }
 
     private static class LogisimProjectDescriptor extends LibraryDescriptor {
@@ -104,12 +107,12 @@ class LibraryManager {
         }
     }
 
-    private HashMap<LibraryDescriptor,WeakReference<LoadedLibrary>> fileMap;
-    private WeakHashMap<LoadedLibrary,LibraryDescriptor> invMap;
+    private HashMap<LibraryDescriptor, WeakReference<LoadedLibrary>> fileMap;
+    private WeakHashMap<LoadedLibrary, LibraryDescriptor> invMap;
 
     private LibraryManager() {
-        fileMap = new HashMap<LibraryDescriptor,WeakReference<LoadedLibrary>>();
-        invMap = new WeakHashMap<LoadedLibrary,LibraryDescriptor>();
+        fileMap = new HashMap<LibraryDescriptor, WeakReference<LoadedLibrary>>();
+        invMap = new WeakHashMap<LoadedLibrary, LibraryDescriptor>();
         ProjectsDirty.initialize();
     }
 
@@ -159,7 +162,7 @@ class LibraryManager {
             return loadJarLibrary(loader, toRead, className);
         } else {
             loader.showError(getFromLocale("fileTypeError",
-                type, desc));
+                    type, desc));
             return null;
         }
     }

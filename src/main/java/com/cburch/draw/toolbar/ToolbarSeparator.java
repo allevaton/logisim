@@ -3,10 +3,7 @@
 
 package com.cburch.draw.toolbar;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 
 public class ToolbarSeparator implements ToolbarItem {
     private int size;
@@ -34,7 +31,7 @@ public class ToolbarSeparator implements ToolbarItem {
             y = 2;
             x = (w - 2) / 2;
             w = 2;
-        // separator is a horizontal line in vertical toolbar
+            // separator is a horizontal line in vertical toolbar
         } else {
             w -= 8;
             x = 2;

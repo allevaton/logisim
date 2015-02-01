@@ -3,11 +3,11 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.util.Arrays;
-
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Value;
 import com.cburch.logisim.instance.InstanceData;
+
+import java.util.Arrays;
 
 class ShiftRegisterData extends ClockState implements InstanceData {
     private BitWidth width;

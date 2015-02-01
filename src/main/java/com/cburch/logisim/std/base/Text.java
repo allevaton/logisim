@@ -3,50 +3,43 @@
 
 package com.cburch.logisim.std.base;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Font;
-import java.awt.Rectangle;
-
 import com.cburch.logisim.comp.TextField;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.instance.InstanceFactory;
 import com.cburch.logisim.instance.InstancePainter;
 import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Text extends InstanceFactory {
     public static Attribute<String> ATTR_TEXT = Attributes.forString("text",
             getFromLocale("textTextAttr"));
     public static Attribute<Font> ATTR_FONT = Attributes.forFont("font",
-        getFromLocale("textFontAttr"));
+            getFromLocale("textFontAttr"));
     public static Attribute<AttributeOption> ATTR_HALIGN = Attributes.forOption("halign",
-        getFromLocale("textHorzAlignAttr"), new AttributeOption[] {
-            new AttributeOption(Integer.valueOf(TextField.H_LEFT),
-                "left", getFromLocale("textHorzAlignLeftOpt")),
-            new AttributeOption(Integer.valueOf(TextField.H_RIGHT),
-                "right", getFromLocale("textHorzAlignRightOpt")),
-            new AttributeOption(Integer.valueOf(TextField.H_CENTER),
-                "center", getFromLocale("textHorzAlignCenterOpt")),
-        });
+            getFromLocale("textHorzAlignAttr"), new AttributeOption[]{
+                    new AttributeOption(Integer.valueOf(TextField.H_LEFT),
+                            "left", getFromLocale("textHorzAlignLeftOpt")),
+                    new AttributeOption(Integer.valueOf(TextField.H_RIGHT),
+                            "right", getFromLocale("textHorzAlignRightOpt")),
+                    new AttributeOption(Integer.valueOf(TextField.H_CENTER),
+                            "center", getFromLocale("textHorzAlignCenterOpt")),
+            });
     public static Attribute<AttributeOption> ATTR_VALIGN = Attributes.forOption("valign",
-        getFromLocale("textVertAlignAttr"), new AttributeOption[] {
-            new AttributeOption(Integer.valueOf(TextField.V_TOP),
-                "top", getFromLocale("textVertAlignTopOpt")),
-            new AttributeOption(Integer.valueOf(TextField.V_BASELINE),
-                "base", getFromLocale("textVertAlignBaseOpt")),
-            new AttributeOption(Integer.valueOf(TextField.V_BOTTOM),
-                "bottom", getFromLocale("textVertAlignBottomOpt")),
-            new AttributeOption(Integer.valueOf(TextField.H_CENTER),
-                "center", getFromLocale("textVertAlignCenterOpt")),
-        });
+            getFromLocale("textVertAlignAttr"), new AttributeOption[]{
+                    new AttributeOption(Integer.valueOf(TextField.V_TOP),
+                            "top", getFromLocale("textVertAlignTopOpt")),
+                    new AttributeOption(Integer.valueOf(TextField.V_BASELINE),
+                            "base", getFromLocale("textVertAlignBaseOpt")),
+                    new AttributeOption(Integer.valueOf(TextField.V_BOTTOM),
+                            "bottom", getFromLocale("textVertAlignBottomOpt")),
+                    new AttributeOption(Integer.valueOf(TextField.H_CENTER),
+                            "center", getFromLocale("textVertAlignCenterOpt")),
+            });
 
     public static final Text FACTORY = new Text();
 
@@ -183,5 +176,6 @@ public class Text extends InstanceFactory {
     }
 
     @Override
-    public void propagate(InstanceState state) { }
+    public void propagate(InstanceState state) {
+    }
 }

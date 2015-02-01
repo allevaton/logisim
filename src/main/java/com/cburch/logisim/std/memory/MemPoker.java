@@ -3,16 +3,15 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.instance.InstancePainter;
 import com.cburch.logisim.instance.InstancePoker;
 import com.cburch.logisim.instance.InstanceState;
 import com.cburch.logisim.proj.Project;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class MemPoker extends InstancePoker {
     private MemPoker sub;
@@ -37,10 +36,12 @@ public class MemPoker extends InstancePoker {
     public Bounds getBounds(InstancePainter state) {
         return sub.getBounds(state);
     }
+
     @Override
     public void paint(InstancePainter painter) {
         sub.paint(painter);
     }
+
     @Override
     public void keyTyped(InstanceState state, KeyEvent e) {
         sub.keyTyped(state, e);

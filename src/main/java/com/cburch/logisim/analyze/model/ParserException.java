@@ -4,7 +4,7 @@
 package com.cburch.logisim.analyze.model;
 
 @SuppressWarnings("serial")
-public  class ParserException extends Exception {
+public class ParserException extends Exception {
     private String message;
     private int start;
     private int length;

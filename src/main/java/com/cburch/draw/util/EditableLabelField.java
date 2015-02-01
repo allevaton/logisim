@@ -3,11 +3,8 @@
 
 package com.cburch.draw.util;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import javax.swing.BorderFactory;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class EditableLabelField extends JTextField {
@@ -25,7 +22,7 @@ public class EditableLabelField extends JTextField {
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(getBackground());
-        g.fillRect(0,0, getWidth(),getHeight());
+        g.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(g);
     }
 }

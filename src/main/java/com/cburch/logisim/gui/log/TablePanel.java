@@ -3,21 +3,16 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JScrollBar;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import com.cburch.logisim.data.Value;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class TablePanel extends LogPanel {
@@ -48,7 +43,8 @@ class TablePanel extends LogPanel {
         }
 
         @Override
-        public void filePropertyChanged(ModelEvent event) { }
+        public void filePropertyChanged(ModelEvent event) {
+        }
 
         private void computeRowCount() {
             Model model = getModel();
@@ -99,12 +95,12 @@ class TablePanel extends LogPanel {
 
             if (direction > 0) {
                 return curY > 0
-                    ? numCells * cellHeight
-                    : numCells * cellHeight + HEADER_SEP;
+                        ? numCells * cellHeight
+                        : numCells * cellHeight + HEADER_SEP;
             } else {
                 return curY > cellHeight + HEADER_SEP
-                    ? numCells * cellHeight
-                    : numCells * cellHeight + HEADER_SEP;
+                        ? numCells * cellHeight
+                        : numCells * cellHeight + HEADER_SEP;
             }
         }
 
@@ -245,7 +241,7 @@ class TablePanel extends LogPanel {
     }
 
     private int paintHeader(String header, int x, int y,
-            Graphics g, FontMetrics fm) {
+                            Graphics g, FontMetrics fm) {
         int width = fm.stringWidth(header);
         g.drawString(header, x + (cellWidth - width) / 2, y);
         return x + cellWidth + COLUMN_SEP;

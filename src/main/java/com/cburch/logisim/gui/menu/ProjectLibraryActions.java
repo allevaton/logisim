@@ -3,6 +3,13 @@
 
 package com.cburch.logisim.gui.menu;
 
+import com.cburch.logisim.file.Loader;
+import com.cburch.logisim.file.LogisimFile;
+import com.cburch.logisim.file.LogisimFileActions;
+import com.cburch.logisim.proj.Project;
+import com.cburch.logisim.tools.Library;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,21 +17,12 @@ import java.util.List;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import javax.swing.JFileChooser;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-
-import com.cburch.logisim.file.Loader;
-import com.cburch.logisim.file.LogisimFile;
-import com.cburch.logisim.file.LogisimFileActions;
-import com.cburch.logisim.proj.Project;
-import com.cburch.logisim.tools.Library;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class ProjectLibraryActions {
-    private ProjectLibraryActions() { }
+    private ProjectLibraryActions() {
+    }
 
     private static class LibraryJList extends JList<Library> {
         LibraryJList(List<Library> libraries) {
@@ -99,16 +97,19 @@ public class ProjectLibraryActions {
                 // if opening the JAR file failed, do nothing
             } finally {
                 if (jarFile != null) {
-                    try { jarFile.close(); } catch (IOException e) { }
+                    try {
+                        jarFile.close();
+                    } catch (IOException e) {
+                    }
                 }
             }
 
             // if the class name was not found, go back to the good old dialog
             if (className == null) {
                 className = JOptionPane.showInputDialog(proj.getFrame(),
-                    getFromLocale("jarClassNamePrompt"),
-                    getFromLocale("jarClassNameTitle"),
-                    JOptionPane.QUESTION_MESSAGE);
+                        getFromLocale("jarClassNamePrompt"),
+                        getFromLocale("jarClassNameTitle"),
+                        JOptionPane.QUESTION_MESSAGE);
                 // if user canceled selection, abort
                 if (className == null) {
                     return;
@@ -158,7 +159,7 @@ public class ProjectLibraryActions {
         String message = proj.getLogisimFile().getUnloadLibraryMessage(lib);
         if (message != null) {
             JOptionPane.showMessageDialog(proj.getFrame(), message,
-                getFromLocale("unloadErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    getFromLocale("unloadErrorTitle"), JOptionPane.ERROR_MESSAGE);
         } else {
             proj.doAction(LogisimFileActions.unloadLibrary(lib));
         }

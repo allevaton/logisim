@@ -3,35 +3,20 @@
 
 package com.cburch.logisim.gui.menu;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
-import javax.swing.KeyStroke;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import com.cburch.logisim.circuit.Circuit;
-import com.cburch.logisim.circuit.CircuitEvent;
-import com.cburch.logisim.circuit.CircuitListener;
-import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.circuit.Simulator;
-import com.cburch.logisim.circuit.SimulatorEvent;
-import com.cburch.logisim.circuit.SimulatorListener;
+import com.cburch.logisim.circuit.*;
 import com.cburch.logisim.gui.log.LogFrame;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.util.CustomAction;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class MenuSimulate extends Menu {
@@ -105,7 +90,7 @@ public class MenuSimulate extends Menu {
         }
     }
 
-    private class MyListener implements ActionListener, SimulatorListener, ChangeListener { 	
+    private class MyListener implements ActionListener, SimulatorListener, ChangeListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object src = e.getSource();
@@ -143,9 +128,13 @@ public class MenuSimulate extends Menu {
         }
 
         @Override
-        public void propagationCompleted(SimulatorEvent e) { }
+        public void propagationCompleted(SimulatorEvent e) {
+        }
+
         @Override
-        public void tickCompleted(SimulatorEvent e) { }
+        public void tickCompleted(SimulatorEvent e) {
+        }
+
         @Override
         public void simulatorStateChanged(SimulatorEvent e) {
             Simulator sim = e.getSource();
@@ -182,28 +171,28 @@ public class MenuSimulate extends Menu {
     private MenuItemImpl tickOnce;
     private JMenu tickFreq = new JMenu();
     private TickFrequencyChoice[] tickFreqs = {
-        new TickFrequencyChoice(4096),
-        new TickFrequencyChoice(2048),
-        new TickFrequencyChoice(1024),
-        new TickFrequencyChoice(512),
-        new TickFrequencyChoice(256),
-        new TickFrequencyChoice(128),
-        new TickFrequencyChoice(64),
-        new TickFrequencyChoice(32),
-        new TickFrequencyChoice(16),
-        new TickFrequencyChoice(8),
-        new TickFrequencyChoice(4),
-        new TickFrequencyChoice(2),
-        new TickFrequencyChoice(1),
-        new TickFrequencyChoice(0.5),
-        new TickFrequencyChoice(0.25),
+            new TickFrequencyChoice(4096),
+            new TickFrequencyChoice(2048),
+            new TickFrequencyChoice(1024),
+            new TickFrequencyChoice(512),
+            new TickFrequencyChoice(256),
+            new TickFrequencyChoice(128),
+            new TickFrequencyChoice(64),
+            new TickFrequencyChoice(32),
+            new TickFrequencyChoice(16),
+            new TickFrequencyChoice(8),
+            new TickFrequencyChoice(4),
+            new TickFrequencyChoice(2),
+            new TickFrequencyChoice(1),
+            new TickFrequencyChoice(0.5),
+            new TickFrequencyChoice(0.25),
     };
     private JMenu downStateMenu = new JMenu();
     private ArrayList<CircuitStateMenuItem> downStateItems
-        = new ArrayList<CircuitStateMenuItem>();
+            = new ArrayList<CircuitStateMenuItem>();
     private JMenu upStateMenu = new JMenu();
     private ArrayList<CircuitStateMenuItem> upStateItems
-        = new ArrayList<CircuitStateMenuItem>();
+            = new ArrayList<CircuitStateMenuItem>();
     private JMenuItem log = new JMenuItem();
 
     public MenuSimulate(LogisimMenuBar menubar) {
@@ -234,7 +223,7 @@ public class MenuSimulate extends Menu {
         ActionMap am = this.getActionMap();
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Space");
         am.put("Space", new CustomAction("Space", this));
-        
+
         ButtonGroup bgroup = new ButtonGroup();
         for (int i = 0; i < tickFreqs.length; i++) {
             bgroup.add(tickFreqs[i]);
@@ -278,12 +267,12 @@ public class MenuSimulate extends Menu {
 
         computeEnabled();
     }
-    
+
     public void tick() {
-    	Project proj = menubar.getProject();
+        Project proj = menubar.getProject();
         Simulator sim = proj == null ? null : proj.getSimulator();
         if (sim != null)
-        	sim.tick();
+            sim.tick();
     }
 
     public void localeChanged() {
@@ -380,7 +369,7 @@ public class MenuSimulate extends Menu {
     }
 
     private void recreateStateMenu(JMenu menu,
-            ArrayList<CircuitStateMenuItem> items, int code) {
+                                   ArrayList<CircuitStateMenuItem> items, int code) {
         menu.removeAll();
         menu.setEnabled(items.size() > 0);
         boolean first = true;

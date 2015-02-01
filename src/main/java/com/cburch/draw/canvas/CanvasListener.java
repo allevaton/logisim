@@ -3,19 +3,14 @@
 
 package com.cburch.draw.canvas;
 
-import java.awt.Cursor;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.List;
-
 import com.cburch.draw.model.CanvasModelEvent;
 import com.cburch.draw.model.CanvasModelListener;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.logisim.data.Location;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
 
 class CanvasListener implements MouseListener, MouseMotionListener, KeyListener,
         CanvasModelListener {
@@ -62,7 +57,7 @@ class CanvasListener implements MouseListener, MouseMotionListener, KeyListener,
         if (e.isPopupTrigger()) {
             handlePopupTrigger(e);
         } else if (e.getButton() == 1 && tool != null) {
-                tool.mousePressed(canvas, e);
+            tool.mousePressed(canvas, e);
 
         }
     }
@@ -91,13 +86,13 @@ class CanvasListener implements MouseListener, MouseMotionListener, KeyListener,
 
             handlePopupTrigger(e);
         } else if (e.getButton() == 1 && tool != null) {
-                tool.mouseReleased(canvas, e);
+            tool.mouseReleased(canvas, e);
         }
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) { 
-    	
+    public void mouseClicked(MouseEvent e) {
+
     }
 
     @Override

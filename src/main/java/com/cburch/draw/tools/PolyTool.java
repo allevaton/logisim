@@ -3,17 +3,6 @@
 
 package com.cburch.draw.tools;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Icon;
-
 import com.cburch.draw.actions.ModelAddAction;
 import com.cburch.draw.canvas.Canvas;
 import com.cburch.draw.model.CanvasModel;
@@ -24,6 +13,14 @@ import com.cburch.draw.shapes.Poly;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.util.Icons;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PolyTool extends AbstractTool {
     // how close we need to be to the start point to count as "closing the loop"
@@ -93,7 +90,7 @@ public class PolyTool extends AbstractTool {
         List<Location> locs = locations;
         if (!active) {
             locs.clear();
-            locs.add(loc); 
+            locs.add(loc);
         }
         locs.add(loc);
 
@@ -149,7 +146,7 @@ public class PolyTool extends AbstractTool {
                 locations.clear();
                 repaintArea(canvas);
                 canvas.toolGestureComplete(this, null);
-            // enter key
+                // enter key
             } else if (ch == '\n') {
                 CanvasObject add = commit(canvas);
                 canvas.toolGestureComplete(this, add);
@@ -165,7 +162,7 @@ public class PolyTool extends AbstractTool {
         CanvasObject add = null;
         active = false;
         List<Location> locs = locations;
-        for(int i = locs.size() - 2; i >= 0; i--) {
+        for (int i = locs.size() - 2; i >= 0; i--) {
             if (locs.get(i).equals(locs.get(i + 1))) {
                 locs.remove(i);
             }
@@ -220,7 +217,7 @@ public class PolyTool extends AbstractTool {
             int size = locations.size();
             int[] xs = new int[size];
             int[] ys = new int[size];
-            for(int i = 0; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 Location loc = locations.get(i);
                 xs[i] = loc.getX();
                 ys[i] = loc.getY();

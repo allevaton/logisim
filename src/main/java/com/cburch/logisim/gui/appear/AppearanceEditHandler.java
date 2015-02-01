@@ -3,13 +3,6 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import com.cburch.draw.actions.ModelDeleteHandleAction;
 import com.cburch.draw.actions.ModelInsertHandleAction;
 import com.cburch.draw.actions.ModelReorderAction;
@@ -17,11 +10,7 @@ import com.cburch.draw.canvas.Canvas;
 import com.cburch.draw.canvas.Selection;
 import com.cburch.draw.canvas.SelectionEvent;
 import com.cburch.draw.canvas.SelectionListener;
-import com.cburch.draw.model.CanvasModel;
-import com.cburch.draw.model.CanvasModelEvent;
-import com.cburch.draw.model.CanvasModelListener;
-import com.cburch.draw.model.CanvasObject;
-import com.cburch.draw.model.Handle;
+import com.cburch.draw.model.*;
 import com.cburch.draw.util.MatchingSet;
 import com.cburch.draw.util.ZOrder;
 import com.cburch.logisim.circuit.Circuit;
@@ -32,7 +21,15 @@ import com.cburch.logisim.data.Location;
 import com.cburch.logisim.gui.main.EditHandler;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.proj.Project;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class AppearanceEditHandler extends EditHandler
         implements SelectionListener, PropertyChangeListener, CanvasModelListener {
@@ -206,8 +203,8 @@ public class AppearanceEditHandler extends EditHandler
 
         if (!remove.isEmpty()) {
             canvas.getProject().doAction(new SelectionAction(canvas,
-                getFromLocale("deleteSelectionAction"), remove, null, select,
-                anchorLocation, anchorFacing));
+                    getFromLocale("deleteSelectionAction"), remove, null, select,
+                    anchorLocation, anchorFacing));
         }
     }
 
@@ -230,8 +227,8 @@ public class AppearanceEditHandler extends EditHandler
 
         if (!clones.isEmpty()) {
             canvas.getProject().doAction(new SelectionAction(canvas,
-                getFromLocale("duplicateSelectionAction"), null, clones, select,
-                null, null));
+                    getFromLocale("duplicateSelectionAction"), null, clones, select,
+                    null, null));
         }
     }
 

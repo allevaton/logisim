@@ -3,58 +3,42 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Color;
+import com.cburch.logisim.circuit.CircuitState;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.gui.hex.HexFrame;
+import com.cburch.logisim.instance.*;
+import com.cburch.logisim.proj.Project;
+import org.apache.commons.lang3.ObjectUtils;
+
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import org.apache.commons.lang3.ObjectUtils;
-
-import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.AttributeSets;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.gui.hex.HexFrame;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceData;
-import com.cburch.logisim.instance.InstanceLogger;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
-import com.cburch.logisim.proj.Project;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Ram extends Mem {
     static final AttributeOption BUS_COMBINED
-        = new AttributeOption("combined", getFromLocale("ramBusSynchCombined"));
+            = new AttributeOption("combined", getFromLocale("ramBusSynchCombined"));
     static final AttributeOption BUS_ASYNCH
-        = new AttributeOption("asynch", getFromLocale("ramBusAsynchCombined"));
+            = new AttributeOption("asynch", getFromLocale("ramBusAsynchCombined"));
     static final AttributeOption BUS_SEPARATE
-        = new AttributeOption("separate", getFromLocale("ramBusSeparate"));
+            = new AttributeOption("separate", getFromLocale("ramBusSeparate"));
 
     static final Attribute<AttributeOption> ATTR_BUS = Attributes.forOption("bus",
             getFromLocale("ramBusAttr"),
-            new AttributeOption[] { BUS_COMBINED, BUS_ASYNCH, BUS_SEPARATE });
+            new AttributeOption[]{BUS_COMBINED, BUS_ASYNCH, BUS_SEPARATE});
 
     private static Attribute<?>[] ATTRIBUTES = {
-        Mem.ADDR_ATTR, Mem.DATA_ATTR, ATTR_BUS
+            Mem.ADDR_ATTR, Mem.DATA_ATTR, ATTR_BUS
     };
     private static Object[] DEFAULTS = {
-        BitWidth.create(8), BitWidth.create(8), BUS_COMBINED
+            BitWidth.create(8), BitWidth.create(8), BUS_COMBINED
     };
 
-    private static final int OE  = MEM_INPUTS + 0;
+    private static final int OE = MEM_INPUTS + 0;
     private static final int CLR = MEM_INPUTS + 1;
     private static final int CLK = MEM_INPUTS + 2;
-    private static final int WE  = MEM_INPUTS + 3;
+    private static final int WE = MEM_INPUTS + 3;
     private static final int DIN = MEM_INPUTS + 4;
 
     private static Object[][] logOptions = new Object[9][];
@@ -90,20 +74,16 @@ public class Ram extends Mem {
         int portCount = MEM_INPUTS;
         if (asynch) {
             portCount += 2;
-        }
-
-        else if (separate) {
+        } else if (separate) {
             portCount += 5;
-        }
-
-        else {
+        } else {
             portCount += 3;
         }
 
         Port[] ps = new Port[portCount];
 
         configureStandardPorts(instance, ps);
-        ps[OE]  = new Port(-50, 40, Port.INPUT, 1);
+        ps[OE] = new Port(-50, 40, Port.INPUT, 1);
         ps[OE].setToolTip(getFromLocale("ramOETip"));
         ps[CLR] = new Port(-30, 40, Port.INPUT, 1);
         ps[CLR].setToolTip(getFromLocale("ramClrTip"));
@@ -306,7 +286,8 @@ public class Ram extends Mem {
         }
 
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
 
         @Override
         public void attributeValueChanged(AttributeEvent e) {
@@ -325,7 +306,7 @@ public class Ram extends Mem {
                 addrBits = logOptions.length - 1;
             }
 
-            synchronized(logOptions) {
+            synchronized (logOptions) {
                 Object[] ret = logOptions[addrBits];
                 if (ret == null) {
                     ret = new Object[1 << addrBits];

@@ -3,46 +3,31 @@
 
 package com.cburch.logisim.std.gates;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.Map;
-
-import javax.swing.Icon;
-
 import com.cburch.logisim.analyze.model.Expression;
 import com.cburch.logisim.analyze.model.Expressions;
 import com.cburch.logisim.circuit.ExpressionComputer;
 import com.cburch.logisim.comp.TextField;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.Icons;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class NotGate extends InstanceFactory {
     public static final AttributeOption SIZE_NARROW
-        = new AttributeOption(Integer.valueOf(20), getFromLocale("gateSizeNarrowOpt"));
+            = new AttributeOption(Integer.valueOf(20), getFromLocale("gateSizeNarrowOpt"));
     public static final AttributeOption SIZE_WIDE
-        = new AttributeOption(Integer.valueOf(30), getFromLocale("gateSizeWideOpt"));
+            = new AttributeOption(Integer.valueOf(30), getFromLocale("gateSizeWideOpt"));
     public static final Attribute<AttributeOption> ATTR_SIZE
-        = Attributes.forOption("size", getFromLocale("gateSizeAttr"),
-            new AttributeOption[] { SIZE_NARROW, SIZE_WIDE });
+            = Attributes.forOption("size", getFromLocale("gateSizeAttr"),
+            new AttributeOption[]{SIZE_NARROW, SIZE_WIDE});
 
     private static final String RECT_LABEL = "1";
     private static final Icon toolIcon = Icons.getIcon("notGate.svg");
@@ -53,15 +38,15 @@ class NotGate extends InstanceFactory {
 
     private NotGate() {
         super("NOT Gate", getFromLocale("notGateComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.FACING, StdAttr.WIDTH, ATTR_SIZE,
                 GateAttributes.ATTR_OUTPUT,
                 StdAttr.LABEL, StdAttr.LABEL_FONT,
-            }, new Object[] {
+        }, new Object[]{
                 Direction.EAST, BitWidth.ONE, SIZE_WIDE,
                 GateAttributes.OUTPUT_01,
                 "", StdAttr.DEFAULT_LABEL_FONT,
-            });
+        });
         setFacingAttribute(StdAttr.FACING);
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
     }
@@ -76,7 +61,7 @@ class NotGate extends InstanceFactory {
             }
 
             if (facing == Direction.NORTH) {
-                return Bounds.create(-9,   0, 18, 20);
+                return Bounds.create(-9, 0, 18, 20);
             }
 
             if (facing == Direction.WEST) {
@@ -91,7 +76,7 @@ class NotGate extends InstanceFactory {
             }
 
             if (facing == Direction.NORTH) {
-                return Bounds.create(-9,   0, 18, 30);
+                return Bounds.create(-9, 0, 18, 30);
             }
 
             if (facing == Direction.WEST) {
@@ -148,7 +133,7 @@ class NotGate extends InstanceFactory {
         if (key == ExpressionComputer.class) {
             return new ExpressionComputer() {
                 @Override
-                public void computeExpression(Map<Location,Expression> expressionMap) {
+                public void computeExpression(Map<Location, Expression> expressionMap) {
                     Expression e = expressionMap.get(instance.getPortLocation(1));
                     if (e != null) {
                         expressionMap.put(instance.getPortLocation(0), Expressions.not(e));
@@ -188,10 +173,14 @@ class NotGate extends InstanceFactory {
             } else {
                 int[] xp = new int[4];
                 int[] yp = new int[4];
-                xp[0] = 15; yp[0] = 10;
-                xp[1] =  1; yp[1] =  3;
-                xp[2] =  1; yp[2] = 17;
-                xp[3] = 15; yp[3] = 10;
+                xp[0] = 15;
+                yp[0] = 10;
+                xp[1] = 1;
+                yp[1] = 3;
+                xp[2] = 1;
+                yp[2] = 17;
+                xp[3] = 15;
+                yp[3] = 10;
                 g.drawPolyline(xp, yp, 4);
                 g.drawOval(15, 8, 4, 4);
             }
@@ -255,7 +244,7 @@ class NotGate extends InstanceFactory {
     }
 
     static void configureLabel(Instance instance, boolean isRectangular,
-            Location control) {
+                               Location control) {
         Object facing = instance.getAttributeValue(StdAttr.FACING);
         Bounds bds = instance.getBounds();
         int x;
@@ -265,7 +254,7 @@ class NotGate extends InstanceFactory {
             x = bds.getX() + bds.getWidth() / 2 + 2;
             y = bds.getY() - 2;
             halign = TextField.H_LEFT;
-        // west or east
+            // west or east
         } else {
             y = isRectangular ? bds.getY() - 2 : bds.getY();
             if (control != null && control.getY() == bds.getY()) {

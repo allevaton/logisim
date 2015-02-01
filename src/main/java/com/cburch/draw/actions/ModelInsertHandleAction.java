@@ -3,13 +3,14 @@
 
 package com.cburch.draw.actions;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import com.cburch.draw.model.CanvasModel;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.Handle;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.Collection;
+import java.util.Collections;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ModelInsertHandleAction extends ModelAction {
     private Handle desired;

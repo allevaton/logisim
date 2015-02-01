@@ -3,13 +3,6 @@
 
 package com.cburch.logisim.file;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.w3c.dom.Element;
-
 import com.cburch.draw.model.AbstractCanvasObject;
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitMutator;
@@ -22,21 +15,28 @@ import com.cburch.logisim.data.Location;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
-import static com.cburch.logisim.util.LocaleString.*;
+import org.w3c.dom.Element;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class XmlCircuitReader extends CircuitTransaction {
     private XmlReader.ReadContext reader;
     private List<XmlReader.CircuitData> circuitsData;
 
     public XmlCircuitReader(XmlReader.ReadContext reader,
-            List<XmlReader.CircuitData> circDatas) {
+                            List<XmlReader.CircuitData> circDatas) {
         this.reader = reader;
         this.circuitsData = circDatas;
     }
 
     @Override
     protected Map<Circuit, Integer> getAccessedCircuits() {
-        HashMap<Circuit, Integer> access = new HashMap<Circuit,Integer>();
+        HashMap<Circuit, Integer> access = new HashMap<Circuit, Integer>();
         for (XmlReader.CircuitData data : circuitsData) {
             access.put(data.circuit, READ_WRITE);
         }
@@ -169,7 +169,7 @@ public class XmlCircuitReader extends CircuitTransaction {
                 return source.createComponent(loc, attrs);
             } catch (NumberFormatException e) {
                 throw new XmlReaderException(getFromLocale("compLocInvalidError",
-                    source.getName(), loc_str));
+                        source.getName(), loc_str));
             }
         }
     }

@@ -3,15 +3,11 @@
 
 package com.cburch.logisim.tools;
 
+import com.cburch.logisim.comp.ComponentFactory;
+import com.cburch.logisim.data.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.cburch.logisim.comp.ComponentFactory;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.AttributeSets;
 
 class FactoryAttributes implements AttributeSet, AttributeListener, Cloneable {
     private Class<? extends Library> descBase;
@@ -21,7 +17,7 @@ class FactoryAttributes implements AttributeSet, AttributeListener, Cloneable {
     private ArrayList<AttributeListener> listeners;
 
     public FactoryAttributes(Class<? extends Library> descBase,
-            FactoryDescription desc) {
+                             FactoryDescription desc) {
         this.descBase = descBase;
         this.desc = desc;
         this.factory = null;

@@ -3,10 +3,10 @@
 
 package com.cburch.logisim.tools;
 
+import com.cburch.logisim.comp.ComponentFactory;
+
 import java.util.Collections;
 import java.util.List;
-
-import com.cburch.logisim.comp.ComponentFactory;
 
 public abstract class Library {
     public String getName() {
@@ -16,11 +16,17 @@ public abstract class Library {
     public abstract List<? extends Tool> getTools();
 
     @Override
-    public String toString() { return getName(); }
+    public String toString() {
+        return getName();
+    }
 
-    public String getDisplayName() { return getName(); }
+    public String getDisplayName() {
+        return getName();
+    }
 
-    public boolean isDirty() { return false; }
+    public boolean isDirty() {
+        return false;
+    }
 
     public List<Library> getLibraries() {
         return Collections.emptyList();

@@ -3,23 +3,19 @@
 
 package com.cburch.logisim.circuit;
 
-import java.io.PrintStream;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-
 import com.cburch.logisim.comp.Component;
+
+import java.io.PrintStream;
+import java.util.*;
 
 public class ReplacementMap {
     private boolean frozen;
-    private HashMap<Component,HashSet<Component>> map;
-    private HashMap<Component,HashSet<Component>> inverse;
+    private HashMap<Component, HashSet<Component>> map;
+    private HashMap<Component, HashSet<Component>> inverse;
 
     public ReplacementMap(Component oldComp, Component newComp) {
-        this(new HashMap<Component,HashSet<Component>>(),
-                new HashMap<Component,HashSet<Component>>());
+        this(new HashMap<Component, HashSet<Component>>(),
+                new HashMap<Component, HashSet<Component>>());
         HashSet<Component> oldSet = new HashSet<Component>(3);
         oldSet.add(oldComp);
         HashSet<Component> newSet = new HashSet<Component>(3);
@@ -29,12 +25,12 @@ public class ReplacementMap {
     }
 
     public ReplacementMap() {
-        this(new HashMap<Component,HashSet<Component>>(),
-                new HashMap<Component,HashSet<Component>>());
+        this(new HashMap<Component, HashSet<Component>>(),
+                new HashMap<Component, HashSet<Component>>());
     }
 
-    private ReplacementMap(HashMap<Component,HashSet<Component>> map,
-            HashMap<Component,HashSet<Component>> inverse) {
+    private ReplacementMap(HashMap<Component, HashSet<Component>> map,
+                           HashMap<Component, HashSet<Component>> inverse) {
         this.map = map;
         this.inverse = inverse;
     }
@@ -101,7 +97,7 @@ public class ReplacementMap {
     }
 
     void append(ReplacementMap next) {
-        for (Map.Entry<Component,HashSet<Component>> e : next.map.entrySet()) {
+        for (Map.Entry<Component, HashSet<Component>> e : next.map.entrySet()) {
             Component b = e.getKey();
             // what b is replaced by
             HashSet<Component> cs = e.getValue();
@@ -136,7 +132,7 @@ public class ReplacementMap {
             }
         }
 
-        for (Map.Entry<Component,HashSet<Component>> e : next.inverse.entrySet()) {
+        for (Map.Entry<Component, HashSet<Component>> e : next.inverse.entrySet()) {
             Component c = e.getKey();
             if (!inverse.containsKey(c)) {
                 HashSet<Component> bs = e.getValue();

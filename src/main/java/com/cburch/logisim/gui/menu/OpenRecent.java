@@ -3,7 +3,12 @@
 
 package com.cburch.logisim.gui.menu;
 
-import java.awt.Component;
+import com.cburch.logisim.prefs.AppPreferences;
+import com.cburch.logisim.proj.Project;
+import com.cburch.logisim.proj.ProjectActions;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -13,13 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import com.cburch.logisim.prefs.AppPreferences;
-import com.cburch.logisim.proj.Project;
-import com.cburch.logisim.proj.ProjectActions;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class OpenRecent extends JMenu implements PropertyChangeListener {

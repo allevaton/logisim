@@ -3,16 +3,12 @@
 
 package com.cburch.logisim.gui.generic;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.file.LibraryEvent;
 import com.cburch.logisim.file.LibraryListener;
+import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.tools.Library;
+
+import java.util.*;
 
 @SuppressWarnings("serial")
 public class ProjectExplorerLibraryNode extends ProjectExplorerModel.Node<Library>
@@ -28,11 +24,13 @@ public class ProjectExplorerLibraryNode extends ProjectExplorerModel.Node<Librar
         buildChildren();
     }
 
-    @Override ProjectExplorerLibraryNode create(Library userObject) {
+    @Override
+    ProjectExplorerLibraryNode create(Library userObject) {
         return new ProjectExplorerLibraryNode(getModel(), userObject);
     }
 
-    @Override void decommission() {
+    @Override
+    void decommission() {
         if (file != null) {
             file.removeLibraryListener(this);
         }
@@ -53,7 +51,7 @@ public class ProjectExplorerLibraryNode extends ProjectExplorerModel.Node<Librar
     }
 
     private <T> void buildChildren(ProjectExplorerModel.Node<T> factory, List<? extends T> items,
-            int startIndex) {
+                                   int startIndex) {
         // go through previously built children
         Map<T, ProjectExplorerModel.Node<T>> nodeMap = new HashMap<T, ProjectExplorerModel.Node<T>>();
         List<ProjectExplorerModel.Node<T>> nodeList = new ArrayList<ProjectExplorerModel.Node<T>>();
@@ -159,21 +157,21 @@ public class ProjectExplorerLibraryNode extends ProjectExplorerModel.Node<Librar
     @Override
     public void libraryChanged(LibraryEvent event) {
         switch (event.getAction()) {
-        case LibraryEvent.DIRTY_STATE:
-        case LibraryEvent.SET_NAME:
-            this.fireNodeChanged();
-            break;
-        case LibraryEvent.SET_MAIN:
-            break;
-        case LibraryEvent.ADD_TOOL:
-        case LibraryEvent.REMOVE_TOOL:
-        case LibraryEvent.MOVE_TOOL:
-        case LibraryEvent.ADD_LIBRARY:
-        case LibraryEvent.REMOVE_LIBRARY:
-            buildChildren();
-            break;
-        default:
-            fireStructureChanged();
+            case LibraryEvent.DIRTY_STATE:
+            case LibraryEvent.SET_NAME:
+                this.fireNodeChanged();
+                break;
+            case LibraryEvent.SET_MAIN:
+                break;
+            case LibraryEvent.ADD_TOOL:
+            case LibraryEvent.REMOVE_TOOL:
+            case LibraryEvent.MOVE_TOOL:
+            case LibraryEvent.ADD_LIBRARY:
+            case LibraryEvent.REMOVE_LIBRARY:
+                buildChildren();
+                break;
+            default:
+                fireStructureChanged();
         }
     }
 }

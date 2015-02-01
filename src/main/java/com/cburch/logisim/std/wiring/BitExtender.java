@@ -3,40 +3,28 @@
 
 package com.cburch.logisim.std.wiring;
 
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.tools.key.JoinedConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class BitExtender extends InstanceFactory {
     private static final Attribute<BitWidth> ATTR_IN_WIDTH
-        = Attributes.forBitWidth("in_width", getFromLocale("extenderInAttr"));
+            = Attributes.forBitWidth("in_width", getFromLocale("extenderInAttr"));
     private static final Attribute<BitWidth> ATTR_OUT_WIDTH
-        = Attributes.forBitWidth("out_width", getFromLocale("extenderOutAttr"));
+            = Attributes.forBitWidth("out_width", getFromLocale("extenderOutAttr"));
     private static final Attribute<AttributeOption> ATTR_TYPE
-        = Attributes.forOption("type", getFromLocale("extenderTypeAttr"),
-            new AttributeOption[] {
-                new AttributeOption("zero", "zero", getFromLocale("extenderZeroType")),
-                new AttributeOption("one", "one", getFromLocale("extenderOneType")),
-                new AttributeOption("sign", "sign", getFromLocale("extenderSignType")),
-                new AttributeOption("input", "input", getFromLocale("extenderInputType")),
+            = Attributes.forOption("type", getFromLocale("extenderTypeAttr"),
+            new AttributeOption[]{
+                    new AttributeOption("zero", "zero", getFromLocale("extenderZeroType")),
+                    new AttributeOption("one", "one", getFromLocale("extenderOneType")),
+                    new AttributeOption("sign", "sign", getFromLocale("extenderSignType")),
+                    new AttributeOption("input", "input", getFromLocale("extenderInputType")),
             });
 
     public static final BitExtender FACTORY = new BitExtender();
@@ -44,11 +32,11 @@ public class BitExtender extends InstanceFactory {
     public BitExtender() {
         super("Bit Extender", getFromLocale("extenderComponent"));
         setIconName("extender.svg");
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 ATTR_IN_WIDTH, ATTR_OUT_WIDTH, ATTR_TYPE
-            }, new Object[] {
+        }, new Object[]{
                 BitWidth.create(8), BitWidth.create(16), ATTR_TYPE.parse("zero")
-            });
+        });
         setFacingAttribute(StdAttr.FACING);
         setKeyConfigurator(JoinedConfigurator.create(
                 new BitWidthConfigurator(ATTR_OUT_WIDTH),
@@ -71,17 +59,11 @@ public class BitExtender extends InstanceFactory {
         String type = getType(painter.getAttributeSet());
         if (type.equals("zero")) {
             s0 = getFromLocale("extenderZeroLabel");
-        }
-
-        else if (type.equals("one")) {
+        } else if (type.equals("one")) {
             s0 = getFromLocale("extenderOneLabel");
-        }
-
-        else if (type.equals("sign")) {
+        } else if (type.equals("sign")) {
             s0 = getFromLocale("extenderSignLabel");
-        }
-
-        else if (type.equals("input")) {
+        } else if (type.equals("input")) {
             s0 = getFromLocale("extenderInputLabel");
         }
 
@@ -134,9 +116,9 @@ public class BitExtender extends InstanceFactory {
         Port p1 = new Port(-40, 0, Port.INPUT, ATTR_IN_WIDTH);
         String type = getType(instance.getAttributeSet());
         if (type.equals("input")) {
-            instance.setPorts(new Port[] { p0, p1, new Port(-20, -20, Port.INPUT, 1) });
+            instance.setPorts(new Port[]{p0, p1, new Port(-20, -20, Port.INPUT, 1)});
         } else {
-            instance.setPorts(new Port[] { p0, p1 });
+            instance.setPorts(new Port[]{p0, p1});
         }
     }
 

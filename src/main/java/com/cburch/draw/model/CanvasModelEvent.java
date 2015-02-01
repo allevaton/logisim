@@ -3,15 +3,7 @@
 
 package com.cburch.draw.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("serial")
 public class CanvasModelEvent extends EventObject {
@@ -26,50 +18,50 @@ public class CanvasModelEvent extends EventObject {
     public static final int ACTION_TEXT_CHANGED = 8;
 
     public static CanvasModelEvent forAdd(CanvasModel source,
-            Collection<? extends CanvasObject> affected) {
+                                          Collection<? extends CanvasObject> affected) {
         return new CanvasModelEvent(source, ACTION_ADDED, affected);
     }
 
     public static CanvasModelEvent forRemove(CanvasModel source,
-            Collection<? extends CanvasObject> affected) {
+                                             Collection<? extends CanvasObject> affected) {
         return new CanvasModelEvent(source, ACTION_REMOVED, affected);
     }
 
     public static CanvasModelEvent forTranslate(CanvasModel source,
-            Collection<? extends CanvasObject> affected, int dx, int dy) {
+                                                Collection<? extends CanvasObject> affected, int dx, int dy) {
         return new CanvasModelEvent(source, ACTION_TRANSLATED, affected,
                 0, 0);
     }
 
     public static CanvasModelEvent forReorder(CanvasModel source,
-            Collection<ReorderRequest> requests) {
+                                              Collection<ReorderRequest> requests) {
         return new CanvasModelEvent(true, source, ACTION_REORDERED, requests);
     }
 
     public static CanvasModelEvent forInsertHandle(CanvasModel source,
-            Handle desired) {
+                                                   Handle desired) {
         return new CanvasModelEvent(source, ACTION_HANDLE_INSERTED, desired);
     }
 
     public static CanvasModelEvent forDeleteHandle(CanvasModel source,
-            Handle handle) {
+                                                   Handle handle) {
         return new CanvasModelEvent(source, ACTION_HANDLE_DELETED, handle);
     }
 
     public static CanvasModelEvent forMoveHandle(CanvasModel source,
-            HandleGesture gesture) {
+                                                 HandleGesture gesture) {
         return new CanvasModelEvent(source, ACTION_HANDLE_MOVED, gesture);
     }
 
     public static CanvasModelEvent forChangeAttributes(CanvasModel source,
-            Map<AttributeMapKey, Object> oldValues,
-            Map<AttributeMapKey, Object> newValues) {
+                                                       Map<AttributeMapKey, Object> oldValues,
+                                                       Map<AttributeMapKey, Object> newValues) {
         return new CanvasModelEvent(source, ACTION_ATTRIBUTES_CHANGED,
                 oldValues, newValues);
     }
 
     public static CanvasModelEvent forChangeText(CanvasModel source,
-            CanvasObject obj, String oldText, String newText) {
+                                                 CanvasObject obj, String oldText, String newText) {
         return new CanvasModelEvent(source, ACTION_TEXT_CHANGED,
                 Collections.singleton(obj), oldText, newText);
     }
@@ -87,7 +79,7 @@ public class CanvasModelEvent extends EventObject {
     private String newText;
 
     private CanvasModelEvent(CanvasModel source, int action,
-            Collection<? extends CanvasObject> affected) {
+                             Collection<? extends CanvasObject> affected) {
         super(source);
 
         this.action = action;
@@ -104,7 +96,7 @@ public class CanvasModelEvent extends EventObject {
     }
 
     private CanvasModelEvent(CanvasModel source, int action,
-            Collection<? extends CanvasObject> affected, int dx, int dy) {
+                             Collection<? extends CanvasObject> affected, int dx, int dy) {
         this(source, action, affected);
 
         this.deltaX = dx;
@@ -118,15 +110,15 @@ public class CanvasModelEvent extends EventObject {
     }
 
     private CanvasModelEvent(CanvasModel source, int action,
-            HandleGesture gesture) {
+                             HandleGesture gesture) {
         this(source, action, gesture.getHandle());
 
         this.gesture = gesture;
     }
 
     private CanvasModelEvent(CanvasModel source, int action,
-            Map<AttributeMapKey, Object> oldValues,
-            Map<AttributeMapKey, Object> newValues) {
+                             Map<AttributeMapKey, Object> oldValues,
+                             Map<AttributeMapKey, Object> newValues) {
         this(source, action, Collections.<CanvasObject>emptySet());
 
         Set<CanvasObject> affected;
@@ -146,8 +138,8 @@ public class CanvasModelEvent extends EventObject {
     }
 
     private CanvasModelEvent(CanvasModel source, int action,
-            Collection<? extends CanvasObject> affected,
-            String oldText, String newText) {
+                             Collection<? extends CanvasObject> affected,
+                             String oldText, String newText) {
         this(source, action, affected);
         this.oldText = oldText;
         this.newText = newText;
@@ -156,7 +148,7 @@ public class CanvasModelEvent extends EventObject {
     // the boolean parameter is just because the compiler insists upon it to
     // avoid an erasure conflict with the first constructor
     private CanvasModelEvent(boolean dummy, CanvasModel source, int action,
-            Collection<ReorderRequest> requests) {
+                             Collection<ReorderRequest> requests) {
         this(source, action, Collections.<CanvasObject>emptySet());
 
         List<CanvasObject> affected;

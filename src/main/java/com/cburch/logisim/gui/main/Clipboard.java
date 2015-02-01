@@ -3,13 +3,13 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.beans.PropertyChangeListener;
-import java.util.Collection;
-import java.util.HashSet;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.util.PropertyChangeWeakSupport;
+
+import java.beans.PropertyChangeListener;
+import java.util.Collection;
+import java.util.HashSet;
 
 class Clipboard {
     public static final String contentsProperty = "contents";
@@ -41,12 +41,15 @@ class Clipboard {
     public static void addPropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.addPropertyChangeListener(listener);
     }
+
     public static void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertySupport.addPropertyChangeListener(propertyName, listener);
     }
+
     public static void removePropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.removePropertyChangeListener(listener);
     }
+
     public static void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertySupport.removePropertyChangeListener(propertyName, listener);
     }

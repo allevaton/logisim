@@ -3,17 +3,12 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
-
 import com.cburch.draw.toolbar.Toolbar;
 import com.cburch.draw.toolbar.ToolbarItem;
 import com.cburch.draw.toolbar.ToolbarModel;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class KeyboardToolSelection extends AbstractAction {

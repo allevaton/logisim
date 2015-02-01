@@ -3,10 +3,7 @@
 
 package com.cburch.logisim.util;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.LayoutManager2;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class TableLayout implements LayoutManager2 {

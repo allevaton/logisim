@@ -58,10 +58,10 @@ class CircuitLocker {
         }
     }
 
-    static Map<Circuit,Lock> acquireLocks(CircuitTransaction xn,
-            CircuitMutatorImpl mutator) {
-        Map<Circuit,Integer> requests = xn.getAccessedCircuits();
-        Map<Circuit,Lock> circuitLocks = new HashMap<Circuit,Lock>();
+    static Map<Circuit, Lock> acquireLocks(CircuitTransaction xn,
+                                           CircuitMutatorImpl mutator) {
+        Map<Circuit, Integer> requests = xn.getAccessedCircuits();
+        Map<Circuit, Lock> circuitLocks = new HashMap<Circuit, Lock>();
         // Acquire locks in serial-number order to avoid deadlock
         Circuit[] lockOrder = requests.keySet().toArray(new Circuit[0]);
         Arrays.sort(lockOrder, new CircuitComparator());
@@ -97,9 +97,9 @@ class CircuitLocker {
         return circuitLocks;
     }
 
-    static void releaseLocks(Map<Circuit,Lock> locks) {
+    static void releaseLocks(Map<Circuit, Lock> locks) {
         Thread curThread = Thread.currentThread();
-        for (Map.Entry<Circuit,Lock> entry : locks.entrySet()) {
+        for (Map.Entry<Circuit, Lock> entry : locks.entrySet()) {
             Circuit circ = entry.getKey();
             Lock lock = entry.getValue();
             CircuitLocker locker = circ.getLocker();

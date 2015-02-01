@@ -3,18 +3,6 @@
 
 package com.cburch.logisim.proj;
 
-import java.awt.Component;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.file.LoadFailedException;
 import com.cburch.logisim.file.Loader;
@@ -24,10 +12,21 @@ import com.cburch.logisim.gui.start.SplashScreen;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.JFileChoosers;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ProjectActions {
-    private ProjectActions() { }
+    private ProjectActions() {
+    }
 
     private static class CreateFrame implements Runnable {
         private Loader loader;
@@ -73,7 +72,10 @@ public class ProjectActions {
         } catch (LoadFailedException ex) {
             displayException(monitor, ex);
         } finally {
-            try { templReader.close(); } catch (IOException e) { }
+            try {
+                templReader.close();
+            } catch (IOException e) {
+            }
         }
         if (file == null) {
             file = createEmptyFile(loader);
@@ -97,13 +99,16 @@ public class ProjectActions {
             file = LogisimFile.createNew(loader);
             file.addCircuit(new Circuit("main"));
         } finally {
-            try { templReader.close(); } catch (IOException e) { }
+            try {
+                templReader.close();
+            } catch (IOException e) {
+            }
         }
         return file;
     }
 
     private static Project completeProject(SplashScreen monitor, Loader loader,
-            LogisimFile file, boolean isStartup) {
+                                           LogisimFile file, boolean isStartup) {
         if (monitor != null) {
             monitor.setProgress(SplashScreen.PROJECT_CREATE);
         }
@@ -133,7 +138,10 @@ public class ProjectActions {
             }
             file = createEmptyFile(loader);
         } finally {
-            try { templReader.close(); } catch (IOException e) { }
+            try {
+                templReader.close();
+            } catch (IOException e) {
+            }
         }
         return file;
     }
@@ -161,7 +169,7 @@ public class ProjectActions {
     }
 
     public static Project doOpen(SplashScreen monitor, File source,
-            Map<File,File> substitutions) throws LoadFailedException {
+                                 Map<File, File> substitutions) throws LoadFailedException {
         if (monitor != null) {
             monitor.setProgress(SplashScreen.FILE_LOAD);
         }
@@ -198,7 +206,7 @@ public class ProjectActions {
     }
 
     public static Project doOpen(Component parent,
-            Project baseProject, File f) {
+                                 Project baseProject, File f) {
         Project proj = Projects.findProjectFor(f);
         Loader loader = null;
         if (proj != null) {
@@ -211,7 +219,7 @@ public class ProjectActions {
                         getFromLocale("openAlreadyLoseChangesOption"),
                         getFromLocale("openAlreadyNewWindowOption"),
                         getFromLocale("openAlreadyCancelOption"),
-                    };
+                };
                 int result = JOptionPane.showOptionDialog(proj.getFrame(),
                         message, getFromLocale("openAlreadyTitle"), 0,
                         JOptionPane.QUESTION_MESSAGE, null,
@@ -251,9 +259,9 @@ public class ProjectActions {
         } catch (LoadFailedException ex) {
             if (!ex.isShown()) {
                 JOptionPane.showMessageDialog(parent,
-                    getFromLocale("fileOpenError", ex.toString()),
-                    getFromLocale("fileOpenErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
+                        getFromLocale("fileOpenError", ex.toString()),
+                        getFromLocale("fileOpenErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
             }
             return null;
         }
@@ -299,7 +307,7 @@ public class ProjectActions {
                         getFromLocale("replaceExtensionReplaceOpt", ext),
                         getFromLocale("replaceExtensionAddOpt", circExt),
                         getFromLocale("replaceExtensionKeepOpt")
-                    };
+                };
                 JOptionPane dlog = new JOptionPane(msg);
                 dlog.setMessageType(JOptionPane.QUESTION_MESSAGE);
                 dlog.setOptions(options);
@@ -317,9 +325,9 @@ public class ProjectActions {
 
         if (f.exists()) {
             int confirm = JOptionPane.showConfirmDialog(proj.getFrame(),
-                getFromLocale("confirmOverwriteMessage"),
-                getFromLocale("confirmOverwriteTitle"),
-                JOptionPane.YES_NO_OPTION);
+                    getFromLocale("confirmOverwriteMessage"),
+                    getFromLocale("confirmOverwriteTitle"),
+                    JOptionPane.YES_NO_OPTION);
             if (confirm != JOptionPane.YES_OPTION) {
                 return false;
             }
@@ -333,9 +341,7 @@ public class ProjectActions {
         File f = loader.getMainFile();
         if (f == null) {
             return doSaveAs(proj);
-        }
-
-        else {
+        } else {
             return doSave(proj, f);
         }
 

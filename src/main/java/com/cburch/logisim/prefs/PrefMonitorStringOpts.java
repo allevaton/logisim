@@ -47,9 +47,11 @@ class PrefMonitorStringOpts extends AbstractPrefMonitor<String> {
                 String chosen = null;
                 for (int i = 0; i < o.length; i++) {
                     if (isSame(o[i], newValue)) {
-                        { chosen = o[i];
+                        {
+                            chosen = o[i];
+                        }
+                        break;
                     }
- break; }
                 }
                 if (chosen == null) {
                     chosen = dflt;

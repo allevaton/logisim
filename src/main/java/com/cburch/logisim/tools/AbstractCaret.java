@@ -3,14 +3,14 @@
 
 package com.cburch.logisim.tools;
 
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
+import com.cburch.logisim.data.Bounds;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
-
-import com.cburch.logisim.data.Bounds;
 
 public class AbstractCaret implements Caret {
     private ArrayList<CaretListener> listeners = new ArrayList<CaretListener>();
@@ -23,41 +23,74 @@ public class AbstractCaret implements Caret {
 
     // listener methods
     @Override
-    public void addCaretListener(CaretListener e) { listeners.add(e); }
+    public void addCaretListener(CaretListener e) {
+        listeners.add(e);
+    }
+
     @Override
-    public void removeCaretListener(CaretListener e) { listeners.remove(e); }
-    protected List<CaretListener> getCaretListeners() { return listenersView; }
+    public void removeCaretListener(CaretListener e) {
+        listeners.remove(e);
+    }
+
+    protected List<CaretListener> getCaretListeners() {
+        return listenersView;
+    }
 
     // configuration methods
-    public void setBounds(Bounds value) { bds = value; }
+    public void setBounds(Bounds value) {
+        bds = value;
+    }
 
     // query/Graphics methods
     @Override
-    public String getText() { return ""; }
+    public String getText() {
+        return "";
+    }
+
     @Override
-    public Bounds getBounds(Graphics g) { return bds; }
+    public Bounds getBounds(Graphics g) {
+        return bds;
+    }
+
     @Override
-    public void draw(Graphics g) { }
+    public void draw(Graphics g) {
+    }
 
     // finishing
     @Override
-    public void commitText(String text) { }
+    public void commitText(String text) {
+    }
+
     @Override
-    public void cancelEditing() { }
+    public void cancelEditing() {
+    }
+
     @Override
-    public void stopEditing() { }
+    public void stopEditing() {
+    }
 
     // events to handle
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+    }
+
     @Override
-    public void mouseDragged(MouseEvent e) { }
+    public void mouseDragged(MouseEvent e) {
+    }
+
     @Override
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {
+    }
+
     @Override
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) {
+    }
+
     @Override
-    public void keyReleased(KeyEvent e) { }
+    public void keyReleased(KeyEvent e) {
+    }
+
     @Override
-    public void keyTyped(KeyEvent e) { }
+    public void keyTyped(KeyEvent e) {
+    }
 }

@@ -3,62 +3,42 @@
 
 package com.cburch.logisim.std.wiring;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-
-import javax.swing.Icon;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.RadixOption;
 import com.cburch.logisim.comp.EndData;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.gui.main.Canvas;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceData;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstanceLogger;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstancePoker;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.tools.key.DirectionConfigurator;
 import com.cburch.logisim.tools.key.JoinedConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.Icons;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Pin extends InstanceFactory {
     public static final Attribute<Boolean> ATTR_TRISTATE
-        = Attributes.forBoolean("tristate", getFromLocale("pinThreeStateAttr"));
+            = Attributes.forBoolean("tristate", getFromLocale("pinThreeStateAttr"));
     public static final Attribute<Boolean> ATTR_TYPE
-        = Attributes.forBoolean("output", getFromLocale("pinOutputAttr"));
+            = Attributes.forBoolean("output", getFromLocale("pinOutputAttr"));
     public static final Attribute<Direction> ATTR_LABEL_LOC
-        = Attributes.forDirection("labelloc", getFromLocale("pinLabelLocAttr"));
+            = Attributes.forDirection("labelloc", getFromLocale("pinLabelLocAttr"));
 
     public static final AttributeOption PULL_NONE
-        = new AttributeOption("none", getFromLocale("pinPullNoneOption"));
+            = new AttributeOption("none", getFromLocale("pinPullNoneOption"));
     public static final AttributeOption PULL_UP
-        = new AttributeOption("up", getFromLocale("pinPullUpOption"));
+            = new AttributeOption("up", getFromLocale("pinPullUpOption"));
     public static final AttributeOption PULL_DOWN
-        = new AttributeOption("down", getFromLocale("pinPullDownOption"));
+            = new AttributeOption("down", getFromLocale("pinPullDownOption"));
     public static final Attribute<AttributeOption> ATTR_PULL
-        = Attributes.forOption("pull", getFromLocale("pinPullAttr"),
-                new AttributeOption[] { PULL_NONE, PULL_UP, PULL_DOWN });
+            = Attributes.forOption("pull", getFromLocale("pinPullAttr"),
+            new AttributeOption[]{PULL_NONE, PULL_UP, PULL_DOWN});
 
     public static final Pin FACTORY = new Pin();
 
@@ -71,8 +51,8 @@ public class Pin extends InstanceFactory {
         super("Pin", getFromLocale("pinComponent"));
         setFacingAttribute(StdAttr.FACING);
         setKeyConfigurator(JoinedConfigurator.create(
-            new BitWidthConfigurator(StdAttr.WIDTH),
-            new DirectionConfigurator(ATTR_LABEL_LOC, InputEvent.ALT_DOWN_MASK)));
+                new BitWidthConfigurator(StdAttr.WIDTH),
+                new DirectionConfigurator(ATTR_LABEL_LOC, InputEvent.ALT_DOWN_MASK)));
         setInstanceLogger(PinLogger.class);
         setInstancePoker(PinPoker.class);
     }
@@ -123,12 +103,18 @@ public class Pin extends InstanceFactory {
                 return;
             }
         }
-        int pinx = 16; int piny = 9;
+        int pinx = 16;
+        int piny = 9;
         // keep defaults
         if (dir == Direction.EAST) {
-        } else if (dir == Direction.WEST) { pinx = 4;
-        } else if (dir == Direction.NORTH) { pinx = 9; piny = 4;
-        } else if (dir == Direction.SOUTH) { pinx = 9; piny = 16;
+        } else if (dir == Direction.WEST) {
+            pinx = 4;
+        } else if (dir == Direction.NORTH) {
+            pinx = 9;
+            piny = 4;
+        } else if (dir == Direction.SOUTH) {
+            pinx = 9;
+            piny = 16;
         }
 
         g.setColor(Color.black);
@@ -138,7 +124,7 @@ public class Pin extends InstanceFactory {
             g.drawRect(4, 4, 13, 13);
         }
         g.setColor(Value.TRUE.getColor());
-        g.fillOval(7, 7,  8,  8);
+        g.fillOval(7, 7, 8, 8);
         g.fillOval(pinx, piny, 3, 3);
     }
 
@@ -156,14 +142,14 @@ public class Pin extends InstanceFactory {
             BitWidth width = attrs.getValue(StdAttr.WIDTH);
             if (width == BitWidth.ONE) {
                 g.drawOval(x + bds.getX() + 1, y + bds.getY() + 1,
-                    bds.getWidth() - 1, bds.getHeight() - 1);
+                        bds.getWidth() - 1, bds.getHeight() - 1);
             } else {
                 g.drawRoundRect(x + bds.getX() + 1, y + bds.getY() + 1,
-                    bds.getWidth() - 1, bds.getHeight() - 1, 6, 6);
+                        bds.getWidth() - 1, bds.getHeight() - 1, 6, 6);
             }
         } else {
             g.drawRect(x + bds.getX() + 1, y + bds.getY() + 1,
-                bds.getWidth() - 1, bds.getHeight() - 1);
+                    bds.getWidth() - 1, bds.getHeight() - 1);
         }
     }
 
@@ -180,14 +166,14 @@ public class Pin extends InstanceFactory {
         if (attrs.type == EndData.OUTPUT_ONLY) {
             if (attrs.width.getWidth() == 1) {
                 g.drawOval(x + 1, y + 1,
-                    bds.getWidth() - 1, bds.getHeight() - 1);
+                        bds.getWidth() - 1, bds.getHeight() - 1);
             } else {
                 g.drawRoundRect(x + 1, y + 1,
-                    bds.getWidth() - 1, bds.getHeight() - 1, 6, 6);
+                        bds.getWidth() - 1, bds.getHeight() - 1, 6, 6);
             }
         } else {
             g.drawRect(x + 1, y + 1,
-                bds.getWidth() - 1, bds.getHeight() - 1);
+                    bds.getWidth() - 1, bds.getHeight() - 1);
         }
 
         painter.drawLabel();
@@ -206,7 +192,7 @@ public class Pin extends InstanceFactory {
                 if (attrs.width.getWidth() == 1) {
                     g.setColor(Color.WHITE);
                     GraphicsUtil.drawCenteredText(g,
-                        state.intendedValue.toDisplayString(), x + 11, y + 9);
+                            state.intendedValue.toDisplayString(), x + 11, y + 9);
                 }
             } else {
                 Probe.paintValue(painter, state.intendedValue);
@@ -250,7 +236,7 @@ public class Pin extends InstanceFactory {
         } else {
             port.setToolTip(getFromLocale("pinInputToolTip"));
         }
-        instance.setPorts(new Port[] { port });
+        instance.setPorts(new Port[]{port});
     }
 
     @Override
@@ -390,8 +376,11 @@ public class Pin extends InstanceFactory {
 
         @Override
         public Object clone() {
-            try { return super.clone(); }
-            catch (CloneNotSupportedException e) { return null; }
+            try {
+                return super.clone();
+            } catch (CloneNotSupportedException e) {
+                return null;
+            }
         }
     }
 
@@ -474,7 +463,7 @@ public class Pin extends InstanceFactory {
             String ret = attrs.label;
             if (ret == null || ret.equals("")) {
                 String type = attrs.type == EndData.INPUT_ONLY
-                    ? getFromLocale("pinInputName") : getFromLocale("pinOutputName");
+                        ? getFromLocale("pinInputName") : getFromLocale("pinOutputName");
                 return type + state.getInstance().getLocation();
             } else {
                 return ret;

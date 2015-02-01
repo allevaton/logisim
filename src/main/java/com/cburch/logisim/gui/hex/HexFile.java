@@ -3,21 +3,17 @@
 
 package com.cburch.logisim.gui.hex;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import com.cburch.hex.HexModel;
+
+import java.io.*;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-import com.cburch.hex.HexModel;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class HexFile {
-    private HexFile() { }
+    private HexFile() {
+    }
 
     private static final String RAW_IMAGE_HEADER = "v2.0 raw";
     private static final String COMMENT_MARKER = "#";
@@ -135,7 +131,10 @@ public class HexFile {
             cur++;
             while (cur <= last && src.get(cur) == val) cur++;
             long len = cur - start;
-            if (len < 4) { cur = start + 1; len = 1; }
+            if (len < 4) {
+                cur = start + 1;
+                len = 1;
+            }
             try {
                 if (tokens > 0) out.write(tokens % 8 == 0 ? '\n' : ' ');
                 if (cur != start + 1) out.write((cur - start) + "*");
@@ -207,7 +206,8 @@ public class HexFile {
         } finally {
             try {
                 if (in != null) in.close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
     }
 

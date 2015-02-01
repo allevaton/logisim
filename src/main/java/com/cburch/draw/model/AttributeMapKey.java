@@ -37,6 +37,6 @@ public class AttributeMapKey {
 
         AttributeMapKey o = (AttributeMapKey) other;
         return (attr == null ? o.attr == null : attr.equals(o.attr))
-            && (object == null ? o.object == null : object.equals(o.object));
+                && (object == null ? o.object == null : object.equals(o.object));
     }
 }

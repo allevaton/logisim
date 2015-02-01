@@ -3,14 +3,6 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.WeakHashMap;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitEvent;
 import com.cburch.logisim.circuit.CircuitListener;
@@ -26,11 +18,20 @@ import com.cburch.logisim.proj.ProjectEvent;
 import com.cburch.logisim.proj.ProjectListener;
 import com.cburch.logisim.tools.CustomHandles;
 
+import java.awt.*;
+import java.util.*;
+
 public class Selection extends SelectionBase {
     public static class Event {
         Object source;
-        Event(Object source) { this.source = source; }
-        public Object getSource() { return source; }
+
+        Event(Object source) {
+            this.source = source;
+        }
+
+        public Object getSource() {
+            return source;
+        }
     }
 
     public static interface Listener {
@@ -38,10 +39,10 @@ public class Selection extends SelectionBase {
     }
 
     private class MyListener implements ProjectListener, CircuitListener {
-        private WeakHashMap<Action,SelectionSave> savedSelections;
+        private WeakHashMap<Action, SelectionSave> savedSelections;
 
         MyListener() {
-            savedSelections = new WeakHashMap<Action,SelectionSave>();
+            savedSelections = new WeakHashMap<Action, SelectionSave>();
         }
 
         @Override
@@ -69,9 +70,7 @@ public class Selection extends SelectionBase {
                         Component[] cs;
                         if (i == 0) {
                             cs = save.getFloatingComponents();
-                        }
-
-                        else {
+                        } else {
                             cs = save.getAnchoredComponents();
                         }
 
@@ -148,11 +147,11 @@ public class Selection extends SelectionBase {
     }
 
     @Override
-	public int hashCode() {
-		return ( this.isVisible ? 12 : 25 );
-	}
+    public int hashCode() {
+        return (this.isVisible ? 12 : 25);
+    }
 
-	@Override
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof Selection)) {
             return false;
@@ -160,7 +159,7 @@ public class Selection extends SelectionBase {
 
         Selection otherSelection = (Selection) other;
         return this.selected.equals(otherSelection.selected)
-            && this.lifted.equals(otherSelection.lifted);
+                && this.lifted.equals(otherSelection.lifted);
     }
 
     public Set<Component> getComponents() {
@@ -246,7 +245,7 @@ public class Selection extends SelectionBase {
                 Graphics g_new = g.create();
                 context.setGraphics(g_new);
                 CustomHandles handler
-                    = (CustomHandles) comp.getFeature(CustomHandles.class);
+                        = (CustomHandles) comp.getFeature(CustomHandles.class);
                 if (handler == null) {
                     context.drawHandles(comp);
                 } else {
@@ -260,7 +259,7 @@ public class Selection extends SelectionBase {
     }
 
     public void drawGhostsShifted(ComponentDrawContext context,
-            int dx, int dy) {
+                                  int dx, int dy) {
         if (shouldSnap()) {
             dx = Canvas.snapXToGrid(dx);
             dy = Canvas.snapYToGrid(dy);

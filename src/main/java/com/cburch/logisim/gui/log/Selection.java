@@ -3,9 +3,9 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.util.ArrayList;
-
 import com.cburch.logisim.circuit.CircuitState;
+
+import java.util.ArrayList;
 
 class Selection {
     private CircuitState root;
@@ -18,8 +18,13 @@ class Selection {
         components = new ArrayList<SelectionItem>();
     }
 
-    public void addModelListener(ModelListener l) { model.addModelListener(l); }
-    public void removeModelListener(ModelListener l) { model.removeModelListener(l); }
+    public void addModelListener(ModelListener l) {
+        model.addModelListener(l);
+    }
+
+    public void removeModelListener(ModelListener l) {
+        model.removeModelListener(l);
+    }
 
     public CircuitState getCircuitState() {
         return root;

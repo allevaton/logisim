@@ -3,10 +3,10 @@
 
 package com.cburch.draw.canvas;
 
+import com.cburch.draw.model.CanvasObject;
+
 import java.util.Collection;
 import java.util.EventObject;
-
-import com.cburch.draw.model.CanvasObject;
 
 @SuppressWarnings("serial")
 public class SelectionEvent extends EventObject {
@@ -18,7 +18,7 @@ public class SelectionEvent extends EventObject {
     private Collection<CanvasObject> affected;
 
     public SelectionEvent(Selection source, int action,
-            Collection<CanvasObject> affected) {
+                          Collection<CanvasObject> affected) {
         super(source);
         this.action = action;
         this.affected = affected;

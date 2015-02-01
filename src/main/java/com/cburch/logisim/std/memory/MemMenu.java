@@ -3,24 +3,21 @@
 
 package com.cburch.logisim.std.memory;
 
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.gui.hex.HexFile;
 import com.cburch.logisim.gui.hex.HexFrame;
 import com.cburch.logisim.instance.Instance;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.MenuExtender;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class MemMenu implements ActionListener, MenuExtender {
     private Mem factory;
@@ -74,17 +71,11 @@ class MemMenu implements ActionListener, MenuExtender {
         Object src = evt.getSource();
         if (src == edit) {
             doEdit();
-        }
-
-        else if (src == clear) {
+        } else if (src == clear) {
             doClear();
-        }
-
-        else if (src == load) {
+        } else if (src == load) {
             doLoad();
-        }
-
-        else if (src == save) {
+        } else if (src == save) {
             doSave();
         }
 
@@ -156,7 +147,7 @@ class MemMenu implements ActionListener, MenuExtender {
                 factory.setCurrentImage(instance, f);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(frame, e.getMessage(),
-                    getFromLocale("ramSaveErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        getFromLocale("ramSaveErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }

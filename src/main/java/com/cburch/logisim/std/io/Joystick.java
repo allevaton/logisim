@@ -3,25 +3,15 @@
 
 package com.cburch.logisim.std.io;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.InstanceData;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstancePoker;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Joystick extends InstanceFactory {
     static final Attribute<BitWidth> ATTR_WIDTH = Attributes.forBitWidth("bits",
@@ -29,15 +19,15 @@ public class Joystick extends InstanceFactory {
 
     public Joystick() {
         super("Joystick", getFromLocale("joystickComponent"));
-        setAttributes(new Attribute[] { ATTR_WIDTH, Io.ATTR_COLOR },
-                new Object[] { BitWidth.create(4), Color.RED });
+        setAttributes(new Attribute[]{ATTR_WIDTH, Io.ATTR_COLOR},
+                new Object[]{BitWidth.create(4), Color.RED});
         setKeyConfigurator(new BitWidthConfigurator(ATTR_WIDTH, 2, 5));
         setOffsetBounds(Bounds.create(-30, -10, 30, 30));
         setIconName("joystick.svg");
-        setPorts(new Port[] {
+        setPorts(new Port[]{
                 new Port(0, 0, Port.OUTPUT, ATTR_WIDTH),
                 new Port(0, 10, Port.OUTPUT, ATTR_WIDTH),
-            });
+        });
         setInstancePoker(Poker.class);
     }
 
@@ -48,10 +38,14 @@ public class Joystick extends InstanceFactory {
         int dy;
         State s = (State) state.getData();
         if (s == null) {
-            { dx = 0;
+            {
+                dx = 0;
+            }
+            dy = 0;
+        } else {
+            dx = s.xPos;
+            dy = s.yPos;
         }
- dy = 0; }
-        else { dx = s.xPos; dy = s.yPos; }
 
         int steps = (1 << bits.getWidth()) - 1;
         dx = (dx + 14) * steps / 29 + 1;
@@ -92,7 +86,7 @@ public class Joystick extends InstanceFactory {
     }
 
     private static void drawBall(Graphics g, int x, int y, Color c,
-            boolean inColor) {
+                                 boolean inColor) {
         if (inColor) {
             g.setColor(c == null ? Color.RED : c);
         } else {
@@ -110,12 +104,18 @@ public class Joystick extends InstanceFactory {
         private int xPos;
         private int yPos;
 
-        public State(int x, int y) { xPos = x; yPos = y; }
+        public State(int x, int y) {
+            xPos = x;
+            yPos = y;
+        }
 
         @Override
         public Object clone() {
-            try { return super.clone(); }
-            catch (CloneNotSupportedException e) { return null; }
+            try {
+                return super.clone();
+            } catch (CloneNotSupportedException e) {
+                return null;
+            }
         }
     }
 

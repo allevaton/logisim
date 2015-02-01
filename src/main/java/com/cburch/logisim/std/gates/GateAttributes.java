@@ -3,53 +3,49 @@
 
 package com.cburch.logisim.std.gates;
 
-import java.awt.Font;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.StdAttr;
+
+import java.awt.*;
 import java.util.List;
 
-import com.cburch.logisim.data.AbstractAttributeSet;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.instance.StdAttr;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class GateAttributes extends AbstractAttributeSet {
     static final int MAX_INPUTS = 32;
     static final int DELAY = 1;
 
     static final AttributeOption SIZE_NARROW
-        = new AttributeOption(Integer.valueOf(30), getFromLocale("gateSizeNarrowOpt"));
+            = new AttributeOption(Integer.valueOf(30), getFromLocale("gateSizeNarrowOpt"));
     static final AttributeOption SIZE_MEDIUM
-        = new AttributeOption(Integer.valueOf(50), getFromLocale("gateSizeNormalOpt"));
+            = new AttributeOption(Integer.valueOf(50), getFromLocale("gateSizeNormalOpt"));
     static final AttributeOption SIZE_WIDE
-        = new AttributeOption(Integer.valueOf(70), getFromLocale("gateSizeWideOpt"));
+            = new AttributeOption(Integer.valueOf(70), getFromLocale("gateSizeWideOpt"));
     public static final Attribute<AttributeOption> ATTR_SIZE
-        = Attributes.forOption("size", getFromLocale("gateSizeAttr"),
-            new AttributeOption[] { SIZE_NARROW, SIZE_MEDIUM, SIZE_WIDE });
+            = Attributes.forOption("size", getFromLocale("gateSizeAttr"),
+            new AttributeOption[]{SIZE_NARROW, SIZE_MEDIUM, SIZE_WIDE});
 
     public static final Attribute<Integer> ATTR_INPUTS
-        = Attributes.forIntegerRange("inputs", getFromLocale("gateInputsAttr"),
-                2, MAX_INPUTS);
+            = Attributes.forIntegerRange("inputs", getFromLocale("gateInputsAttr"),
+            2, MAX_INPUTS);
 
     static final AttributeOption XOR_ONE
-        = new AttributeOption("1", getFromLocale("xorBehaviorOne"));
+            = new AttributeOption("1", getFromLocale("xorBehaviorOne"));
     static final AttributeOption XOR_ODD
-        = new AttributeOption("odd", getFromLocale("xorBehaviorOdd"));
+            = new AttributeOption("odd", getFromLocale("xorBehaviorOdd"));
     public static final Attribute<AttributeOption> ATTR_XOR
-        = Attributes.forOption("xor", getFromLocale("xorBehaviorAttr"),
-                new AttributeOption[] { XOR_ONE, XOR_ODD });
+            = Attributes.forOption("xor", getFromLocale("xorBehaviorAttr"),
+            new AttributeOption[]{XOR_ONE, XOR_ODD});
 
     static final AttributeOption OUTPUT_01
-        = new AttributeOption("01", getFromLocale("gateOutput01"));
+            = new AttributeOption("01", getFromLocale("gateOutput01"));
     static final AttributeOption OUTPUT_0Z
-        = new AttributeOption("0Z", getFromLocale("gateOutput0Z"));
+            = new AttributeOption("0Z", getFromLocale("gateOutput0Z"));
     static final AttributeOption OUTPUT_Z1
-        = new AttributeOption("Z1", getFromLocale("gateOutputZ1"));
+            = new AttributeOption("Z1", getFromLocale("gateOutputZ1"));
     public static final Attribute<AttributeOption> ATTR_OUTPUT
-        = Attributes.forOption("out", getFromLocale("gateOutputAttr"),
-            new AttributeOption[] { OUTPUT_01, OUTPUT_0Z, OUTPUT_Z1 });
+            = Attributes.forOption("out", getFromLocale("gateOutputAttr"),
+            new AttributeOption[]{OUTPUT_01, OUTPUT_0Z, OUTPUT_Z1});
 
 
     Direction facing = Direction.EAST;

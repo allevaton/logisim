@@ -3,14 +3,13 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.Vector;
-
-import javax.swing.JList;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.file.LogisimFile;
 import com.cburch.logisim.proj.Project;
+
+import javax.swing.*;
+import java.util.Vector;
 
 @SuppressWarnings("serial")
 class CircuitJList extends JList<Circuit> {

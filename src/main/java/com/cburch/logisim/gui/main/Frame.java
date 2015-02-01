@@ -3,27 +3,6 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.IllegalComponentStateException;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import com.cburch.draw.toolbar.Toolbar;
 import com.cburch.draw.toolbar.ToolbarModel;
 import com.cburch.logisim.circuit.Circuit;
@@ -36,28 +15,23 @@ import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.file.LibraryEvent;
 import com.cburch.logisim.file.LibraryListener;
 import com.cburch.logisim.gui.appear.AppearanceView;
-import com.cburch.logisim.gui.generic.AttrTable;
-import com.cburch.logisim.gui.generic.AttrTableModel;
-import com.cburch.logisim.gui.generic.BasicZoomModel;
-import com.cburch.logisim.gui.generic.CanvasPane;
-import com.cburch.logisim.gui.generic.CardPanel;
-import com.cburch.logisim.gui.generic.LFrame;
-import com.cburch.logisim.gui.generic.ZoomControl;
-import com.cburch.logisim.gui.generic.ZoomModel;
+import com.cburch.logisim.gui.generic.*;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.prefs.AppPreferences;
-import com.cburch.logisim.proj.Project;
-import com.cburch.logisim.proj.ProjectActions;
-import com.cburch.logisim.proj.ProjectEvent;
-import com.cburch.logisim.proj.ProjectListener;
-import com.cburch.logisim.proj.Projects;
+import com.cburch.logisim.proj.*;
 import com.cburch.logisim.tools.Tool;
-import com.cburch.logisim.util.HorizontalSplitPane;
-import com.cburch.logisim.util.JFileChoosers;
-import com.cburch.logisim.util.LocaleListener;
-import com.cburch.logisim.util.LocaleManager;
-import com.cburch.logisim.util.VerticalSplitPane;
-import static com.cburch.logisim.util.LocaleString.*;
+import com.cburch.logisim.util.*;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class Frame extends LFrame implements LocaleListener {
@@ -68,11 +42,11 @@ public class Frame extends LFrame implements LocaleListener {
     public static final String VIEW_TOOLBOX = "toolbox";
     public static final String VIEW_SIMULATION = "simulation";
 
-    private static final double[] ZOOM_OPTIONS = { 20, 50, 75, 100, 133, 150, 200, 250, 300, 400 };
+    private static final double[] ZOOM_OPTIONS = {20, 50, 75, 100, 133, 150, 200, 250, 300, 400};
 
     class MyProjectListener
             implements ProjectListener, LibraryListener, CircuitListener,
-                PropertyChangeListener, ChangeListener {
+            PropertyChangeListener, ChangeListener {
         @Override
         public void projectChanged(ProjectEvent event) {
             int action = event.getAction();
@@ -124,7 +98,8 @@ public class Frame extends LFrame implements LocaleListener {
             getRootPane().putClientProperty("windowModified", Boolean.valueOf(ok));
         }
 
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
 
         @Override
         public void propertyChange(PropertyChangeEvent event) {
@@ -159,29 +134,29 @@ public class Frame extends LFrame implements LocaleListener {
         }
     }
 
-    private Project         proj;
+    private Project proj;
     private MyProjectListener myProjectListener = new MyProjectListener();
 
     // GUI elements shared between views
-    private LogisimMenuBar  menubar;
-    private MenuListener    menuListener;
-    private Toolbar         toolbar;
+    private LogisimMenuBar menubar;
+    private MenuListener menuListener;
+    private Toolbar toolbar;
     private HorizontalSplitPane leftRegion;
     private VerticalSplitPane mainRegion;
-    private JPanel          mainPanelSuper;
-    private CardPanel       mainPanel;
+    private JPanel mainPanelSuper;
+    private CardPanel mainPanel;
     // left-side elements
-    private Toolbar         projectToolbar;
-    private CardPanel       explorerPane;
-    private Toolbox         toolbox;
+    private Toolbar projectToolbar;
+    private CardPanel explorerPane;
+    private Toolbox toolbox;
     private SimulationExplorer simExplorer;
-    private AttrTable       attrTable;
-    private ZoomControl     zoom;
+    private AttrTable attrTable;
+    private ZoomControl zoom;
 
     // for the Layout view
     private LayoutToolbarModel layoutToolbarModel;
-    private Canvas          layoutCanvas;
-    private ZoomModel       layoutZoomModel;
+    private Canvas layoutCanvas;
+    private ZoomModel layoutZoomModel;
     private LayoutEditHandler layoutEditHandler;
     private AttrTableSelectionModel attrTableSelectionModel;
 
@@ -292,25 +267,19 @@ public class Frame extends LFrame implements LocaleListener {
         } else if (AppPreferences.TOOLBAR_DOWN_MIDDLE.equals(loc)) {
             toolbar.setOrientation(Toolbar.VERTICAL);
             mainPanelSuper.add(toolbar, BorderLayout.WEST);
-        // it is a BorderLayout constant
+            // it is a BorderLayout constant
         } else {
             Object value = BorderLayout.NORTH;
             for (Direction dir : Direction.cardinals) {
                 if (dir.toString().equals(loc)) {
                     if (dir == Direction.EAST) {
-                              value = BorderLayout.EAST;
-                    }
-
-                    else if (dir == Direction.SOUTH) {
+                        value = BorderLayout.EAST;
+                    } else if (dir == Direction.SOUTH) {
                         value = BorderLayout.SOUTH;
-                    }
-
-                    else if (dir == Direction.WEST) {
-                         value = BorderLayout.WEST;
-                    }
-
-                    else {
-                                                    value = BorderLayout.NORTH;
+                    } else if (dir == Direction.WEST) {
+                        value = BorderLayout.WEST;
+                    } else {
+                        value = BorderLayout.NORTH;
                     }
 
                 }
@@ -384,7 +353,7 @@ public class Frame extends LFrame implements LocaleListener {
             menuListener.setEditHandler(app.getEditHandler());
             mainPanel.setView(view);
             app.getCanvas().requestFocus();
-        // layout view
+            // layout view
         } else {
             toolbar.setToolbarModel(layoutToolbarModel);
             zoom.setZoomModel(layoutZoomModel);
@@ -438,7 +407,7 @@ public class Frame extends LFrame implements LocaleListener {
         if (newAttrs == null) {
             AttrTableModel oldModel = attrTable.getAttrTableModel();
             boolean same = oldModel instanceof AttrTableToolModel
-                && ((AttrTableToolModel) oldModel).getTool() == oldTool;
+                    && ((AttrTableToolModel) oldModel).getTool() == oldTool;
             if (!force && !same && !(oldModel instanceof AttrTableCircuitModel)) {
                 return;
             }
@@ -503,7 +472,7 @@ public class Frame extends LFrame implements LocaleListener {
         }
 
         toFront();
-        String[] options = { getFromLocale("saveOption"), getFromLocale("discardOption"), getFromLocale("cancelOption") };
+        String[] options = {getFromLocale("saveOption"), getFromLocale("discardOption"), getFromLocale("cancelOption")};
         int result = JOptionPane.showOptionDialog(this,
                 message, title, 0, JOptionPane.QUESTION_MESSAGE, null,
                 options, options[0]);

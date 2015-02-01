@@ -3,18 +3,14 @@
 
 package com.cburch.logisim.gui.prefs;
 
-import java.awt.Component;
-import java.awt.Dimension;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.util.LocaleManager;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.createLocaleSelector;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class IntlOptions extends OptionsPanel {
@@ -37,13 +33,13 @@ class IntlOptions extends OptionsPanel {
         replAccents = new PrefBoolean(AppPreferences.ACCENTS_REPLACE,
                 getFromLocale("intlReplaceAccents"));
         gateShape = new PrefOptionList(AppPreferences.GATE_SHAPE,
-                getFromLocale("intlGateShape"), new PrefOption[] {
-                    new PrefOption(AppPreferences.SHAPE_SHAPED,
-                            getFromLocale("shapeShaped")),
-                    new PrefOption(AppPreferences.SHAPE_RECTANGULAR,
-                            getFromLocale("shapeRectangular")),
-                    new PrefOption(AppPreferences.SHAPE_DIN40700,
-                            getFromLocale("shapeDIN40700")) });
+                getFromLocale("intlGateShape"), new PrefOption[]{
+                new PrefOption(AppPreferences.SHAPE_SHAPED,
+                        getFromLocale("shapeShaped")),
+                new PrefOption(AppPreferences.SHAPE_RECTANGULAR,
+                        getFromLocale("shapeRectangular")),
+                new PrefOption(AppPreferences.SHAPE_DIN40700,
+                        getFromLocale("shapeDIN40700"))});
 
         Box localePanel = new Box(BoxLayout.X_AXIS);
         localePanel.add(Box.createGlue());

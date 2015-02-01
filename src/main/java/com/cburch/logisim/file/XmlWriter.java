@@ -3,26 +3,6 @@
 
 package com.cburch.logisim.file;
 
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.cburch.draw.model.AbstractCanvasObject;
 import com.cburch.logisim.LogisimVersion;
 import com.cburch.logisim.Main;
@@ -36,11 +16,23 @@ import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.InputEventUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 class XmlWriter {
     static void write(LogisimFile file, OutputStream out, LibraryLoader loader)
             throws ParserConfigurationException,
-                TransformerConfigurationException, TransformerException {
+            TransformerConfigurationException, TransformerException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -51,14 +43,16 @@ class XmlWriter {
         TransformerFactory tfFactory = TransformerFactory.newInstance();
         try {
             tfFactory.setAttribute("indent-number", Integer.valueOf(2));
-        } catch (IllegalArgumentException e) { }
+        } catch (IllegalArgumentException e) {
+        }
         Transformer tf = tfFactory.newTransformer();
         tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         tf.setOutputProperty(OutputKeys.INDENT, "yes");
         try {
             tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount",
                     "2");
-        } catch (IllegalArgumentException e) { }
+        } catch (IllegalArgumentException e) {
+        }
 
         Source src = new DOMSource(doc);
         Result dest = new StreamResult(out);
@@ -68,7 +62,7 @@ class XmlWriter {
     private LogisimFile file;
     private Document doc;
     private LibraryLoader loader;
-    private HashMap<Library,String> libs = new HashMap<Library,String>();
+    private HashMap<Library, String> libs = new HashMap<Library, String>();
 
     private XmlWriter(LogisimFile file, Document doc, LibraryLoader loader) {
         this.file = file;
@@ -118,7 +112,7 @@ class XmlWriter {
         String desc = loader.getDescriptor(lib);
         if (desc == null) {
             loader.showError("library location unknown: "
-                + lib.getName());
+                    + lib.getName());
             return null;
         }
         libs.put(lib, name);
@@ -147,7 +141,7 @@ class XmlWriter {
     Element fromMouseMappings() {
         Element elt = doc.createElement("mappings");
         MouseMappings map = file.getOptions().getMouseMappings();
-        for (Map.Entry<Integer,Tool> entry : map.getMappings().entrySet()) {
+        for (Map.Entry<Integer, Tool> entry : map.getMappings().entrySet()) {
             Integer mods = entry.getKey();
             Tool tool = entry.getValue();
             Element toolElt = fromTool(tool);
@@ -176,7 +170,7 @@ class XmlWriter {
         String lib_name;
         if (lib == null) {
             loader.showError(String.format("tool `%s' not found",
-                tool.getDisplayName()));
+                    tool.getDisplayName()));
             return null;
         } else if (lib == file) {
             lib_name = null;
@@ -263,7 +257,7 @@ class XmlWriter {
     }
 
     void addAttributeSetContent(Element elt, AttributeSet attrs,
-            AttributeDefaultProvider source) {
+                                AttributeDefaultProvider source) {
         if (attrs == null) {
             return;
         }

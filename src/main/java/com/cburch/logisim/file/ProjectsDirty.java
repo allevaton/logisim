@@ -3,16 +3,17 @@
 
 package com.cburch.logisim.file;
 
+import com.cburch.logisim.proj.Project;
+import com.cburch.logisim.proj.Projects;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.cburch.logisim.proj.Project;
-import com.cburch.logisim.proj.Projects;
-
 class ProjectsDirty {
-    private ProjectsDirty() { }
+    private ProjectsDirty() {
+    }
 
     private static class DirtyListener implements LibraryListener {
         Project proj;

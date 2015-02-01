@@ -3,15 +3,15 @@
 
 package com.cburch.logisim.instance;
 
-import java.awt.Font;
-import java.util.List;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
+
+import java.awt.*;
+import java.util.List;
 
 public class Instance {
     public static Instance getInstanceFor(Component comp) {
@@ -81,7 +81,7 @@ public class Instance {
     }
 
     public void setTextField(Attribute<String> labelAttr, Attribute<Font> fontAttr,
-            int x, int y, int halign, int valign) {
+                             int x, int y, int halign, int valign) {
         comp.setTextField(labelAttr, fontAttr, x, y, halign, valign);
     }
 

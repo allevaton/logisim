@@ -3,9 +3,6 @@
 
 package com.cburch.draw.gui;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.cburch.draw.actions.ModelChangeAttributeAction;
 import com.cburch.draw.canvas.Canvas;
 import com.cburch.draw.canvas.Selection;
@@ -18,7 +15,11 @@ import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.gui.generic.AttrTableSetException;
 import com.cburch.logisim.gui.generic.AttributeSetTableModel;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class AttrTableSelectionModel extends AttributeSetTableModel
         implements SelectionListener {

@@ -3,10 +3,6 @@
 
 package com.cburch.logisim.std.wiring;
 
-import java.awt.Font;
-import java.util.Arrays;
-import java.util.List;
-
 import com.cburch.logisim.circuit.RadixOption;
 import com.cburch.logisim.data.AbstractAttributeSet;
 import com.cburch.logisim.data.Attribute;
@@ -14,14 +10,18 @@ import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Direction;
 import com.cburch.logisim.instance.StdAttr;
 
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+
 class ProbeAttributes extends AbstractAttributeSet {
     public static ProbeAttributes instance = new ProbeAttributes();
 
     private static final List<Attribute<?>> ATTRIBUTES
-        = Arrays.asList(new Attribute<?>[] {
+            = Arrays.asList(new Attribute<?>[]{
             StdAttr.FACING, RadixOption.ATTRIBUTE,
             StdAttr.LABEL, Pin.ATTR_LABEL_LOC, StdAttr.LABEL_FONT,
-        });
+    });
 
     Direction facing = Direction.EAST;
     String label = "";
@@ -30,7 +30,8 @@ class ProbeAttributes extends AbstractAttributeSet {
     RadixOption radix = RadixOption.RADIX_2;
     BitWidth width = BitWidth.ONE;
 
-    public ProbeAttributes() { }
+    public ProbeAttributes() {
+    }
 
     @Override
     protected void copyInto(AbstractAttributeSet destObj) {

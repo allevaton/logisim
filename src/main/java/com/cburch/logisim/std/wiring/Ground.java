@@ -7,36 +7,25 @@
 
 package com.cburch.logisim.std.wiring;
 
-import java.awt.Graphics2D;
-
+import com.cburch.logisim.circuit.Wire;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 
-import com.cburch.logisim.circuit.Wire;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
-import static com.cburch.logisim.util.LocaleString.*;
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Ground extends InstanceFactory {
     public Ground() {
         super("Ground", getFromLocale("groundComponent"));
         setIconName("ground.svg");
-        setAttributes(new Attribute[] { StdAttr.FACING, StdAttr.WIDTH },
-                new Object[] { Direction.SOUTH, BitWidth.ONE });
+        setAttributes(new Attribute[]{StdAttr.FACING, StdAttr.WIDTH},
+                new Object[]{Direction.SOUTH, BitWidth.ONE});
         setFacingAttribute(StdAttr.FACING);
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
-        setPorts(new Port[] { new Port(0, 0, Port.OUTPUT, StdAttr.WIDTH) });
+        setPorts(new Port[]{new Port(0, 0, Port.OUTPUT, StdAttr.WIDTH)});
     }
 
     @Override
@@ -54,7 +43,7 @@ public class Ground extends InstanceFactory {
     @Override
     public Bounds getOffsetBounds(AttributeSet attrs) {
         return Bounds.create(0, -8, 14, 16)
-            .rotate(Direction.EAST, attrs.getValue(StdAttr.FACING), 0, 0);
+                .rotate(Direction.EAST, attrs.getValue(StdAttr.FACING), 0, 0);
     }
 
     @Override

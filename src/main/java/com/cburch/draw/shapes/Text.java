@@ -3,15 +3,8 @@
 
 package com.cburch.draw.shapes;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.AbstractCanvasObject;
+import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.Handle;
 import com.cburch.draw.model.HandleGesture;
 import com.cburch.draw.util.EditableLabel;
@@ -19,7 +12,13 @@ import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeOption;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
-import static com.cburch.logisim.util.LocaleString.*;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Text extends AbstractCanvasObject {
     private EditableLabel label;
@@ -30,7 +29,7 @@ public class Text extends AbstractCanvasObject {
     }
 
     private Text(int x, int y, int halign, int valign, String text, Font font,
-        Color color) {
+                 Color color) {
         label = new EditableLabel(x, y, text, font);
         label.setColor(color);
         label.setHorizontalAlignment(halign);
@@ -58,7 +57,7 @@ public class Text extends AbstractCanvasObject {
     public int matchesHashCode() {
         return label.hashCode();
     }
-    
+
     public Location getLocation() {
         return Location.create(label.getX(), label.getY());
     }
@@ -141,9 +140,9 @@ public class Text extends AbstractCanvasObject {
         int y = bds.getY();
         int w = bds.getWidth();
         int h = bds.getHeight();
-        return UnmodifiableList.decorate(Arrays.asList(new Handle[] {
+        return UnmodifiableList.decorate(Arrays.asList(new Handle[]{
                 new Handle(this, x, y), new Handle(this, x + w, y),
-                new Handle(this, x + w, y + h), new Handle(this, x, y + h) }));
+                new Handle(this, x + w, y + h), new Handle(this, x, y + h)}));
     }
 
     @Override

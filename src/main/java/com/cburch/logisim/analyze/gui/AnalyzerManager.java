@@ -3,11 +3,12 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import javax.swing.JFrame;
-
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
 import com.cburch.logisim.util.WindowMenuItemManager;
+
+import javax.swing.*;
+
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class AnalyzerManager extends WindowMenuItemManager

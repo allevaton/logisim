@@ -3,31 +3,19 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.cburch.logisim.analyze.model.VariableList;
+import com.cburch.logisim.analyze.model.VariableListEvent;
+import com.cburch.logisim.analyze.model.VariableListListener;
 
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import com.cburch.logisim.analyze.model.VariableList;
-import com.cburch.logisim.analyze.model.VariableListEvent;
-import com.cburch.logisim.analyze.model.VariableListListener;
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
@@ -69,24 +57,24 @@ class VariableTab extends AnalyzerTab implements TabInterface {
             updateCopy();
             int index;
             switch (event.getType()) {
-            case VariableListEvent.ALL_REPLACED:
-                fireContentsChanged(this, 0, oldCopy.length);
-                return;
-            case VariableListEvent.ADD:
-                index = list.indexOf(event.getVariable());
-                fireIntervalAdded(this, index, index);
-                return;
-            case VariableListEvent.REMOVE:
-                index = ((Integer) event.getData()).intValue();
-                fireIntervalRemoved(this, index, index);
-                return;
-            case VariableListEvent.MOVE:
-                fireContentsChanged(this, 0, getSize());
-                return;
-            case VariableListEvent.REPLACE:
-                index = ((Integer) event.getData()).intValue();
-                fireContentsChanged(this, index, index);
-                return;
+                case VariableListEvent.ALL_REPLACED:
+                    fireContentsChanged(this, 0, oldCopy.length);
+                    return;
+                case VariableListEvent.ADD:
+                    index = list.indexOf(event.getVariable());
+                    fireIntervalAdded(this, index, index);
+                    return;
+                case VariableListEvent.REMOVE:
+                    index = ((Integer) event.getData()).intValue();
+                    fireIntervalRemoved(this, index, index);
+                    return;
+                case VariableListEvent.MOVE:
+                    fireContentsChanged(this, 0, getSize());
+                    return;
+                case VariableListEvent.REPLACE:
+                    index = ((Integer) event.getData()).intValue();
+                    fireContentsChanged(this, index, index);
+                    return;
             }
         }
     }
@@ -139,10 +127,16 @@ class VariableTab extends AnalyzerTab implements TabInterface {
         public void insertUpdate(DocumentEvent event) {
             computeEnabled();
         }
+
         @Override
-        public void removeUpdate(DocumentEvent event) { insertUpdate(event); }
+        public void removeUpdate(DocumentEvent event) {
+            insertUpdate(event);
+        }
+
         @Override
-        public void changedUpdate(DocumentEvent event) { insertUpdate(event); }
+        public void changedUpdate(DocumentEvent event) {
+            insertUpdate(event);
+        }
 
         @Override
         public void valueChanged(ListSelectionEvent event) {
@@ -177,8 +171,8 @@ class VariableTab extends AnalyzerTab implements TabInterface {
         field.getDocument().addDocumentListener(myListener);
 
         JScrollPane listPane = new JScrollPane(list,
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         listPane.setPreferredSize(new Dimension(100, 100));
 
         JPanel topPanel = new JPanel(new GridLayout(3, 1));
@@ -195,30 +189,35 @@ class VariableTab extends AnalyzerTab implements TabInterface {
         setLayout(gb);
         Insets oldInsets = gc.insets;
 
-          gc.insets = new Insets(10, 10, 0, 0);
-          gc.fill = GridBagConstraints.BOTH;
-          gc.weightx = 1.0;
-        gb.setConstraints(listPane, gc); add(listPane);
+        gc.insets = new Insets(10, 10, 0, 0);
+        gc.fill = GridBagConstraints.BOTH;
+        gc.weightx = 1.0;
+        gb.setConstraints(listPane, gc);
+        add(listPane);
 
-          gc.fill = GridBagConstraints.NONE;
-          gc.anchor = GridBagConstraints.PAGE_START;
-          gc.weightx = 0.0;
-        gb.setConstraints(topPanel, gc); add(topPanel);
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.PAGE_START;
+        gc.weightx = 0.0;
+        gb.setConstraints(topPanel, gc);
+        add(topPanel);
 
-          gc.insets = new Insets(10, 10, 0, 10);
-          gc.gridwidth = GridBagConstraints.REMAINDER;
-          gc.gridx = 0;
-          gc.gridy = GridBagConstraints.RELATIVE;
-          gc.fill = GridBagConstraints.HORIZONTAL;
-        gb.setConstraints(field, gc); add(field);
+        gc.insets = new Insets(10, 10, 0, 10);
+        gc.gridwidth = GridBagConstraints.REMAINDER;
+        gc.gridx = 0;
+        gc.gridy = GridBagConstraints.RELATIVE;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gb.setConstraints(field, gc);
+        add(field);
 
-          gc.insets = oldInsets;
-          gc.fill = GridBagConstraints.NONE;
-          gc.anchor = GridBagConstraints.LINE_END;
-        gb.setConstraints(fieldPanel, gc); add(fieldPanel);
+        gc.insets = oldInsets;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gb.setConstraints(fieldPanel, gc);
+        add(fieldPanel);
 
-          gc.fill = GridBagConstraints.HORIZONTAL;
-        gb.setConstraints(error, gc); add(error);
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gb.setConstraints(error, gc);
+        add(error);
 
         if (!data.isEmpty()) {
             list.setSelectedValue(data.get(0), true);

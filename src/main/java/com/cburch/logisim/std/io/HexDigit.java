@@ -3,30 +3,27 @@
 
 package com.cburch.logisim.std.io;
 
-import java.awt.Color;
-
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.InstanceDataSingleton;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import static com.cburch.logisim.util.LocaleString.*;
+import com.cburch.logisim.instance.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class HexDigit extends InstanceFactory {
     public HexDigit() {
         super("Hex Digit Display", getFromLocale("hexDigitComponent"));
-        setAttributes(new Attribute[] { Io.ATTR_ON_COLOR, Io.ATTR_OFF_COLOR,
-                    Io.ATTR_BACKGROUND },
-                new Object[] { new Color(240, 0, 0), SevenSegment.DEFAULT_OFF,
-                    Io.DEFAULT_BACKGROUND });
-        setPorts(new Port[] {
-                new Port( 0, 0, Port.INPUT, 4),
+        setAttributes(new Attribute[]{Io.ATTR_ON_COLOR, Io.ATTR_OFF_COLOR,
+                        Io.ATTR_BACKGROUND},
+                new Object[]{new Color(240, 0, 0), SevenSegment.DEFAULT_OFF,
+                        Io.DEFAULT_BACKGROUND});
+        setPorts(new Port[]{
+                new Port(0, 0, Port.INPUT, 4),
                 new Port(10, 0, Port.INPUT, 1)
-            });
+        });
         setOffsetBounds(Bounds.create(-15, -60, 40, 60));
         setIconName("hexdig.svg");
     }
@@ -41,26 +38,60 @@ public class HexDigit extends InstanceFactory {
 
         // each nibble is one segment, in top-down, left-to-right
         int segs;
-          // order: middle three nibbles are the three horizontal segments
+        // order: middle three nibbles are the three horizontal segments
         switch (baseVal.toIntValue()) {
-        case 0:  segs = 0x1110111; break;
-        case 1:  segs = 0x0000011; break;
-        case 2:  segs = 0x0111110; break;
-        case 3:  segs = 0x0011111; break;
-        case 4:  segs = 0x1001011; break;
-        case 5:  segs = 0x1011101; break;
-        case 6:  segs = 0x1111101; break;
-        case 7:  segs = 0x0010011; break;
-        case 8:  segs = 0x1111111; break;
-        case 9:  segs = 0x1011011; break;
-        case 10: segs = 0x1111011; break;
-        case 11: segs = 0x1101101; break;
-        case 12: segs = 0x1110100; break;
-        case 13: segs = 0x0101111; break;
-        case 14: segs = 0x1111100; break;
-        case 15: segs = 0x1111000; break;
-        // a dash '-'
-        default: segs = 0x0001000; break;
+            case 0:
+                segs = 0x1110111;
+                break;
+            case 1:
+                segs = 0x0000011;
+                break;
+            case 2:
+                segs = 0x0111110;
+                break;
+            case 3:
+                segs = 0x0011111;
+                break;
+            case 4:
+                segs = 0x1001011;
+                break;
+            case 5:
+                segs = 0x1011101;
+                break;
+            case 6:
+                segs = 0x1111101;
+                break;
+            case 7:
+                segs = 0x0010011;
+                break;
+            case 8:
+                segs = 0x1111111;
+                break;
+            case 9:
+                segs = 0x1011011;
+                break;
+            case 10:
+                segs = 0x1111011;
+                break;
+            case 11:
+                segs = 0x1101101;
+                break;
+            case 12:
+                segs = 0x1110100;
+                break;
+            case 13:
+                segs = 0x0101111;
+                break;
+            case 14:
+                segs = 0x1111100;
+                break;
+            case 15:
+                segs = 0x1111000;
+                break;
+            // a dash '-'
+            default:
+                segs = 0x0001000;
+                break;
         }
         // vertical seg in bottom right
         if ((segs & 0x1) != 0) {

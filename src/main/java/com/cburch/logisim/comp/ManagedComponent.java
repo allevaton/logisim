@@ -3,10 +3,6 @@
 
 package com.cburch.logisim.comp;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.data.BitWidth;
@@ -14,9 +10,13 @@ import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class ManagedComponent extends AbstractComponent {
     private EventSourceWeakSupport<ComponentListener> listeners
-        = new EventSourceWeakSupport<ComponentListener>();
+            = new EventSourceWeakSupport<ComponentListener>();
     private Location loc;
     private AttributeSet attrs;
     private ArrayList<EndData> ends;
@@ -193,7 +193,7 @@ public abstract class ManagedComponent extends AbstractComponent {
         java.awt.Component dest = context.getDestination();
         if (bounds != null) {
             dest.repaint(bounds.getX() - 5, bounds.getY() - 5,
-                bounds.getWidth() + 10, bounds.getHeight() + 10);
+                    bounds.getWidth() + 10, bounds.getHeight() + 10);
         }
     }
 

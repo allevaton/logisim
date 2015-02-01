@@ -3,17 +3,12 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
-
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.EndData;
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Location;
+
+import java.util.*;
 
 class CircuitPoints {
     private static class LocationData {
@@ -23,12 +18,13 @@ class CircuitPoints {
         // these lists are parallel - ends corresponding to wires are null
     }
 
-    private HashMap<Location,LocationData> map
-        = new HashMap<Location,LocationData>();
-    private HashMap<Location,WidthIncompatibilityData> incompatibilityData
-        = new HashMap<Location,WidthIncompatibilityData>();
+    private HashMap<Location, LocationData> map
+            = new HashMap<Location, LocationData>();
+    private HashMap<Location, WidthIncompatibilityData> incompatibilityData
+            = new HashMap<Location, WidthIncompatibilityData>();
 
-    public CircuitPoints() { }
+    public CircuitPoints() {
+    }
 
     //
     // access methods
@@ -67,9 +63,7 @@ class CircuitPoints {
         LocationData locData = map.get(loc);
         if (locData == null) {
             return Collections.emptySet();
-        }
-
-        else {
+        } else {
             return locData.components;
         }
 
@@ -103,9 +97,11 @@ class CircuitPoints {
         Component retValue = null;
         for (Component o : list) {
             if ((o instanceof Wire) == isWire) {
-                { retValue = o;
+                {
+                    retValue = o;
+                }
+                retSize++;
             }
- retSize++; }
         }
         if (retSize == list.size()) {
             return list;
@@ -125,9 +121,11 @@ class CircuitPoints {
         int retPos = 0;
         for (Component o : list) {
             if ((o instanceof Wire) == isWire) {
-                { ret[retPos] = o;
+                {
+                    ret[retPos] = o;
+                }
+                retPos++;
             }
- retPos++; }
         }
         return Arrays.asList(ret);
     }

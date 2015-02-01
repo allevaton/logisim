@@ -3,20 +3,16 @@
 
 package com.cburch.logisim.gui.hex;
 
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.swing.JOptionPane;
-
 import com.cburch.hex.Caret;
 import com.cburch.hex.HexEditor;
 import com.cburch.hex.HexModel;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.datatransfer.*;
+import java.io.IOException;
+import java.io.StringReader;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class Clip implements ClipboardOwner {
     private static final DataFlavor binaryFlavor = new DataFlavor(int[].class, "Binary data");
@@ -30,7 +26,7 @@ class Clip implements ClipboardOwner {
 
         @Override
         public DataFlavor[] getTransferDataFlavors() {
-            return new DataFlavor[] { binaryFlavor, DataFlavor.stringFlavor };
+            return new DataFlavor[]{binaryFlavor, DataFlavor.stringFlavor};
         }
 
         @Override
@@ -84,7 +80,9 @@ class Clip implements ClipboardOwner {
         }
 
         if (p0 > p1) {
-            long t = p0; p0 = p1; p1 = t;
+            long t = p0;
+            p0 = p1;
+            p1 = t;
         }
         p1++;
 
@@ -138,9 +136,9 @@ class Clip implements ClipboardOwner {
             }
         } else {
             JOptionPane.showMessageDialog(editor.getRootPane(),
-                getFromLocale("hexPasteSupportedError"),
-                getFromLocale("hexPasteErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
+                    getFromLocale("hexPasteSupportedError"),
+                    getFromLocale("hexPasteErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -163,7 +161,9 @@ class Clip implements ClipboardOwner {
             }
 
             if (p0 > p1) {
-                long t = p0; p0 = p1; p1 = t;
+                long t = p0;
+                p0 = p1;
+                p1 = t;
             }
             p1++;
 
@@ -180,6 +180,7 @@ class Clip implements ClipboardOwner {
     }
 
     @Override
-    public void lostOwnership(Clipboard clip, Transferable transfer) { }
+    public void lostOwnership(Clipboard clip, Transferable transfer) {
+    }
 
 }

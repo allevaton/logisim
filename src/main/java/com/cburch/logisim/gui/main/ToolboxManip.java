@@ -3,34 +3,25 @@
 
 package com.cburch.logisim.gui.main;
 
-import javax.swing.JPopupMenu;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.SubcircuitFactory;
 import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.data.AttributeEvent;
 import com.cburch.logisim.data.AttributeListener;
 import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.file.LibraryEvent;
-import com.cburch.logisim.file.LibraryEventSource;
-import com.cburch.logisim.file.LibraryListener;
-import com.cburch.logisim.file.LogisimFile;
-import com.cburch.logisim.file.LogisimFileActions;
-import com.cburch.logisim.gui.generic.AttrTableModel;
-import com.cburch.logisim.gui.generic.ProjectExplorer;
-import com.cburch.logisim.gui.generic.ProjectExplorerEvent;
-import com.cburch.logisim.gui.generic.ProjectExplorerLibraryNode;
-import com.cburch.logisim.gui.generic.ProjectExplorerListener;
-import com.cburch.logisim.gui.generic.ProjectExplorerToolNode;
+import com.cburch.logisim.file.*;
+import com.cburch.logisim.gui.generic.*;
+import com.cburch.logisim.gui.menu.Popups;
 import com.cburch.logisim.gui.menu.ProjectCircuitActions;
 import com.cburch.logisim.gui.menu.ProjectLibraryActions;
-import com.cburch.logisim.gui.menu.Popups;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.proj.ProjectEvent;
 import com.cburch.logisim.proj.ProjectListener;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
+
+import javax.swing.*;
 
 class ToolboxManip implements ProjectExplorerListener {
     private class MyListener
@@ -120,7 +111,8 @@ class ToolboxManip implements ProjectExplorerListener {
 
 
         @Override
-        public void attributeListChanged(AttributeEvent e) { }
+        public void attributeListChanged(AttributeEvent e) {
+        }
 
         @Override
         public void attributeValueChanged(AttributeEvent e) {

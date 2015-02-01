@@ -3,7 +3,7 @@
 
 package com.cburch.logisim.circuit;
 
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class AnalyzeException extends Exception {
@@ -27,7 +27,8 @@ public class AnalyzeException extends Exception {
         }
     }
 
-    public AnalyzeException() { }
+    public AnalyzeException() {
+    }
 
     public AnalyzeException(String message) {
         super(message);

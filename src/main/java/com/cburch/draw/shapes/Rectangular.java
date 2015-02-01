@@ -3,17 +3,16 @@
 
 package com.cburch.draw.shapes;
 
-import java.awt.Graphics;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.Handle;
 import com.cburch.draw.model.HandleGesture;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 abstract class Rectangular extends FillableCanvasObject {
     // excluding the stroke's width
@@ -28,7 +27,7 @@ abstract class Rectangular extends FillableCanvasObject {
         if (other instanceof Rectangular) {
             Rectangular that = (Rectangular) other;
             return this.bounds.equals(that.bounds)
-                && super.matches(that);
+                    && super.matches(that);
         } else {
             return false;
         }
@@ -83,9 +82,9 @@ abstract class Rectangular extends FillableCanvasObject {
         int x1 = x0 + bds.getWidth();
         int y1 = y0 + bds.getHeight();
         if (gesture == null) {
-            return new Handle[] { new Handle(this, x0, y0),
+            return new Handle[]{new Handle(this, x0, y0),
                     new Handle(this, x1, y0), new Handle(this, x1, y1),
-                    new Handle(this, x0, y1) };
+                    new Handle(this, x0, y1)};
         } else {
             int hx = gesture.getHandle().getX();
             int hy = gesture.getHandle().getY();
@@ -98,16 +97,16 @@ abstract class Rectangular extends FillableCanvasObject {
             if (gesture.isShiftDown()) {
                 if (gesture.isAltDown()) {
                     if (x0 == hx) {
-                    	newX1 -= dx;
+                        newX1 -= dx;
                     }
                     if (x1 == hx) {
-                    	newX0 -= dx;
+                        newX0 -= dx;
                     }
                     if (y0 == hy) {
-                    	newY1 -= dy;
+                        newY1 -= dy;
                     }
                     if (y1 == hy) {
-                    	newY0 -= dy;
+                        newY0 -= dy;
                     }
 
                     int w = Math.abs(newX1 - newX0);
@@ -133,7 +132,7 @@ abstract class Rectangular extends FillableCanvasObject {
                         if (x1 == hx) {
                             newX1 = newX0 + (newX1 > newX0 ? 1 : -1) * h;
                         }
-                    // reduce height to w
+                        // reduce height to w
                     } else {
                         if (y0 == hy) {
                             newY0 = newY1 + (newY0 > newY1 ? 1 : -1) * w;
@@ -146,25 +145,25 @@ abstract class Rectangular extends FillableCanvasObject {
             } else {
                 if (gesture.isAltDown()) {
                     if (x0 == hx) {
-                    	newX1 -= dx;
+                        newX1 -= dx;
                     }
                     if (x1 == hx) {
-                    	newX0 -= dx;
+                        newX0 -= dx;
                     }
                     if (y0 == hy) {
-                    	newY1 -= dy;
+                        newY1 -= dy;
                     }
                     if (y1 == hy) {
-                    	newY0 -= dy;
+                        newY0 -= dy;
                     }
                 } else {
                     // already handled
                     ;
                 }
             }
-            return new Handle[] { new Handle(this, newX0, newY0),
-                new Handle(this, newX1, newY0), new Handle(this, newX1, newY1),
-                new Handle(this, newX0, newY1) };
+            return new Handle[]{new Handle(this, newX0, newY0),
+                    new Handle(this, newX1, newY0), new Handle(this, newX1, newY1),
+                    new Handle(this, newX0, newY1)};
         }
     }
 
@@ -192,16 +191,16 @@ abstract class Rectangular extends FillableCanvasObject {
             int hx = h.getX();
             int hy = h.getY();
             if (hx < x0) {
-            	x0 = hx;
+                x0 = hx;
             }
             if (hx > x1) {
-            	x1 = hx;
+                x1 = hx;
             }
             if (hy < y0) {
-            	y0 = hy;
+                y0 = hy;
             }
             if (hy > y1) {
-            	y1 = hy;
+                y1 = hy;
             }
         }
         bounds = Bounds.create(x0, y0, x1 - x0, y1 - y0);
@@ -221,15 +220,15 @@ abstract class Rectangular extends FillableCanvasObject {
             int y0 = p0.getY();
             int x1 = p1.getX();
             int y1 = p1.getY();
-            if (x1 < x0) { 
-            	int t = x0; 
-            	x0 = x1; 
-            	x1 = t; 
+            if (x1 < x0) {
+                int t = x0;
+                x0 = x1;
+                x1 = t;
             }
-            if (y1 < y0) { 
-            	int t = y0; 
-            	y0 = y1; 
-            	y1 = t; 
+            if (y1 < y0) {
+                int t = y0;
+                y0 = y1;
+                y1 = t;
             }
 
             draw(g, x0, y0, x1 - x0, y1 - y0);
@@ -263,7 +262,7 @@ abstract class Rectangular extends FillableCanvasObject {
             int tol2 = stroke;
             int tol = tol2 / 2;
             return isInRect(qx, qy, x - tol, y - tol, w + tol2, h + tol2)
-                && contains(x - tol, y - tol, w + tol2, h + tol2, loc);
+                    && contains(x - tol, y - tol, w + tol2, h + tol2, loc);
         } else {
             return false;
         }
@@ -274,5 +273,6 @@ abstract class Rectangular extends FillableCanvasObject {
     }
 
     protected abstract boolean contains(int x, int y, int w, int h, Location q);
+
     protected abstract void draw(Graphics g, int x, int y, int w, int h);
 }

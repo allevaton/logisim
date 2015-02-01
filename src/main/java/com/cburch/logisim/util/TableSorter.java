@@ -1,18 +1,18 @@
 // retrieved from http://ouroborus.org/java/2.1/TableSorter.java
 package com.cburch.logisim.util;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
-
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
-
-import java.lang.reflect.Method;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.List;
 
 /**
  * TableSorter is a decorator for TableModels; adding sorting
@@ -24,7 +24,7 @@ import java.lang.reflect.InvocationTargetException;
  * have been translated via the internal mapping array. This way,
  * the TableSorter appears to hold another copy of the table
  * with the rows in a different order.
- * <p/>
+ * <p>
  * TableSorter registers itself as a listener to the underlying model,
  * just as the JTable itself would. Events recieved from the model
  * are examined, sometimes manipulated (typically widened), and then
@@ -32,7 +32,7 @@ import java.lang.reflect.InvocationTargetException;
  * If a change to the model has invalidated the order of TableSorter's
  * rows, a note of this is made and the sorter will resort the
  * rows the next time a value is requested.
- * <p/>
+ * <p>
  * When the tableHeader property is set, either by using the
  * setTableHeader() method or the two argument constructor, the
  * table header may be used as a complete UI for TableSorter.
@@ -55,10 +55,10 @@ import java.lang.reflect.InvocationTargetException;
  * that are already sorting - giving a way to initiate a compound
  * sort.
  * </ul>
- * <p/>
+ * <p>
  * This class first appeared in the swing table demos in 1997 (v1.5) and then
  * had a major rewrite in 2004 (v2.0) to make it compatible with Java 1.4.
- * <p/>
+ * <p>
  * This rewrite makes the class compile cleanly with Java 1.5 while
  * maintaining backward compatibility with TableSorter v2.0.
  *
@@ -87,7 +87,7 @@ public class TableSorter extends AbstractTableModel {
             Method m;
             try {
                 // See if o1 is capable of comparing itself to o2
-                m = o1.getClass().getDeclaredMethod("compareTo",o2.getClass());
+                m = o1.getClass().getDeclaredMethod("compareTo", o2.getClass());
             } catch (NoSuchMethodException e) {
                 throw new ClassCastException();
             }
@@ -95,7 +95,7 @@ public class TableSorter extends AbstractTableModel {
             Object retVal;
             try {
                 // make the comparison
-                retVal = m.invoke(o1,o2);
+                retVal = m.invoke(o1, o2);
             } catch (IllegalAccessException e) {
                 throw new ClassCastException();
             } catch (InvocationTargetException e) {
@@ -128,7 +128,7 @@ public class TableSorter extends AbstractTableModel {
     private JTableHeader tableHeader;
     private MouseListener mouseListener;
     private TableModelListener tableModelListener;
-    private Map<Class<?>,Comparator<Object>> columnComparators = new HashMap<Class<?>,Comparator<Object>>();
+    private Map<Class<?>, Comparator<Object>> columnComparators = new HashMap<Class<?>, Comparator<Object>>();
     private List<Directive> sortingColumns = new ArrayList<Directive>();
 
     public TableSorter() {
@@ -343,7 +343,7 @@ public class TableSorter extends AbstractTableModel {
             int row1 = modelIndex;
             int row2 = o.modelIndex;
 
-            for (Iterator<Directive> it = sortingColumns.iterator(); it.hasNext();) {
+            for (Iterator<Directive> it = sortingColumns.iterator(); it.hasNext(); ) {
                 Directive directive = it.next();
                 int column = directive.column;
 
@@ -361,7 +361,7 @@ public class TableSorter extends AbstractTableModel {
                 } else {
                     comparison = getComparator(column).compare(o1, o2);
                 }
-                
+
                 if (comparison != 0) {
                     return directive.direction == DESCENDING ? -comparison : comparison;
                 }
@@ -414,8 +414,8 @@ public class TableSorter extends AbstractTableModel {
                     && modelToView != null) {
                 int viewIndex = getModelToView()[e.getFirstRow()];
                 fireTableChanged(new TableModelEvent(TableSorter.this,
-                                                     viewIndex, viewIndex,
-                                                     column, e.getType()));
+                        viewIndex, viewIndex,
+                        column, e.getType()));
                 return;
             }
 
@@ -464,10 +464,10 @@ public class TableSorter extends AbstractTableModel {
             Color color = c == null ? Color.GRAY : c.getBackground();
             // In a compound sort, make each succesive triangle 20%
             // smaller than the previous one.
-            int dx = (int)(size/2*Math.pow(0.8, priority));
+            int dx = (int) (size / 2 * Math.pow(0.8, priority));
             int dy = descending ? dx : -dx;
             // Align icon (roughly) with font baseline.
-            y = y + 5*size/6 + (descending ? -dy : 0);
+            y = y + 5 * size / 6 + (descending ? -dy : 0);
             int shift = descending ? 1 : -1;
             g.translate(x, y);
 

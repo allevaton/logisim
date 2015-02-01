@@ -3,20 +3,19 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-
 import com.cburch.draw.toolbar.AbstractToolbarModel;
 import com.cburch.draw.toolbar.ToolbarItem;
 import com.cburch.logisim.circuit.Simulator;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.proj.Project;
-import static com.cburch.logisim.util.LocaleString.*;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class SimulationToolbarModel extends AbstractToolbarModel
         implements ChangeListener {
@@ -39,12 +38,12 @@ class SimulationToolbarModel extends AbstractToolbarModel
         tickStep = new LogisimToolbarItem(menu, "simtstep.svg", LogisimMenuBar.TICK_STEP,
                 getFromLocale("simulateTickTip"));
 
-        items = UnmodifiableList.decorate(Arrays.asList(new ToolbarItem[] {
+        items = UnmodifiableList.decorate(Arrays.asList(new ToolbarItem[]{
                 simEnable,
                 simStep,
                 tickEnable,
                 tickStep,
-            }));
+        }));
 
         menu.getMenuBar().addEnableListener(this);
         stateChanged(null);

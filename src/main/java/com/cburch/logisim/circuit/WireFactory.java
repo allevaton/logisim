@@ -3,25 +3,28 @@
 
 package com.cburch.logisim.circuit;
 
-import java.awt.Graphics;
-import java.awt.Color;
-
-import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.AbstractComponentFactory;
+import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentDrawContext;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class WireFactory extends AbstractComponentFactory {
     public static final WireFactory instance = new WireFactory();
 
-    private WireFactory() { }
+    private WireFactory() {
+    }
 
     @Override
-    public String getName() { return "Wire"; }
+    public String getName() {
+        return "Wire";
+    }
 
     @Override
     public String getDisplayGetter() {
@@ -62,7 +65,7 @@ class WireFactory extends AbstractComponentFactory {
     //
     @Override
     public void drawGhost(ComponentDrawContext context,
-            Color color, int x, int y, AttributeSet attrs) {
+                          Color color, int x, int y, AttributeSet attrs) {
         Graphics g = context.getGraphics();
         Object dir = attrs.getValue(Wire.dir_attr);
         int len = attrs.getValue(Wire.len_attr).intValue();

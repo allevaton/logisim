@@ -4,7 +4,8 @@
 package com.cburch.logisim.std.memory;
 
 import com.cburch.logisim.data.Value;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class DFlipFlop extends AbstractFlipFlop {
     public DFlipFlop() {

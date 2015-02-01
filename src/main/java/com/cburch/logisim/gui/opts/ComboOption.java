@@ -3,9 +3,9 @@
 
 package com.cburch.logisim.gui.opts;
 
-import javax.swing.JComboBox;
-
 import com.cburch.logisim.data.AttributeOption;
+
+import javax.swing.*;
 
 class ComboOption {
     private Object value;

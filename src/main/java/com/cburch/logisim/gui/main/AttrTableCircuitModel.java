@@ -9,7 +9,8 @@ import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.gui.generic.AttrTableSetException;
 import com.cburch.logisim.gui.generic.AttributeSetTableModel;
 import com.cburch.logisim.proj.Project;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class AttrTableCircuitModel extends AttributeSetTableModel {
     private Project proj;

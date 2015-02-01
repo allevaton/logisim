@@ -3,16 +3,10 @@
 
 package com.cburch.logisim.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-
 import org.apache.commons.collections15.EnumerationUtils;
+
+import javax.swing.*;
+import java.util.*;
 
 public class LocaleManager {
     // static members
@@ -20,10 +14,10 @@ public class LocaleManager {
     private static ArrayList<LocaleManager> managers = new ArrayList<LocaleManager>();
     private static ArrayList<LocaleListener> listeners = new ArrayList<LocaleListener>();
     private static boolean replaceAccents = false;
-    private static HashMap<Character,String> repl = null;
+    private static HashMap<Character, String> repl = null;
     private static Locale curLocale = null;
-    
-    
+
+
     public static Locale getFromLocale() {
         if (curLocale == null) {
             curLocale = Locale.getDefault();
@@ -47,7 +41,7 @@ public class LocaleManager {
                 }
             }
             if (select == null) {
-            	select = backup == null ? new Locale("en") : backup;
+                select = backup == null ? new Locale("en") : backup;
             }
 
             curLocale = select;
@@ -65,14 +59,14 @@ public class LocaleManager {
     }
 
     public static void setReplaceAccents(boolean value) {
-        HashMap<Character,String> newRepl = value ? fetchReplaceAccents() : null;
+        HashMap<Character, String> newRepl = value ? fetchReplaceAccents() : null;
         replaceAccents = value;
         repl = newRepl;
         fireLocaleChanged();
     }
 
-    private static HashMap<Character,String> fetchReplaceAccents() {
-        HashMap<Character,String> ret = null;
+    private static HashMap<Character, String> fetchReplaceAccents() {
+        HashMap<Character, String> ret = null;
         String val;
         try {
             val = LocaleString.getUtilLocaleManager().locale.getString("accentReplacements");
@@ -93,7 +87,7 @@ public class LocaleManager {
             }
             if (s != null) {
                 if (ret == null) {
-                    ret = new HashMap<Character,String>();
+                    ret = new HashMap<Character, String>();
                 }
 
                 ret.put(new Character(c), s);
@@ -134,7 +128,8 @@ public class LocaleManager {
         if (settings == null) {
             try {
                 settings = ResourceBundle.getBundle(dir_name + "/" + SETTINGS_NAME);
-            } catch (java.util.MissingResourceException e) { }
+            } catch (java.util.MissingResourceException e) {
+            }
         }
 
         try {
@@ -143,14 +138,16 @@ public class LocaleManager {
                 return;
             }
 
-        } catch (java.util.MissingResourceException e) { }
+        } catch (java.util.MissingResourceException e) {
+        }
         try {
             loadLocale(Locale.ENGLISH);
             if (locale != null) {
                 return;
             }
 
-        } catch (java.util.MissingResourceException e) { }
+        } catch (java.util.MissingResourceException e) {
+        }
         Locale[] choices = getFromLocaleOptions();
         if (choices != null && choices.length > 0) {
             loadLocale(choices[0]);
@@ -189,7 +186,7 @@ public class LocaleManager {
                 ret = key;
             }
         }
-        HashMap<Character,String> repl = LocaleManager.repl;
+        HashMap<Character, String> repl = LocaleManager.repl;
         if (repl != null) {
             ret = replaceAccents(ret, repl);
         }
@@ -212,9 +209,10 @@ public class LocaleManager {
                 locs = settings.getString("locales");
             }
 
-        } catch (java.util.MissingResourceException e) { }
+        } catch (java.util.MissingResourceException e) {
+        }
         if (locs == null) {
-            return new Locale[] { };
+            return new Locale[]{};
         }
 
 
@@ -248,12 +246,12 @@ public class LocaleManager {
                 cur = new Locale("en");
             }
 
-            locales = new Locale[] { cur };
+            locales = new Locale[]{cur};
         }
         return new JScrollPane(new LocaleSelector(locales));
     }
 
-    private static String replaceAccents(String src, HashMap<Character,String> repl) {
+    private static String replaceAccents(String src, HashMap<Character, String> repl) {
         // find first non-standard character - so we can avoid the
         // replacement process if possible
         int i = 0;
@@ -268,7 +266,7 @@ public class LocaleManager {
         if (i == n) {
             return src;
         }
-        
+
         // ok, we'll have to consider replacing accents
         char[] cs = src.toCharArray();
         StringBuilder ret = new StringBuilder(src.substring(0, i));

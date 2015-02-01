@@ -3,19 +3,6 @@
 
 package com.cburch.logisim.gui.opts;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import com.cburch.logisim.file.ToolbarData;
 import com.cburch.logisim.gui.generic.ProjectExplorer;
 import com.cburch.logisim.gui.generic.ProjectExplorerEvent;
@@ -24,7 +11,15 @@ import com.cburch.logisim.gui.generic.ProjectExplorerToolNode;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.TableLayout;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class ToolbarOptions extends OptionsPanel {
@@ -45,11 +40,17 @@ class ToolbarOptions extends OptionsPanel {
         }
 
         @Override
-        public void moveRequested(ProjectExplorerEvent event, AddTool dragged, AddTool target) { }
+        public void moveRequested(ProjectExplorerEvent event, AddTool dragged, AddTool target) {
+        }
+
         @Override
-        public void deleteRequested(ProjectExplorerEvent event) { }
+        public void deleteRequested(ProjectExplorerEvent event) {
+        }
+
         @Override
-        public JPopupMenu menuRequested(ProjectExplorerEvent event) { return null; }
+        public JPopupMenu menuRequested(ProjectExplorerEvent event) {
+            return null;
+        }
 
         @Override
         public void actionPerformed(ActionEvent event) {
@@ -153,14 +154,17 @@ class ToolbarOptions extends OptionsPanel {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gridbag.setConstraints(explorerPane, gbc); add(explorerPane);
+        gridbag.setConstraints(explorerPane, gbc);
+        add(explorerPane);
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.weightx = 0.0;
-        gridbag.setConstraints(middle, gbc); add(middle);
+        gridbag.setConstraints(middle, gbc);
+        add(middle);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
-        gridbag.setConstraints(listPane, gbc); add(listPane);
+        gridbag.setConstraints(listPane, gbc);
+        add(listPane);
     }
 
     @Override

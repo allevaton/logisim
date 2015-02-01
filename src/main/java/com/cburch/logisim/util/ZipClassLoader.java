@@ -43,7 +43,7 @@ public class ZipClassLoader extends ClassLoader {
         }
 
         void setResponse(Object value) {
-            synchronized(this) {
+            synchronized (this) {
                 response = value;
                 responseSent = true;
                 notifyAll();
@@ -51,7 +51,7 @@ public class ZipClassLoader extends ClassLoader {
         }
 
         void ensureDone() {
-            synchronized(this) {
+            synchronized (this) {
                 if (!responseSent) {
                     responseSent = true;
                     response = null;
@@ -62,9 +62,12 @@ public class ZipClassLoader extends ClassLoader {
         }
 
         Object getResponse() {
-            synchronized(this) {
+            synchronized (this) {
                 while (!responseSent) {
-                    try { this.wait(1000); } catch (InterruptedException e) { }
+                    try {
+                        this.wait(1000);
+                    } catch (InterruptedException e) {
+                    }
                 }
                 return response;
             }
@@ -87,8 +90,12 @@ public class ZipClassLoader extends ClassLoader {
 
                     try {
                         switch (request.action) {
-                        case REQUEST_LOAD: performLoad(request); break;
-                        case REQUEST_FIND: performFind(request); break;
+                            case REQUEST_LOAD:
+                                performLoad(request);
+                                break;
+                            case REQUEST_FIND:
+                                performFind(request);
+                                break;
                         }
                     } finally {
                         request.ensureDone();
@@ -108,7 +115,7 @@ public class ZipClassLoader extends ClassLoader {
         }
 
         private Request waitForNextRequest() {
-            synchronized(bgLock) {
+            synchronized (bgLock) {
                 long start = System.currentTimeMillis();
                 while (requests.isEmpty()) {
                     long elapse = System.currentTimeMillis() - start;
@@ -118,7 +125,8 @@ public class ZipClassLoader extends ClassLoader {
                     }
                     try {
                         bgLock.wait(OPEN_TIME);
-                    } catch (InterruptedException e) { }
+                    } catch (InterruptedException e) {
+                    }
                 }
                 return requests.removeFirst();
             }
@@ -127,18 +135,18 @@ public class ZipClassLoader extends ClassLoader {
         private void performFind(Request req) {
             ensureZipOpen();
             Object ret = null;
-                if (zipFile != null) {
-                    String res = req.resource;
-                    ZipEntry zipEntry = zipFile.getEntry(res);
-                    if (zipEntry != null) {
-                        String url = "jar:" + zipPath.toURI() + "!/" + res;
-                        try {
-							ret = new URL(url);
-						} catch (MalformedURLException e) {
-							e.printStackTrace();
-						}
+            if (zipFile != null) {
+                String res = req.resource;
+                ZipEntry zipEntry = zipFile.getEntry(res);
+                if (zipEntry != null) {
+                    String url = "jar:" + zipPath.toURI() + "!/" + res;
+                    try {
+                        ret = new URL(url);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
                     }
                 }
+            }
             req.setResponse(ret);
         }
 
@@ -163,9 +171,9 @@ public class ZipClassLoader extends ClassLoader {
                     }
                 }
             } catch (IOException e1) {
-				e1.printStackTrace();
-			} finally {
-                if (bis!=null) {
+                e1.printStackTrace();
+            } finally {
+                if (bis != null) {
                     try {
 
                         bis.close();
@@ -187,7 +195,7 @@ public class ZipClassLoader extends ClassLoader {
     }
 
     private File zipPath;
-    private HashMap<String,Object> classes = new HashMap<String,Object>();
+    private HashMap<String, Object> classes = new HashMap<String, Object>();
     private Object bgLock = new Object();
     private WorkThread bgThread = null;
 
@@ -215,7 +223,7 @@ public class ZipClassLoader extends ClassLoader {
         Object result = null;
 
         // check whether we have loaded this class before
-        synchronized(classes) {
+        synchronized (classes) {
             found = classes.containsKey(className);
             if (found) {
                 result = classes.get(className);
@@ -237,7 +245,9 @@ public class ZipClassLoader extends ClassLoader {
                 }
             }
 
-            synchronized(classes) { classes.put(className, result); }
+            synchronized (classes) {
+                classes.put(className, result);
+            }
         }
 
         if (result instanceof Class) {
@@ -254,7 +264,7 @@ public class ZipClassLoader extends ClassLoader {
 
     private Object request(int action, String resourceName) {
         Request request;
-        synchronized(bgLock) {
+        synchronized (bgLock) {
             // start the thread if it isn't working
             if (bgThread == null) {
                 bgThread = new WorkThread();

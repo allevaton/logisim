@@ -3,8 +3,7 @@
 
 package com.cburch.hex;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.ArrayList;
 
 class Highlighter {
@@ -35,7 +34,9 @@ class Highlighter {
         }
 
         if (start > end) {
-            long t = start; start = end; end = t;
+            long t = start;
+            start = end;
+            end = t;
         }
         if (start < model.getFirstOffset()) {
             start = model.getFirstOffset();
@@ -66,7 +67,7 @@ class Highlighter {
     public synchronized void clear() {
         ArrayList<Entry> oldEntries = entries;
         entries = new ArrayList<Entry>();
-        for(int n = oldEntries.size(); n >= 0; n--) {
+        for (int n = oldEntries.size(); n >= 0; n--) {
             expose(oldEntries.get(n));
         }
     }

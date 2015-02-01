@@ -3,39 +3,44 @@
 
 package com.cburch.logisim.std.gates;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Gates extends Library {
     private List<Tool> tools = null;
 
     public Gates() {
-        tools = Arrays.asList(new Tool[] {
-            new AddTool(NotGate.FACTORY),
-            new AddTool(Buffer.FACTORY),
-            new AddTool(AndGate.FACTORY),
-            new AddTool(OrGate.FACTORY),
-            new AddTool(NandGate.FACTORY),
-            new AddTool(NorGate.FACTORY),
-            new AddTool(XorGate.FACTORY),
-            new AddTool(XnorGate.FACTORY),
-            new AddTool(OddParityGate.FACTORY),
-            new AddTool(EvenParityGate.FACTORY),
-            new AddTool(ControlledBuffer.FACTORY_BUFFER),
-            new AddTool(ControlledBuffer.FACTORY_INVERTER),
+        tools = Arrays.asList(new Tool[]{
+                new AddTool(NotGate.FACTORY),
+                new AddTool(Buffer.FACTORY),
+                new AddTool(AndGate.FACTORY),
+                new AddTool(OrGate.FACTORY),
+                new AddTool(NandGate.FACTORY),
+                new AddTool(NorGate.FACTORY),
+                new AddTool(XorGate.FACTORY),
+                new AddTool(XnorGate.FACTORY),
+                new AddTool(OddParityGate.FACTORY),
+                new AddTool(EvenParityGate.FACTORY),
+                new AddTool(ControlledBuffer.FACTORY_BUFFER),
+                new AddTool(ControlledBuffer.FACTORY_INVERTER),
         });
     }
 
     @Override
-    public String getName() { return "Gates"; }
+    public String getName() {
+        return "Gates";
+    }
 
     @Override
-    public String getDisplayName() { return getFromLocale("gatesLibrary"); }
+    public String getDisplayName() {
+        return getFromLocale("gatesLibrary");
+    }
 
     @Override
     public List<Tool> getTools() {

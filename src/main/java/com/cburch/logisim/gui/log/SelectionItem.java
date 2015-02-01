@@ -3,11 +3,7 @@
 
 package com.cburch.logisim.gui.log;
 
-import com.cburch.logisim.circuit.Circuit;
-import com.cburch.logisim.circuit.CircuitEvent;
-import com.cburch.logisim.circuit.CircuitListener;
-import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.circuit.SubcircuitFactory;
+import com.cburch.logisim.circuit.*;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.data.AttributeEvent;
 import com.cburch.logisim.data.AttributeListener;
@@ -48,7 +44,7 @@ class SelectionItem implements AttributeListener, CircuitListener {
         String newShort = log.getLogName(option);
         if (newShort == null || newShort.equals("")) {
             newShort = comp.getFactory().getDisplayName()
-                + comp.getLocation().toString();
+                    + comp.getLocation().toString();
             if (option != null) {
                 newShort += "." + option.toString();
             }
@@ -124,7 +120,8 @@ class SelectionItem implements AttributeListener, CircuitListener {
     }
 
     @Override
-    public void attributeListChanged(AttributeEvent e) { }
+    public void attributeListChanged(AttributeEvent e) {
+    }
 
     @Override
     public void attributeValueChanged(AttributeEvent e) {

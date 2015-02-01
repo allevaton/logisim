@@ -3,34 +3,18 @@
 
 package com.cburch.logisim.instance;
 
-import java.awt.Font;
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
-
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.comp.Component;
-import com.cburch.logisim.comp.ComponentDrawContext;
-import com.cburch.logisim.comp.ComponentEvent;
-import com.cburch.logisim.comp.ComponentFactory;
-import com.cburch.logisim.comp.ComponentListener;
-import com.cburch.logisim.comp.ComponentUserEvent;
-import com.cburch.logisim.comp.EndData;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Location;
+import com.cburch.logisim.comp.*;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.tools.TextEditable;
 import com.cburch.logisim.tools.ToolTipMaker;
 import com.cburch.logisim.util.EventSourceWeakSupport;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 class InstanceComponent implements Component, AttributeListener, ToolTipMaker {
     private EventSourceWeakSupport<ComponentListener> listeners;
@@ -48,7 +32,7 @@ class InstanceComponent implements Component, AttributeListener, ToolTipMaker {
     private InstanceTextField textField;
 
     InstanceComponent(InstanceFactory factory, Location loc,
-            AttributeSet attrs) {
+                      AttributeSet attrs) {
         this.listeners = null;
         this.factory = factory;
         this.instance = new Instance(this);
@@ -159,7 +143,7 @@ class InstanceComponent implements Component, AttributeListener, ToolTipMaker {
     }
 
     private void fireEndsChanged(ArrayList<EndData> oldEnds,
-            ArrayList<EndData> newEnds) {
+                                 ArrayList<EndData> newEnds) {
         EventSourceWeakSupport<ComponentListener> ls = listeners;
         if (ls != null) {
             ComponentEvent e = null;
@@ -257,9 +241,7 @@ class InstanceComponent implements Component, AttributeListener, ToolTipMaker {
         InstanceTextField field = textField;
         if (field != null && field.getBounds(g).contains(pt)) {
             return true;
-        }
-
-        else {
+        } else {
             return contains(pt);
         }
 
@@ -331,7 +313,8 @@ class InstanceComponent implements Component, AttributeListener, ToolTipMaker {
     // AttributeListener methods
     //
     @Override
-    public void attributeListChanged(AttributeEvent e) { }
+    public void attributeListChanged(AttributeEvent e) {
+    }
 
     @Override
     public void attributeValueChanged(AttributeEvent e) {
@@ -388,7 +371,7 @@ class InstanceComponent implements Component, AttributeListener, ToolTipMaker {
     }
 
     void setTextField(Attribute<String> labelAttr, Attribute<Font> fontAttr,
-            int x, int y, int halign, int valign) {
+                      int x, int y, int halign, int valign) {
         InstanceTextField field = textField;
         if (field == null) {
             field = new InstanceTextField(this);

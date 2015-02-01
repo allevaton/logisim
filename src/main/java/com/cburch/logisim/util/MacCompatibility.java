@@ -3,15 +3,15 @@
 
 package com.cburch.logisim.util;
 
+import net.roydesign.mac.MRJAdapter;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JMenuBar;
-
-import net.roydesign.mac.MRJAdapter;
-
 public class MacCompatibility {
-    private MacCompatibility() { }
+    private MacCompatibility() {
+    }
 
     public static final double mrjVersion;
 
@@ -60,7 +60,8 @@ public class MacCompatibility {
     public static void setFramelessJMenuBar(JMenuBar menubar) {
         try {
             MRJAdapter.setFramelessJMenuBar(menubar);
-        } catch (Exception t) { }
+        } catch (Exception t) {
+        }
     }
 
     public static void setFileCreatorAndType(File dest, String app, String type)
@@ -72,7 +73,8 @@ public class MacCompatibility {
             } catch (IOException e) {
                 ioExcept = e;
             }
-        } catch (Exception t) { }
+        } catch (Exception t) {
+        }
         if (ioExcept != null) {
             throw ioExcept;
         }

@@ -3,30 +3,21 @@
 
 package com.cburch.logisim.gui.opts;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-
-import com.cburch.logisim.file.LibraryEvent;
-import com.cburch.logisim.file.LibraryListener;
-import com.cburch.logisim.file.LogisimFile;
-import com.cburch.logisim.file.LogisimFileActions;
-import com.cburch.logisim.file.Options;
+import com.cburch.logisim.file.*;
 import com.cburch.logisim.gui.generic.LFrame;
 import com.cburch.logisim.gui.menu.LogisimMenuBar;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
-import static com.cburch.logisim.util.LocaleString.*;
 import com.cburch.logisim.util.WindowMenuItemManager;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class OptionsFrame extends LFrame {
@@ -101,7 +92,7 @@ public class OptionsFrame extends LFrame {
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setJMenuBar(new LogisimMenuBar(this, project));
 
-        panels = new OptionsPanel[] {
+        panels = new OptionsPanel[]{
                 new SimulateOptions(this),
                 new ToolbarOptions(this),
                 new MouseOptions(this),

@@ -3,38 +3,23 @@
 
 package com.cburch.logisim.std.wiring;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
-import javax.swing.Icon;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.Icons;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class PullResistor extends InstanceFactory {
     public static final Attribute<AttributeOption> ATTR_PULL_TYPE
-        = Attributes.forOption("pull", getFromLocale("pullTypeAttr"),
-                new AttributeOption[] {
+            = Attributes.forOption("pull", getFromLocale("pullTypeAttr"),
+            new AttributeOption[]{
                     new AttributeOption(Value.FALSE, "0", getFromLocale("pullZeroType")),
-                    new AttributeOption(Value.TRUE,  "1", getFromLocale("pullOneType")),
+                    new AttributeOption(Value.TRUE, "1", getFromLocale("pullOneType")),
                     new AttributeOption(Value.ERROR, "X", getFromLocale("pullErrorType"))
             });
 
@@ -45,8 +30,8 @@ public class PullResistor extends InstanceFactory {
 
     public PullResistor() {
         super("Pull Resistor", getFromLocale("pullComponent"));
-        setAttributes(new Attribute[] { StdAttr.FACING, ATTR_PULL_TYPE },
-                new Object[] { Direction.SOUTH, ATTR_PULL_TYPE.parse("0") });
+        setAttributes(new Attribute[]{StdAttr.FACING, ATTR_PULL_TYPE},
+                new Object[]{Direction.SOUTH, ATTR_PULL_TYPE.parse("0")});
         setFacingAttribute(StdAttr.FACING);
     }
 
@@ -99,7 +84,7 @@ public class PullResistor extends InstanceFactory {
     }
 
     private void paintBase(InstancePainter painter, Value pullValue,
-            Color inColor, Color outColor) {
+                           Color inColor, Color outColor) {
         boolean color = painter.shouldDrawColor();
         Direction facing = painter.getAttributeValue(StdAttr.FACING);
         Graphics g = painter.getGraphics();
@@ -132,8 +117,8 @@ public class PullResistor extends InstanceFactory {
         g.setColor(baseColor);
         GraphicsUtil.switchToWidth(g, 2);
         if (painter.getGateShape() == AppPreferences.SHAPE_SHAPED) {
-            int[] xp = {   0,  -5,   5,  -5,   5, -5,  0 };
-            int[] yp = { -25, -23, -19, -15, -11, -7, -5};
+            int[] xp = {0, -5, 5, -5, 5, -5, 0};
+            int[] yp = {-25, -23, -19, -15, -11, -7, -5};
             g.drawPolyline(xp, yp, xp.length);
         } else {
             g.drawRect(-5, -25, 10, 20);
@@ -149,9 +134,9 @@ public class PullResistor extends InstanceFactory {
     @Override
     protected void configureNewInstance(Instance instance) {
         instance.addAttributeListener();
-        instance.setPorts(new Port[] {
+        instance.setPorts(new Port[]{
                 new Port(0, 0, Port.INOUT, BitWidth.UNKNOWN)
-            });
+        });
     }
 
     @Override

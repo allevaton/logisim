@@ -3,16 +3,6 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitMutation;
 import com.cburch.logisim.circuit.Wire;
@@ -24,6 +14,9 @@ import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.util.CollectionUtil;
+
+import java.awt.*;
+import java.util.*;
 
 class SelectionBase {
     static final Set<Component> NO_COMPONENTS = Collections.emptySet();
@@ -184,7 +177,7 @@ class SelectionBase {
     void pasteHelper(CircuitMutation xn, Collection<Component> comps) {
         clear(xn);
 
-        Map<Component,Component> newLifted = copyComponents(comps);
+        Map<Component, Component> newLifted = copyComponents(comps);
         lifted.addAll(newLifted.values());
         fireSelectionChanged();
     }
@@ -199,14 +192,14 @@ class SelectionBase {
     }
 
     void translateHelper(CircuitMutation xn, int dx, int dy) {
-        Map<Component,Component> selectedAfter = copyComponents(selected, dx, dy);
-        for (Map.Entry<Component,Component> entry : selectedAfter.entrySet()) {
+        Map<Component, Component> selectedAfter = copyComponents(selected, dx, dy);
+        for (Map.Entry<Component, Component> entry : selectedAfter.entrySet()) {
             xn.replace(entry.getKey(), entry.getValue());
         }
 
-        Map<Component,Component> liftedAfter = copyComponents(lifted, dx, dy);
+        Map<Component, Component> liftedAfter = copyComponents(lifted, dx, dy);
         lifted.clear();
-        for (Map.Entry<Component,Component> entry : liftedAfter.entrySet()) {
+        for (Map.Entry<Component, Component> entry : liftedAfter.entrySet()) {
             xn.add(entry.getValue());
             selected.add(entry.getValue());
         }
@@ -232,7 +225,7 @@ class SelectionBase {
     }
 
     private boolean hasConflictTranslated(Collection<Component> components,
-            int dx, int dy, boolean selfConflicts) {
+                                          int dx, int dy, boolean selfConflicts) {
         Circuit circuit = proj.getCurrentCircuit();
         if (circuit == null) {
             return false;
@@ -283,7 +276,7 @@ class SelectionBase {
         }
     }
 
-    private HashMap<Component,Component> copyComponents(Collection<Component> components) {
+    private HashMap<Component, Component> copyComponents(Collection<Component> components) {
         // determine translation offset where we can legally place the clipboard
         int dx;
         int dy;
@@ -303,12 +296,12 @@ class SelectionBase {
                 // top edge of square
                 if (offs < side - 1) {
                     dx -= offs;
-                // left edge
+                    // left edge
                 } else if (offs < 2 * (side - 1)) {
                     offs -= side - 1;
                     dx = -dx;
                     dy -= offs;
-                // right edge
+                    // right edge
                 } else if (offs < 3 * (side - 1)) {
                     offs -= 2 * (side - 1);
                     dx = -dx + offs;
@@ -328,9 +321,9 @@ class SelectionBase {
         }
     }
 
-    private HashMap<Component,Component> copyComponents(Collection<Component> components,
-            int dx, int dy) {
-        HashMap<Component,Component> ret = new HashMap<Component,Component>();
+    private HashMap<Component, Component> copyComponents(Collection<Component> components,
+                                                         int dx, int dy) {
+        HashMap<Component, Component> ret = new HashMap<Component, Component>();
         for (Component comp : components) {
             Location oldLoc = comp.getLocation();
             AttributeSet attrs = (AttributeSet) comp.getAttributeSet().clone();

@@ -3,13 +3,19 @@
 
 package com.cburch.logisim.gui.opts;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import com.cburch.logisim.file.MouseMappings;
+import com.cburch.logisim.gui.generic.*;
+import com.cburch.logisim.gui.main.AttrTableToolModel;
+import com.cburch.logisim.proj.Project;
+import com.cburch.logisim.tools.AddTool;
+import com.cburch.logisim.tools.Tool;
+import com.cburch.logisim.util.InputEventUtil;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -17,31 +23,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
-
-import com.cburch.logisim.file.MouseMappings;
-import com.cburch.logisim.gui.generic.AttrTable;
-import com.cburch.logisim.gui.generic.AttrTableModel;
-import com.cburch.logisim.gui.generic.ProjectExplorer;
-import com.cburch.logisim.gui.generic.ProjectExplorerEvent;
-import com.cburch.logisim.gui.generic.ProjectExplorerListener;
-import com.cburch.logisim.gui.generic.ProjectExplorerToolNode;
-import com.cburch.logisim.gui.main.AttrTableToolModel;
-import com.cburch.logisim.proj.Project;
-import com.cburch.logisim.tools.AddTool;
-import com.cburch.logisim.tools.Tool;
-import com.cburch.logisim.util.InputEventUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class MouseOptions extends OptionsPanel {
@@ -88,7 +70,7 @@ class MouseOptions extends OptionsPanel {
 
     private class MyListener
             implements ActionListener, MouseListener, ListSelectionListener,
-                MouseMappings.MouseMappingsListener, ProjectExplorerListener {
+            MouseMappings.MouseMappingsListener, ProjectExplorerListener {
         //
         // ActionListener method
         //
@@ -98,7 +80,7 @@ class MouseOptions extends OptionsPanel {
             if (src == remove) {
                 int row = mappings.getSelectedRow();
                 getProject().doAction(OptionsActions.removeMapping(getOptions().getMouseMappings(),
-                    model.getKey(row)));
+                        model.getKey(row)));
                 row = Math.min(row, model.getRowCount() - 1);
                 if (row >= 0) setSelectedRow(row);
             }
@@ -108,11 +90,17 @@ class MouseOptions extends OptionsPanel {
         // MouseListener methods
         //
         @Override
-        public void mouseClicked(MouseEvent e) { }
+        public void mouseClicked(MouseEvent e) {
+        }
+
         @Override
-        public void mouseEntered(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) {
+        }
+
         @Override
-        public void mouseExited(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) {
+        }
+
         @Override
         public void mousePressed(MouseEvent e) {
             if (e.getSource() == addArea && curTool != null) {
@@ -122,8 +110,10 @@ class MouseOptions extends OptionsPanel {
                 setSelectedRow(model.getRow(mods));
             }
         }
+
         @Override
-        public void mouseReleased(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) {
+        }
 
         //
         // ListSelectionListener method
@@ -171,13 +161,21 @@ class MouseOptions extends OptionsPanel {
         }
 
         @Override
-        public void doubleClicked(ProjectExplorerEvent event) { }
+        public void doubleClicked(ProjectExplorerEvent event) {
+        }
+
         @Override
-        public void moveRequested(ProjectExplorerEvent event, AddTool dragged, AddTool target) { }
+        public void moveRequested(ProjectExplorerEvent event, AddTool dragged, AddTool target) {
+        }
+
         @Override
-        public void deleteRequested(ProjectExplorerEvent event) { }
+        public void deleteRequested(ProjectExplorerEvent event) {
+        }
+
         @Override
-        public JPopupMenu menuRequested(ProjectExplorerEvent event) { return null; }
+        public JPopupMenu menuRequested(ProjectExplorerEvent event) {
+            return null;
+        }
     }
 
     private class MappingsModel extends AbstractTableModel {
@@ -286,15 +284,24 @@ class MouseOptions extends OptionsPanel {
         gbc.weightx = 0.0;
         JPanel gap = new JPanel();
         gap.setPreferredSize(new Dimension(10, 10));
-        gridbag.setConstraints(gap, gbc); add(gap);
+        gridbag.setConstraints(gap, gbc);
+        add(gap);
         gbc.weightx = 1.0;
         gbc.gridheight = 1;
         gbc.gridx = 2;
         gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.weighty = 0.0; gridbag.setConstraints(addArea, gbc); add(addArea);
-        gbc.weighty = 1.0; gridbag.setConstraints(mapPane, gbc); add(mapPane);
-        gbc.weighty = 0.0; gridbag.setConstraints(removeArea, gbc); add(removeArea);
-        gbc.weighty = 1.0; gridbag.setConstraints(attrTable, gbc); add(attrTable);
+        gbc.weighty = 0.0;
+        gridbag.setConstraints(addArea, gbc);
+        add(addArea);
+        gbc.weighty = 1.0;
+        gridbag.setConstraints(mapPane, gbc);
+        add(mapPane);
+        gbc.weighty = 0.0;
+        gridbag.setConstraints(removeArea, gbc);
+        add(removeArea);
+        gbc.weighty = 1.0;
+        gridbag.setConstraints(attrTable, gbc);
+        add(attrTable);
 
         getOptions().getMouseMappings().addMouseMappingsListener(listener);
         setCurrentTool(null);

@@ -3,40 +3,31 @@
 
 package com.cburch.draw.tools;
 
-import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.AbstractCanvasObject;
+import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.shapes.DrawAttr;
-import com.cburch.logisim.data.AbstractAttributeSet;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeEvent;
-import com.cburch.logisim.data.AttributeListener;
-import com.cburch.logisim.data.AttributeSet;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.util.EventSourceWeakSupport;
-
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class DrawingAttributeSet implements AttributeSet, Cloneable {
     static final List<Attribute<?>> ATTRS_ALL
-        = UnmodifiableList.decorate(Arrays.asList(new Attribute<?>[] {
-                DrawAttr.FONT, DrawAttr.ALIGNMENT,
-                DrawAttr.PAINT_TYPE,
-                DrawAttr.STROKE_WIDTH, DrawAttr.STROKE_COLOR,
-                DrawAttr.FILL_COLOR, DrawAttr.TEXT_DEFAULT_FILL,
-                DrawAttr.CORNER_RADIUS }));
+            = UnmodifiableList.decorate(Arrays.asList(new Attribute<?>[]{
+            DrawAttr.FONT, DrawAttr.ALIGNMENT,
+            DrawAttr.PAINT_TYPE,
+            DrawAttr.STROKE_WIDTH, DrawAttr.STROKE_COLOR,
+            DrawAttr.FILL_COLOR, DrawAttr.TEXT_DEFAULT_FILL,
+            DrawAttr.CORNER_RADIUS}));
     static final List<Object> DEFAULTS_ALL
-        = Arrays.asList(new Object[] {
-                DrawAttr.DEFAULT_FONT, DrawAttr.ALIGN_CENTER,
-                DrawAttr.PAINT_STROKE,
-                Integer.valueOf(1), Color.BLACK,
-                Color.WHITE, Color.BLACK, Integer.valueOf(10) });
+            = Arrays.asList(new Object[]{
+            DrawAttr.DEFAULT_FONT, DrawAttr.ALIGN_CENTER,
+            DrawAttr.PAINT_STROKE,
+            Integer.valueOf(1), Color.BLACK,
+            Color.WHITE, Color.BLACK, Integer.valueOf(10)});
 
     private class Restriction extends AbstractAttributeSet
             implements AttributeListener {
@@ -177,7 +168,7 @@ public class DrawingAttributeSet implements AttributeSet, Cloneable {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public <V> V getValue(Attribute<V> attr) {
         Iterator<Attribute<?>> ait = attrs.iterator();
         Iterator<Object> vit = values.iterator();

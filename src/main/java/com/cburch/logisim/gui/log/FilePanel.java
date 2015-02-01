@@ -3,35 +3,29 @@
 
 package com.cburch.logisim.gui.log;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import com.cburch.logisim.data.Value;
+import com.cburch.logisim.util.JFileChoosers;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.util.JFileChoosers;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class FilePanel extends LogPanel {
     private class Listener implements ActionListener, ModelListener {
         @Override
-        public void selectionChanged(ModelEvent event) { }
+        public void selectionChanged(ModelEvent event) {
+        }
 
         @Override
-        public void entryAdded(ModelEvent event, Value[] values) { }
+        public void entryAdded(ModelEvent event, Value[] values) {
+        }
 
         @Override
         public void filePropertyChanged(ModelEvent event) {
@@ -69,9 +63,9 @@ class FilePanel extends LogPanel {
                 File file = chooser.getSelectedFile();
                 if (file.exists() && (!file.canWrite() || file.isDirectory())) {
                     JOptionPane.showMessageDialog(getLogFrame(),
-                        getFromLocale("fileCannotWriteMessage", file.getName()),
-                        getFromLocale("fileCannotWriteTitle"),
-                        JOptionPane.OK_OPTION);
+                            getFromLocale("fileCannotWriteMessage", file.getName()),
+                            getFromLocale("fileCannotWriteTitle"),
+                            JOptionPane.OK_OPTION);
                     return;
                 }
                 if (file.exists() && file.length() > 0) {
@@ -81,15 +75,16 @@ class FilePanel extends LogPanel {
                             getFromLocale("fileCancelOption"),
                     };
                     int option = JOptionPane.showOptionDialog(getLogFrame(),
-                        getFromLocale("fileExistsMessage", file.getName()),
-                        getFromLocale("fileExistsTitle"),
-                        0, JOptionPane.QUESTION_MESSAGE, null,
-                        options, options[0]);
+                            getFromLocale("fileExistsMessage", file.getName()),
+                            getFromLocale("fileExistsTitle"),
+                            0, JOptionPane.QUESTION_MESSAGE, null,
+                            options, options[0]);
                     if (option == 0) {
                         try {
                             FileWriter delete = new FileWriter(file);
                             delete.close();
-                        } catch (IOException e) { }
+                        } catch (IOException e) {
+                        }
                     } else if (option == 1) {
                         // do nothing
                     } else {
@@ -118,13 +113,13 @@ class FilePanel extends LogPanel {
         JPanel filePanel = new JPanel(new GridBagLayout());
         GridBagLayout gb = (GridBagLayout) filePanel.getLayout();
         GridBagConstraints gc = new GridBagConstraints();
-          gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.fill = GridBagConstraints.HORIZONTAL;
         gb.setConstraints(fileLabel, gc);
         filePanel.add(fileLabel);
-          gc.weightx = 1.0;
+        gc.weightx = 1.0;
         gb.setConstraints(fileField, gc);
         filePanel.add(fileField);
-          gc.weightx = 0.0;
+        gc.weightx = 0.0;
         gb.setConstraints(selectButton, gc);
         filePanel.add(selectButton);
         fileField.setEditable(false);
@@ -133,20 +128,40 @@ class FilePanel extends LogPanel {
         setLayout(new GridBagLayout());
         gb = (GridBagLayout) getLayout();
         gc = new GridBagConstraints();
-          gc.gridx = 0;
-          gc.weightx = 1.0;
-          gc.gridy = GridBagConstraints.RELATIVE;
+        gc.gridx = 0;
+        gc.weightx = 1.0;
+        gc.gridy = GridBagConstraints.RELATIVE;
         JComponent glue;
-        glue = new JPanel(); gc.weighty = 1.0; gb.setConstraints(glue, gc); add(glue); gc.weighty = 0.0;
-        gb.setConstraints(enableLabel, gc);    add(enableLabel);
-        gb.setConstraints(enableButton, gc);   add(enableButton);
-        glue = new JPanel(); gc.weighty = 1.0; gb.setConstraints(glue, gc); add(glue); gc.weighty = 0.0;
-          gc.fill = GridBagConstraints.HORIZONTAL;
-        gb.setConstraints(filePanel, gc);      add(filePanel);
-          gc.fill = GridBagConstraints.NONE;
-        glue = new JPanel(); gc.weighty = 1.0; gb.setConstraints(glue, gc); add(glue); gc.weighty = 0.0;
-        gb.setConstraints(headerCheckBox, gc); add(headerCheckBox);
-        glue = new JPanel(); gc.weighty = 1.0; gb.setConstraints(glue, gc); add(glue); gc.weighty = 0.0;
+        glue = new JPanel();
+        gc.weighty = 1.0;
+        gb.setConstraints(glue, gc);
+        add(glue);
+        gc.weighty = 0.0;
+        gb.setConstraints(enableLabel, gc);
+        add(enableLabel);
+        gb.setConstraints(enableButton, gc);
+        add(enableButton);
+        glue = new JPanel();
+        gc.weighty = 1.0;
+        gb.setConstraints(glue, gc);
+        add(glue);
+        gc.weighty = 0.0;
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gb.setConstraints(filePanel, gc);
+        add(filePanel);
+        gc.fill = GridBagConstraints.NONE;
+        glue = new JPanel();
+        gc.weighty = 1.0;
+        gb.setConstraints(glue, gc);
+        add(glue);
+        gc.weighty = 0.0;
+        gb.setConstraints(headerCheckBox, gc);
+        add(headerCheckBox);
+        glue = new JPanel();
+        gc.weighty = 1.0;
+        gb.setConstraints(glue, gc);
+        add(glue);
+        gc.weighty = 0.0;
 
         enableButton.addActionListener(listener);
         selectButton.addActionListener(listener);

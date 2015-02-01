@@ -3,14 +3,15 @@
 
 package com.cburch.logisim.gui.appear;
 
-import java.util.ArrayList;
-
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.appear.CircuitAppearance;
 import com.cburch.logisim.proj.Action;
 import com.cburch.logisim.proj.Project;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.ArrayList;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class RevertAppearanceAction extends Action {
     private Circuit circuit;

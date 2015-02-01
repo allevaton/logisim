@@ -3,10 +3,10 @@
 
 package com.cburch.logisim.tools.key;
 
-import java.awt.event.KeyEvent;
-
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
+
+import java.awt.event.KeyEvent;
 
 public abstract class NumericConfigurator<V> implements KeyConfigurator, Cloneable {
     private static final int MAX_TIME_KEY_LASTS = 800;
@@ -24,7 +24,7 @@ public abstract class NumericConfigurator<V> implements KeyConfigurator, Cloneab
     }
 
     public NumericConfigurator(Attribute<V> attr, int min, int max,
-            int modifiersEx, int radix) {
+                               int modifiersEx, int radix) {
         this.attr = attr;
         this.minValue = min;
         this.maxValue = max;

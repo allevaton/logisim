@@ -3,44 +3,29 @@
 
 package com.cburch.logisim.std.gates;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
-import javax.swing.Icon;
-
 import com.cburch.logisim.comp.ComponentFactory;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import com.cburch.logisim.data.Value;
+import com.cburch.logisim.data.*;
 import com.cburch.logisim.file.Options;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.WireRepair;
 import com.cburch.logisim.tools.WireRepairData;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
 import com.cburch.logisim.util.Icons;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 class ControlledBuffer extends InstanceFactory {
     private static final AttributeOption RIGHT_HANDED
-        = new AttributeOption("right", getFromLocale("controlledRightHanded"));
+            = new AttributeOption("right", getFromLocale("controlledRightHanded"));
     private static final AttributeOption LEFT_HANDED
-        = new AttributeOption("left", getFromLocale("controlledLeftHanded"));
+            = new AttributeOption("left", getFromLocale("controlledLeftHanded"));
     private static final Attribute<AttributeOption> ATTR_CONTROL
-        = Attributes.forOption("control", getFromLocale("controlledControlOption"),
-                new AttributeOption[] { RIGHT_HANDED, LEFT_HANDED });
+            = Attributes.forOption("control", getFromLocale("controlledControlOption"),
+            new AttributeOption[]{RIGHT_HANDED, LEFT_HANDED});
 
     public static ComponentFactory FACTORY_BUFFER = new ControlledBuffer(false);
     public static ComponentFactory FACTORY_INVERTER = new ControlledBuffer(true);
@@ -52,22 +37,22 @@ class ControlledBuffer extends InstanceFactory {
 
     private ControlledBuffer(boolean isInverter) {
         super(isInverter ? "Controlled Inverter" : "Controlled Buffer",
-            isInverter ? getFromLocale("controlledInverterComponent")
-                    : getFromLocale("controlledBufferComponent"));
+                isInverter ? getFromLocale("controlledInverterComponent")
+                        : getFromLocale("controlledBufferComponent"));
         this.isInverter = isInverter;
         if (isInverter) {
-            setAttributes(new Attribute[] { StdAttr.FACING, StdAttr.WIDTH,
-                    NotGate.ATTR_SIZE, ATTR_CONTROL,
-                    StdAttr.LABEL, StdAttr.LABEL_FONT },
-                new Object[] { Direction.EAST, BitWidth.ONE,
-                    NotGate.SIZE_WIDE, RIGHT_HANDED,
-                    "", StdAttr.DEFAULT_LABEL_FONT });
+            setAttributes(new Attribute[]{StdAttr.FACING, StdAttr.WIDTH,
+                            NotGate.ATTR_SIZE, ATTR_CONTROL,
+                            StdAttr.LABEL, StdAttr.LABEL_FONT},
+                    new Object[]{Direction.EAST, BitWidth.ONE,
+                            NotGate.SIZE_WIDE, RIGHT_HANDED,
+                            "", StdAttr.DEFAULT_LABEL_FONT});
         } else {
-            setAttributes(new Attribute[] {
-                    StdAttr.FACING, StdAttr.WIDTH, ATTR_CONTROL,
-                    StdAttr.LABEL, StdAttr.LABEL_FONT },
-                new Object[] { Direction.EAST, BitWidth.ONE, RIGHT_HANDED,
-                    "", StdAttr.DEFAULT_LABEL_FONT });
+            setAttributes(new Attribute[]{
+                            StdAttr.FACING, StdAttr.WIDTH, ATTR_CONTROL,
+                            StdAttr.LABEL, StdAttr.LABEL_FONT},
+                    new Object[]{Direction.EAST, BitWidth.ONE, RIGHT_HANDED,
+                            "", StdAttr.DEFAULT_LABEL_FONT});
         }
         setFacingAttribute(StdAttr.FACING);
         setKeyConfigurator(new BitWidthConfigurator(StdAttr.WIDTH));
@@ -82,7 +67,7 @@ class ControlledBuffer extends InstanceFactory {
         }
         Direction facing = attrs.getValue(StdAttr.FACING);
         if (facing == Direction.NORTH) {
-            return Bounds.create(-10,  0, 20, w);
+            return Bounds.create(-10, 0, 20, w);
         }
 
         if (facing == Direction.SOUTH) {
@@ -113,8 +98,8 @@ class ControlledBuffer extends InstanceFactory {
         } else {
             int x = isInverter ? 0 : 2;
             g.setColor(Color.BLACK);
-            int[] xp = new int[] { x + 15, x + 1, x + 1, x + 15 };
-            int[] yp = new int[] { 10,     3,     17,    10 };
+            int[] xp = new int[]{x + 15, x + 1, x + 1, x + 15};
+            int[] yp = new int[]{10, 3, 17, 10};
             g.drawPolyline(xp, yp, 4);
             if (isInverter) {
                 g.drawOval(x + 13, 8, 4, 4);
@@ -175,8 +160,8 @@ class ControlledBuffer extends InstanceFactory {
         } else {
             GraphicsUtil.switchToWidth(g, 2);
             int d = isInverter ? 10 : 0;
-            int[] xp = new int[] { -d, -19 - d, -19 - d, -d };
-            int[] yp = new int[] {  0,  -7,       7,      0 };
+            int[] xp = new int[]{-d, -19 - d, -19 - d, -d};
+            int[] yp = new int[]{0, -7, 7, 0};
             g.drawPolyline(xp, yp, 4);
             // if (isInverter) g.drawOval(-9, -4, 9, 9);
         }

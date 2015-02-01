@@ -3,23 +3,18 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
-
-import javax.swing.tree.TreeNode;
-
-import com.cburch.logisim.circuit.CircuitAttributes;
-import com.cburch.logisim.circuit.CircuitEvent;
-import com.cburch.logisim.circuit.CircuitListener;
-import com.cburch.logisim.circuit.CircuitState;
-import com.cburch.logisim.circuit.SubcircuitFactory;
+import com.cburch.logisim.circuit.*;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentFactory;
 import com.cburch.logisim.data.AttributeEvent;
 import com.cburch.logisim.data.AttributeListener;
 import com.cburch.logisim.instance.StdAttr;
+
+import javax.swing.tree.TreeNode;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
 
 class SimulationTreeCircuitNode extends SimulationTreeNode
         implements CircuitListener, AttributeListener, Comparator<Component> {
@@ -37,8 +32,8 @@ class SimulationTreeCircuitNode extends SimulationTreeNode
     private ArrayList<TreeNode> children;
 
     public SimulationTreeCircuitNode(SimulationTreeModel model,
-            SimulationTreeCircuitNode parent, CircuitState circuitState,
-            Component subcircComp) {
+                                     SimulationTreeCircuitNode parent, CircuitState circuitState,
+                                     Component subcircComp) {
         this.model = model;
         this.parent = parent;
         this.circuitState = circuitState;
@@ -153,9 +148,11 @@ class SimulationTreeCircuitNode extends SimulationTreeNode
                 if (o instanceof SimulationTreeCircuitNode) {
                     SimulationTreeCircuitNode n = (SimulationTreeCircuitNode) o;
                     if (n.circuitState == state) {
-                        { toAdd = n;
+                        {
+                            toAdd = n;
+                        }
+                        break;
                     }
- break; }
                 }
             }
             if (toAdd == null) {
@@ -189,7 +186,8 @@ class SimulationTreeCircuitNode extends SimulationTreeNode
     //
     // AttributeListener methods
     @Override
-    public void attributeListChanged(AttributeEvent e) { }
+    public void attributeListChanged(AttributeEvent e) {
+    }
 
     @Override
     public void attributeValueChanged(AttributeEvent e) {

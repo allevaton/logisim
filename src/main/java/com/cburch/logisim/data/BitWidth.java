@@ -4,7 +4,7 @@
 package com.cburch.logisim.data;
 
 
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 public class BitWidth implements Comparable<BitWidth> {
     public static final BitWidth UNKNOWN = new BitWidth(0);
@@ -60,15 +60,11 @@ public class BitWidth implements Comparable<BitWidth> {
 
     public int getMask() {
         if (width == 0) {
-                  return 0;
-        }
-
-        else if (width == 32) {
+            return 0;
+        } else if (width == 32) {
             return -1;
-        }
-
-        else {
-                            return (1 << width) - 1;
+        } else {
+            return (1 << width) - 1;
         }
 
     }
@@ -105,7 +101,7 @@ public class BitWidth implements Comparable<BitWidth> {
                 return UNKNOWN;
             } else {
                 throw new IllegalArgumentException("width " + width
-                    + " must be positive");
+                        + " must be positive");
             }
         } else if (width - 1 < prefab.length) {
             return prefab[width - 1];

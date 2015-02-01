@@ -3,39 +3,24 @@
 
 package com.cburch.logisim.analyze.gui;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import com.cburch.logisim.analyze.model.*;
+
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import com.cburch.logisim.analyze.model.AnalyzerModel;
-import com.cburch.logisim.analyze.model.OutputExpressionsEvent;
-import com.cburch.logisim.analyze.model.OutputExpressionsListener;
-import com.cburch.logisim.analyze.model.Expression;
-import com.cburch.logisim.analyze.model.Parser;
-import com.cburch.logisim.analyze.model.ParserException;
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class ExpressionTab extends AnalyzerTab implements TabInterface {
     private class MyListener extends AbstractAction
             implements DocumentListener,
-                OutputExpressionsListener, ItemListener {
+            OutputExpressionsListener, ItemListener {
         boolean edited = false;
 
         @Override
@@ -69,17 +54,19 @@ class ExpressionTab extends AnalyzerTab implements TabInterface {
         public void insertUpdate(DocumentEvent event) {
             String curText = field.getText();
             edited = curText.length() != curExprStringLength
-                || !curText.equals(getCurrentString());
+                    || !curText.equals(getCurrentString());
 
             boolean enable = (edited && getCurrentVariable() != null);
             clear.setEnabled(curText.length() > 0);
             revert.setEnabled(enable);
             enter.setEnabled(enable);
         }
+
         @Override
         public void removeUpdate(DocumentEvent event) {
             insertUpdate(event);
         }
+
         @Override
         public void changedUpdate(DocumentEvent event) {
             insertUpdate(event);
@@ -162,20 +149,25 @@ class ExpressionTab extends AnalyzerTab implements TabInterface {
         gc.fill = GridBagConstraints.BOTH;
 
         JPanel selectorPanel = selector.createPanel();
-        gb.setConstraints(selectorPanel, gc); add(selectorPanel);
-        gb.setConstraints(prettyView, gc); add(prettyView);
-          Insets oldInsets = gc.insets;
-          gc.insets = new Insets(10, 10, 0, 10);
-          JScrollPane fieldPane = new JScrollPane(field,
-                  ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                  ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        gb.setConstraints(fieldPane, gc); add(fieldPane);
-          gc.insets = oldInsets;
-          gc.fill = GridBagConstraints.NONE;
-          gc.anchor = GridBagConstraints.LINE_END;
-        gb.setConstraints(buttons, gc); add(buttons);
-          gc.fill = GridBagConstraints.BOTH;
-        gb.setConstraints(error, gc); add(error);
+        gb.setConstraints(selectorPanel, gc);
+        add(selectorPanel);
+        gb.setConstraints(prettyView, gc);
+        add(prettyView);
+        Insets oldInsets = gc.insets;
+        gc.insets = new Insets(10, 10, 0, 10);
+        JScrollPane fieldPane = new JScrollPane(field,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        gb.setConstraints(fieldPane, gc);
+        add(fieldPane);
+        gc.insets = oldInsets;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gb.setConstraints(buttons, gc);
+        add(buttons);
+        gc.fill = GridBagConstraints.BOTH;
+        gb.setConstraints(error, gc);
+        add(error);
 
         myListener.insertUpdate(null);
         setError(null);

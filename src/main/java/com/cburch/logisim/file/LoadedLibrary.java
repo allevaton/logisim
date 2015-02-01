@@ -3,12 +3,6 @@
 
 package com.cburch.logisim.file;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitMutation;
 import com.cburch.logisim.circuit.SubcircuitFactory;
@@ -22,6 +16,8 @@ import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.EventSourceWeakSupport;
+
+import java.util.*;
 
 public class LoadedLibrary extends Library implements LibraryEventSource {
     private class MyListener implements LibraryListener {
@@ -109,6 +105,7 @@ public class LoadedLibrary extends Library implements LibraryEventSource {
     private void fireLibraryEvent(int action, Object data) {
         fireLibraryEvent(new LibraryEvent(this, action, data));
     }
+
     private void fireLibraryEvent(LibraryEvent event) {
         if (event.getSource() != this) {
             event = new LibraryEvent(this, event.getAction(), event.getData());
@@ -141,10 +138,10 @@ public class LoadedLibrary extends Library implements LibraryEventSource {
             fireLibraryEvent(LibraryEvent.ADD_LIBRARY, lib);
         }
 
-        HashMap<ComponentFactory,ComponentFactory> componentMap;
-        HashMap<Tool,Tool> toolMap;
-        componentMap = new HashMap<ComponentFactory,ComponentFactory>();
-        toolMap = new HashMap<Tool,Tool>();
+        HashMap<ComponentFactory, ComponentFactory> componentMap;
+        HashMap<Tool, Tool> toolMap;
+        componentMap = new HashMap<ComponentFactory, ComponentFactory>();
+        toolMap = new HashMap<Tool, Tool>();
         for (Tool oldTool : old.getTools()) {
             Tool newTool = base.getTool(oldTool.getName());
             toolMap.put(oldTool, newTool);
@@ -173,8 +170,8 @@ public class LoadedLibrary extends Library implements LibraryEventSource {
         }
     }
 
-    private static void replaceAll(Map<ComponentFactory,ComponentFactory> compMap,
-            Map<Tool,Tool> toolMap) {
+    private static void replaceAll(Map<ComponentFactory, ComponentFactory> compMap,
+                                   Map<Tool, Tool> toolMap) {
         for (Project proj : Projects.getOpenProjects()) {
             Tool oldTool = proj.getTool();
             Circuit oldCircuit = proj.getCurrentCircuit();
@@ -195,8 +192,8 @@ public class LoadedLibrary extends Library implements LibraryEventSource {
     }
 
     private static void replaceAll(LogisimFile file,
-            Map<ComponentFactory,ComponentFactory> compMap,
-            Map<Tool,Tool> toolMap) {
+                                   Map<ComponentFactory, ComponentFactory> compMap,
+                                   Map<Tool, Tool> toolMap) {
         file.getOptions().getToolbarData().replaceAll(toolMap);
         file.getOptions().getMouseMappings().replaceAll(toolMap);
         for (Circuit circuit : file.getCircuits()) {
@@ -205,7 +202,7 @@ public class LoadedLibrary extends Library implements LibraryEventSource {
     }
 
     private static void replaceAll(Circuit circuit,
-            Map<ComponentFactory,ComponentFactory> compMap) {
+                                   Map<ComponentFactory, ComponentFactory> compMap) {
         ArrayList<Component> toReplace = null;
         for (Component comp : circuit.getNonWires()) {
             if (compMap.containsKey(comp.getFactory())) {

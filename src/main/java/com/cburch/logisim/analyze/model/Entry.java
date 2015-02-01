@@ -3,7 +3,7 @@
 
 package com.cburch.logisim.analyze.model;
 
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Entry {
     public static final Entry ZERO = new Entry("0");
@@ -36,13 +36,13 @@ public class Entry {
     private String errorMessage;
 
     private Entry(String message, boolean... isError) {
-    	if (isError.length > 0 && isError[0]) {
-    		this.description = "!!";
+        if (isError.length > 0 && isError[0]) {
+            this.description = "!!";
             this.errorMessage = message;
-    	} else {
-    		this.description = message;
-    		this.errorMessage = null;
-    	}
+        } else {
+            this.description = message;
+            this.errorMessage = null;
+        }
     }
 
     public String getDescription() {

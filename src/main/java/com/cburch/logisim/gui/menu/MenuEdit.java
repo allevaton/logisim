@@ -3,19 +3,18 @@
 
 package com.cburch.logisim.gui.menu;
 
+import com.cburch.logisim.proj.Action;
+import com.cburch.logisim.proj.Project;
+import com.cburch.logisim.proj.ProjectEvent;
+import com.cburch.logisim.proj.ProjectListener;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-
-import com.cburch.logisim.proj.Action;
-import com.cburch.logisim.proj.Project;
-import com.cburch.logisim.proj.ProjectEvent;
-import com.cburch.logisim.proj.ProjectListener;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class MenuEdit extends Menu {
@@ -24,67 +23,58 @@ class MenuEdit extends Menu {
         public void projectChanged(ProjectEvent e) {
             Project proj = menubar.getProject();
             Action last = proj == null ? null : proj.getLastAction();
-			if( last == null )
-			{
-				undo.setText( getFromLocale( "editCantUndoItem" ) );
-				undo.setEnabled( false );
-			}
-			else
-			{
-				undo.setText( getFromLocale( "editUndoItem", last.getName() ) );
-				undo.setEnabled( true );
+            if (last == null) {
+                undo.setText(getFromLocale("editCantUndoItem"));
+                undo.setEnabled(false);
+            } else {
+                undo.setText(getFromLocale("editUndoItem", last.getName()));
+                undo.setEnabled(true);
             }
 
-			// If there is a project open...
-			if( proj != null )
-				// And you CAN redo an undo...
-				if( proj.getCanRedo() )
-				{
-					// Get that action
-					Action lastRedo = proj.getLastRedoAction();
+            // If there is a project open...
+            if (proj != null)
+                // And you CAN redo an undo...
+                if (proj.getCanRedo()) {
+                    // Get that action
+                    Action lastRedo = proj.getLastRedoAction();
 
-					// Set the detailed, localized text
+                    // Set the detailed, localized text
 
-					redo.setText( getFromLocale( "editRedoItem", lastRedo.getName() ) );
-					
-					// Set it to enabled
-					redo.setEnabled( true );
-				}
-				else
-				{	// If there is no project...
-					// Let them know they can't redo anything
-					redo.setText( getFromLocale( "editCantRedoItem" ) );
+                    redo.setText(getFromLocale("editRedoItem", lastRedo.getName()));
 
-					// And disable the button
-					redo.setEnabled( false );
-				}
+                    // Set it to enabled
+                    redo.setEnabled(true);
+                } else {    // If there is no project...
+                    // Let them know they can't redo anything
+                    redo.setText(getFromLocale("editCantRedoItem"));
+
+                    // And disable the button
+                    redo.setEnabled(false);
+                }
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             Object src = e.getSource();
             Project proj = menubar.getProject();
-			if( src == undo )
-			{
-				if( proj != null )
-					proj.undoAction();
-			}
-			else if( src == redo )
-			{
-				if (proj != null )
-					proj.redoAction();
+            if (src == undo) {
+                if (proj != null)
+                    proj.undoAction();
+            } else if (src == redo) {
+                if (proj != null)
+                    proj.redoAction();
             }
         }
     }
 
     private LogisimMenuBar menubar;
-    private JMenuItem undo  = new JMenuItem();
-	private JMenuItem redo  = new JMenuItem();
-    private MenuItemImpl cut    = new MenuItemImpl(this, LogisimMenuBar.CUT);
-    private MenuItemImpl copy   = new MenuItemImpl(this, LogisimMenuBar.COPY);
-    private MenuItemImpl paste  = new MenuItemImpl(this, LogisimMenuBar.PASTE);
+    private JMenuItem undo = new JMenuItem();
+    private JMenuItem redo = new JMenuItem();
+    private MenuItemImpl cut = new MenuItemImpl(this, LogisimMenuBar.CUT);
+    private MenuItemImpl copy = new MenuItemImpl(this, LogisimMenuBar.COPY);
+    private MenuItemImpl paste = new MenuItemImpl(this, LogisimMenuBar.PASTE);
     private MenuItemImpl delete = new MenuItemImpl(this, LogisimMenuBar.DELETE);
-    private MenuItemImpl dup    = new MenuItemImpl(this, LogisimMenuBar.DUPLICATE);
+    private MenuItemImpl dup = new MenuItemImpl(this, LogisimMenuBar.DUPLICATE);
     private MenuItemImpl selall = new MenuItemImpl(this, LogisimMenuBar.SELECT_ALL);
     private MenuItemImpl raise = new MenuItemImpl(this, LogisimMenuBar.RAISE);
     private MenuItemImpl lower = new MenuItemImpl(this, LogisimMenuBar.LOWER);
@@ -100,14 +90,14 @@ class MenuEdit extends Menu {
         int menuMask = getToolkit().getMenuShortcutKeyMask();
         undo.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Z, menuMask));
-		redo.setAccelerator(KeyStroke.getKeyStroke(
-				KeyEvent.VK_Y, menuMask));
+        redo.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Y, menuMask));
         cut.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_X, menuMask));
+                KeyEvent.VK_X, menuMask));
         copy.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_C, menuMask));
+                KeyEvent.VK_C, menuMask));
         paste.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_V, menuMask));
+                KeyEvent.VK_V, menuMask));
         delete.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_DELETE, 0));
         dup.setAccelerator(KeyStroke.getKeyStroke(
@@ -124,7 +114,7 @@ class MenuEdit extends Menu {
                 KeyEvent.VK_DOWN, menuMask | InputEvent.SHIFT_DOWN_MASK));
 
         add(undo);
-		add(redo);
+        add(redo);
         addSeparator();
         add(cut);
         add(copy);
@@ -146,11 +136,11 @@ class MenuEdit extends Menu {
         if (proj != null) {
             proj.addProjectListener(myListener);
             undo.addActionListener(myListener);
-			redo.addActionListener( myListener );
+            redo.addActionListener(myListener);
         }
 
         undo.setEnabled(false);
-		redo.setEnabled(false);
+        redo.setEnabled(false);
         menubar.registerItem(LogisimMenuBar.CUT, cut);
         menubar.registerItem(LogisimMenuBar.COPY, copy);
         menubar.registerItem(LogisimMenuBar.PASTE, paste);

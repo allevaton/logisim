@@ -3,15 +3,16 @@
 
 package com.cburch.draw.shapes;
 
-import java.awt.Graphics;
-import java.util.List;
-import java.util.Random;
-
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.Bounds;
 import com.cburch.logisim.data.Location;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.util.List;
+import java.util.Random;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Oval extends Rectangular {
     public Oval(int x, int y, int w, int h) {

@@ -3,9 +3,6 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.proj.Action;
@@ -13,7 +10,11 @@ import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.tools.key.KeyConfigurationEvent;
 import com.cburch.logisim.tools.key.KeyConfigurationResult;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ToolAttributeAction extends Action {
     public static Action create(Tool tool, Attribute<?> attr, Object value) {
@@ -28,11 +29,11 @@ public class ToolAttributeAction extends Action {
     }
 
     private KeyConfigurationResult config;
-    private Map<Attribute<?>,Object> oldValues;
+    private Map<Attribute<?>, Object> oldValues;
 
     private ToolAttributeAction(KeyConfigurationResult config) {
         this.config = config;
-        this.oldValues = new HashMap<Attribute<?>,Object>(2);
+        this.oldValues = new HashMap<Attribute<?>, Object>(2);
     }
 
     @Override
@@ -43,9 +44,9 @@ public class ToolAttributeAction extends Action {
     @Override
     public void doIt(Project proj) {
         AttributeSet attrs = config.getEvent().getAttributeSet();
-        Map<Attribute<?>,Object> newValues = config.getAttributeValues();
-        Map<Attribute<?>,Object> oldValues = new HashMap<Attribute<?>,Object>(newValues.size());
-        for (Map.Entry<Attribute<?>,Object> entry : newValues.entrySet()) {
+        Map<Attribute<?>, Object> newValues = config.getAttributeValues();
+        Map<Attribute<?>, Object> oldValues = new HashMap<Attribute<?>, Object>(newValues.size());
+        for (Map.Entry<Attribute<?>, Object> entry : newValues.entrySet()) {
             @SuppressWarnings("unchecked")
             Attribute<Object> attr = (Attribute<Object>) entry.getKey();
             oldValues.put(attr, attrs.getValue(attr));
@@ -57,8 +58,8 @@ public class ToolAttributeAction extends Action {
     @Override
     public void undo(Project proj) {
         AttributeSet attrs = config.getEvent().getAttributeSet();
-        Map<Attribute<?>,Object> oldValues = this.oldValues;
-        for (Map.Entry<Attribute<?>,Object> entry : oldValues.entrySet()) {
+        Map<Attribute<?>, Object> oldValues = this.oldValues;
+        for (Map.Entry<Attribute<?>, Object> entry : oldValues.entrySet()) {
             @SuppressWarnings("unchecked")
             Attribute<Object> attr = (Attribute<Object>) entry.getKey();
             attrs.setValue(attr, entry.getValue());

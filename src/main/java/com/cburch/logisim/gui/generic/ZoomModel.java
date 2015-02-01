@@ -10,10 +10,16 @@ public interface ZoomModel {
     public static final String SHOW_GRID = "grid";
 
     public void addPropertyChangeListener(String prop, PropertyChangeListener l);
+
     public void removePropertyChangeListener(String prop, PropertyChangeListener l);
+
     public boolean getShowGrid();
+
     public double getZoomFactor();
+
     public double[] getZoomOptions();
+
     public void setShowGrid(boolean value);
+
     public void setZoomFactor(double value);
 }

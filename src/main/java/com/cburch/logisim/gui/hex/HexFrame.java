@@ -3,25 +3,6 @@
 
 package com.cburch.logisim.gui.hex;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import com.cburch.hex.HexEditor;
 import com.cburch.hex.HexModel;
 import com.cburch.logisim.gui.generic.LFrame;
@@ -31,7 +12,18 @@ import com.cburch.logisim.util.JFileChoosers;
 import com.cburch.logisim.util.LocaleListener;
 import com.cburch.logisim.util.LocaleManager;
 import com.cburch.logisim.util.WindowMenuItemManager;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class HexFrame extends LFrame {
@@ -85,7 +77,7 @@ public class HexFrame extends LFrame {
                         lastFile = f;
                     } catch (IOException e) {
                         JOptionPane.showMessageDialog(HexFrame.this, e.getMessage(),
-                            getFromLocale("hexSaveErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                getFromLocale("hexSaveErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } else if (src == close) {

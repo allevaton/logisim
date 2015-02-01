@@ -3,17 +3,6 @@
 
 package com.cburch.logisim.gui.main;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Collections;
-import java.util.Set;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitState;
 import com.cburch.logisim.circuit.WidthIncompatibilityData;
@@ -29,6 +18,12 @@ import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.tools.Tool;
 import com.cburch.logisim.util.GraphicsUtil;
+
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Collections;
+import java.util.Set;
 
 class CanvasPainter implements PropertyChangeListener {
     private static final Set<Component> NO_COMPONENTS = Collections.emptySet();
@@ -88,9 +83,9 @@ class CanvasPainter implements PropertyChangeListener {
         int h = bds.getHeight();
         double a = Canvas.SQRT_2 * w;
         double b = Canvas.SQRT_2 * h;
-        canvas.repaint((int) Math.round(bds.getX() + w/2.0 - a/2.0),
-            (int) Math.round(bds.getY() + h/2.0 - b/2.0),
-            (int) Math.round(a), (int) Math.round(b));
+        canvas.repaint((int) Math.round(bds.getX() + w / 2.0 - a / 2.0),
+                (int) Math.round(bds.getY() + h / 2.0 - b / 2.0),
+                (int) Math.round(a), (int) Math.round(b));
     }
 
     @Override
@@ -163,9 +158,9 @@ class CanvasPainter implements PropertyChangeListener {
             int h = bds.getHeight();
             double a = Canvas.SQRT_2 * w;
             double b = Canvas.SQRT_2 * h;
-            g.drawOval((int) Math.round(bds.getX() + w/2.0 - a/2.0),
-                (int) Math.round(bds.getY() + h/2.0 - b/2.0),
-                (int) Math.round(a), (int) Math.round(b));
+            g.drawOval((int) Math.round(bds.getX() + w / 2.0 - a / 2.0),
+                    (int) Math.round(bds.getY() + h / 2.0 - b / 2.0),
+                    (int) Math.round(a), (int) Math.round(b));
             GraphicsUtil.switchToWidth(g, 1);
             g.setColor(Color.BLACK);
         }
@@ -209,9 +204,11 @@ class CanvasPainter implements PropertyChangeListener {
                 boolean drawn = false;
                 for (int j = 0; j < i; j++) {
                     if (ex.getPoint(j).equals(p)) {
-                        { drawn = true;
+                        {
+                            drawn = true;
+                        }
+                        break;
                     }
- break; }
                 }
                 if (drawn) {
                     continue;
@@ -222,9 +219,11 @@ class CanvasPainter implements PropertyChangeListener {
                 String caption = "" + w.getWidth();
                 for (int j = i + 1; j < ex.size(); j++) {
                     if (ex.getPoint(j).equals(p)) {
-                        { caption += "/" + ex.getBitWidth(j);
+                        {
+                            caption += "/" + ex.getBitWidth(j);
+                        }
+                        break;
                     }
- break; }
                 }
                 g.drawOval(p.getX() - 4, p.getY() - 4, 8, 8);
                 g.drawString(caption, p.getX() + 5, p.getY() + 2 + fm.getAscent());

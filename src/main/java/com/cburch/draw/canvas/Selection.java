@@ -3,21 +3,15 @@
 
 package com.cburch.draw.canvas;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.cburch.draw.model.CanvasModelEvent;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.Handle;
 import com.cburch.draw.model.HandleGesture;
 import com.cburch.logisim.data.Location;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class Selection {
     private static final String MOVING_HANDLE = "movingHandle";
@@ -229,31 +223,31 @@ public class Selection {
     void modelChanged(CanvasModelEvent event) {
         int action = event.getAction();
         switch (action) {
-        case CanvasModelEvent.ACTION_REMOVED:
-            Collection<? extends CanvasObject> affected = event.getAffected();
-            if (affected != null) {
-                selected.removeAll(affected);
-                suppressed.keySet().removeAll(affected);
-                Handle h = selectedHandle;
-                if (h != null && affected.contains(h.getObject())) {
+            case CanvasModelEvent.ACTION_REMOVED:
+                Collection<? extends CanvasObject> affected = event.getAffected();
+                if (affected != null) {
+                    selected.removeAll(affected);
+                    suppressed.keySet().removeAll(affected);
+                    Handle h = selectedHandle;
+                    if (h != null && affected.contains(h.getObject())) {
+                        setHandleSelected(null);
+                    }
+                }
+                break;
+            case CanvasModelEvent.ACTION_HANDLE_DELETED:
+                if (event.getHandle().equals(selectedHandle)) {
                     setHandleSelected(null);
                 }
-            }
-            break;
-        case CanvasModelEvent.ACTION_HANDLE_DELETED:
-            if (event.getHandle().equals(selectedHandle)) {
-                setHandleSelected(null);
-            }
-            break;
-        case CanvasModelEvent.ACTION_HANDLE_MOVED:
-            HandleGesture gesture = event.getHandleGesture();
-            if (gesture.getHandle().equals(selectedHandle)) {
-                setHandleSelected(gesture.getResultingHandle());
+                break;
+            case CanvasModelEvent.ACTION_HANDLE_MOVED:
+                HandleGesture gesture = event.getHandleGesture();
+                if (gesture.getHandle().equals(selectedHandle)) {
+                    setHandleSelected(gesture.getResultingHandle());
 
-            }
-			break;
-		default:
-			break;
+                }
+                break;
+            default:
+                break;
         }
     }
 }

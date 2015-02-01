@@ -3,21 +3,7 @@
 
 package com.cburch.logisim.tools;
 
-import java.awt.Cursor;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.FontMetrics;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
-import javax.swing.Icon;
-
-import com.cburch.logisim.circuit.Circuit;
-import com.cburch.logisim.circuit.CircuitEvent;
-import com.cburch.logisim.circuit.CircuitListener;
-import com.cburch.logisim.circuit.RadixOption;
-import com.cburch.logisim.circuit.Wire;
-import com.cburch.logisim.circuit.WireSet;
+import com.cburch.logisim.circuit.*;
 import com.cburch.logisim.comp.Component;
 import com.cburch.logisim.comp.ComponentDrawContext;
 import com.cburch.logisim.comp.ComponentUserEvent;
@@ -29,7 +15,12 @@ import com.cburch.logisim.prefs.AppPreferences;
 import com.cburch.logisim.proj.Project;
 import com.cburch.logisim.util.Icons;
 
-import static com.cburch.logisim.util.LocaleString.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class PokeTool extends Tool {
     private static final Icon toolIcon = Icons.getIcon("poke.svg");
@@ -82,7 +73,7 @@ public class PokeTool extends Tool {
             Circuit circ = pokedCircuit;
             if (event.getCircuit() == circ && circ != null
                     && (event.getAction() == CircuitEvent.ACTION_REMOVE
-                            || event.getAction() == CircuitEvent.ACTION_CLEAR)
+                    || event.getAction() == CircuitEvent.ACTION_CLEAR)
                     && !circ.contains(pokedComponent)) {
                 removeCaret(false);
             }
@@ -90,7 +81,7 @@ public class PokeTool extends Tool {
     }
 
     private static Cursor cursor
-        = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+            = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 
     private Listener listener;
     private Circuit pokedCircuit;
@@ -127,9 +118,8 @@ public class PokeTool extends Tool {
         if (caret != null) {
             if (normal) {
                 caret.stopEditing();
-            }
-            else {
-            	caret.cancelEditing();
+            } else {
+                caret.cancelEditing();
             }
 
             circ.removeCircuitListener(listener);
@@ -190,7 +180,7 @@ public class PokeTool extends Tool {
 
                 if (c instanceof Wire) {
                     Caret caret = new WireCaret(canvas, (Wire) c, x, y,
-                        canvas.getProject().getOptions().getAttributeSet());
+                            canvas.getProject().getOptions().getAttributeSet());
                     setPokedComponent(circ, c, caret);
                     canvas.setHighlightedWires(circ.getWireSet((Wire) c));
                 } else {
@@ -265,19 +255,19 @@ public class PokeTool extends Tool {
         } else {
             g.setColor(java.awt.Color.black);
             // TODO explain the values
-            g.drawLine(x + 4, y +  2, x + 4, y + 17);
+            g.drawLine(x + 4, y + 2, x + 4, y + 17);
             g.drawLine(x + 4, y + 17, x + 1, y + 11);
             g.drawLine(x + 4, y + 17, x + 7, y + 11);
 
-            g.drawLine(x + 15, y +  2, x + 15, y + 17);
-            g.drawLine(x + 15, y +  2, x + 12, y + 8);
-            g.drawLine(x + 15, y +  2, x + 18, y + 8);
+            g.drawLine(x + 15, y + 2, x + 15, y + 17);
+            g.drawLine(x + 15, y + 2, x + 12, y + 8);
+            g.drawLine(x + 15, y + 2, x + 18, y + 8);
         }
     }
 
     @Override
     public Cursor getCursor() {
-    	return cursor;
+        return cursor;
     }
 }
 

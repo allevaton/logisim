@@ -3,24 +3,21 @@
 
 package com.cburch.draw.actions;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import com.cburch.draw.model.CanvasModel;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.ReorderRequest;
 import com.cburch.draw.util.ZOrder;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class ModelReorderAction extends ModelAction {
     public static ModelReorderAction createRaise(CanvasModel model,
-            Collection<? extends CanvasObject> objects) {
+                                                 Collection<? extends CanvasObject> objects) {
         List<ReorderRequest> reqs = new ArrayList<ReorderRequest>();
         Map<CanvasObject, Integer> zmap = ZOrder.getZIndex(objects, model);
-        for(Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
+        for (Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
             CanvasObject obj = entry.getKey();
             int from = entry.getValue().intValue();
             CanvasObject above = ZOrder.getObjectAbove(obj, model, objects);
@@ -32,7 +29,7 @@ public class ModelReorderAction extends ModelAction {
                 reqs.add(new ReorderRequest(obj, from, to));
             }
         }
-        
+
         // TODO factorize deuplicate code of create* methods
         if (reqs.isEmpty()) {
             return null;
@@ -43,10 +40,10 @@ public class ModelReorderAction extends ModelAction {
     }
 
     public static ModelReorderAction createLower(CanvasModel model,
-            Collection<? extends CanvasObject> objects) {
+                                                 Collection<? extends CanvasObject> objects) {
         List<ReorderRequest> reqs = new ArrayList<ReorderRequest>();
         Map<CanvasObject, Integer> zmap = ZOrder.getZIndex(objects, model);
-        for(Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
+        for (Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
             CanvasObject obj = entry.getKey();
             int from = entry.getValue().intValue();
             CanvasObject above = ZOrder.getObjectBelow(obj, model, objects);
@@ -58,7 +55,7 @@ public class ModelReorderAction extends ModelAction {
                 reqs.add(new ReorderRequest(obj, from, to));
             }
         }
-        
+
         if (reqs.isEmpty()) {
             return null;
         }
@@ -68,16 +65,16 @@ public class ModelReorderAction extends ModelAction {
     }
 
     public static ModelReorderAction createRaiseTop(CanvasModel model,
-            Collection<? extends CanvasObject> objects) {
+                                                    Collection<? extends CanvasObject> objects) {
         List<ReorderRequest> reqs = new ArrayList<ReorderRequest>();
         Map<CanvasObject, Integer> zmap = ZOrder.getZIndex(objects, model);
         int to = model.getObjectsFromBottom().size() - 1;
-        for(Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
+        for (Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
             CanvasObject obj = entry.getKey();
             int from = entry.getValue().intValue();
             reqs.add(new ReorderRequest(obj, from, to));
         }
-        
+
         if (reqs.isEmpty()) {
             return null;
         }
@@ -87,16 +84,16 @@ public class ModelReorderAction extends ModelAction {
     }
 
     public static ModelReorderAction createLowerBottom(CanvasModel model,
-            Collection<? extends CanvasObject> objects) {
+                                                       Collection<? extends CanvasObject> objects) {
         List<ReorderRequest> reqs = new ArrayList<ReorderRequest>();
         Map<CanvasObject, Integer> zmap = ZOrder.getZIndex(objects, model);
         int to = 0;
-        for(Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
+        for (Map.Entry<CanvasObject, Integer> entry : zmap.entrySet()) {
             CanvasObject obj = entry.getKey();
             int from = entry.getValue().intValue();
             reqs.add(new ReorderRequest(obj, from, to));
         }
-        
+
         if (reqs.isEmpty()) {
             return null;
         }

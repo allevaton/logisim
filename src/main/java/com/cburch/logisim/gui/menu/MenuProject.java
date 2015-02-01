@@ -3,15 +3,13 @@
 
 package com.cburch.logisim.gui.menu;
 
+import com.cburch.logisim.proj.Project;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import com.cburch.logisim.proj.Project;
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class MenuProject extends Menu {

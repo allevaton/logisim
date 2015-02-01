@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 class WindowMenuManager {
-    private WindowMenuManager() { }
+    private WindowMenuManager() {
+    }
 
     private static ArrayList<WindowMenu> menus = new ArrayList<WindowMenu>();
     private static ArrayList<WindowMenuItemManager> managers
-        = new ArrayList<WindowMenuItemManager>();
+            = new ArrayList<WindowMenuItemManager>();
     private static WindowMenuItemManager currentManager = null;
 
     public static void addMenu(WindowMenu menu) {
@@ -54,21 +55,19 @@ class WindowMenuManager {
         boolean doEnable = (currentManager == null) != (value == null);
         if (currentManager == null) {
             setNullItems(false);
-        }
-        else {
-        	currentManager.setSelected(false);
+        } else {
+            currentManager.setSelected(false);
         }
 
         currentManager = value;
         if (currentManager == null) {
-        	setNullItems(true);
-        }
-        else {
-        	currentManager.setSelected(true);
+            setNullItems(true);
+        } else {
+            currentManager.setSelected(true);
         }
 
         if (doEnable) {
-        	enableAll();
+            enableAll();
         }
     }
 

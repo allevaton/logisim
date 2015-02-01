@@ -3,8 +3,6 @@
 
 package com.cburch.logisim.file;
 
-import java.util.ArrayList;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.data.Attribute;
 import com.cburch.logisim.data.AttributeSet;
@@ -14,11 +12,15 @@ import com.cburch.logisim.proj.ProjectActions;
 import com.cburch.logisim.tools.AddTool;
 import com.cburch.logisim.tools.Library;
 import com.cburch.logisim.tools.Tool;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.util.ArrayList;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 
 public class LogisimFileActions {
-    private LogisimFileActions() { }
+    private LogisimFileActions() {
+    }
 
     public static Action addCircuit(Circuit circuit) {
         return new AddCircuit(circuit);
@@ -33,7 +35,7 @@ public class LogisimFileActions {
     }
 
     public static Action loadLibrary(Library lib) {
-        return new LoadLibraries(new Library[] { lib });
+        return new LoadLibraries(new Library[]{lib});
     }
 
     public static Action loadLibraries(Library[] libs) {
@@ -41,7 +43,7 @@ public class LogisimFileActions {
     }
 
     public static Action unloadLibrary(Library lib) {
-        return new UnloadLibraries(new Library[] { lib });
+        return new UnloadLibraries(new Library[]{lib});
     }
 
     public static Action unloadLibraries(Library[] libs) {
@@ -133,7 +135,7 @@ public class LogisimFileActions {
         @Override
         public boolean shouldAppendTo(Action other) {
             return other instanceof MoveCircuit
-                && ((MoveCircuit) other).tool == this.tool;
+                    && ((MoveCircuit) other).tool == this.tool;
         }
 
         @Override

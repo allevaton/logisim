@@ -27,9 +27,9 @@ class RecentProjects implements PreferenceChangeListener {
 
         @Override
         public int hashCode() {
-            return ((int)time % 25);
+            return ((int) time % 25);
         }
-		
+
         @Override
         public boolean equals(Object other) {
             if (other instanceof FileTime) {
@@ -94,7 +94,8 @@ class RecentProjects implements PreferenceChangeListener {
         File fileToSave = file;
         try {
             fileToSave = file.getCanonicalFile();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+        }
         long now = System.currentTimeMillis();
         int index = getReplacementIndex(now, fileToSave);
         updateInto(index, now, fileToSave);
@@ -137,7 +138,8 @@ class RecentProjects implements PreferenceChangeListener {
                     index = -1;
                 }
 
-            } catch (NumberFormatException e) { }
+            } catch (NumberFormatException e) {
+            }
             if (index >= 0) {
                 File oldValue = recentFiles[index];
                 long oldTime = recentTimes[index];
@@ -187,7 +189,8 @@ class RecentProjects implements PreferenceChangeListener {
             long time = Long.parseLong(encoding.substring(0, semi));
             File file = new File(encoding.substring(semi + 1));
             updateInto(index, time, file);
-        } catch (NumberFormatException e) { }
+        } catch (NumberFormatException e) {
+        }
     }
 
 

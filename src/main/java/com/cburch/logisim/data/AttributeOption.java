@@ -21,11 +21,17 @@ public class AttributeOption implements AttributeOptionInterface {
     }
 
     @Override
-    public Object getValue() { return value; }
+    public Object getValue() {
+        return value;
+    }
 
     @Override
-    public String toString() { return name; }
+    public String toString() {
+        return name;
+    }
 
     @Override
-    public String toDisplayString() { return desc.toString(); }
+    public String toDisplayString() {
+        return desc.toString();
+    }
 }

@@ -3,11 +3,11 @@
 
 package com.cburch.logisim.circuit;
 
-import java.util.concurrent.CopyOnWriteArraySet;
-
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Location;
 import com.cburch.logisim.data.Value;
+
+import java.util.concurrent.CopyOnWriteArraySet;
 
 class WireBundle {
     private BitWidth width = BitWidth.UNKNOWN;
@@ -40,7 +40,7 @@ class WireBundle {
             if (width.equals(this.width)) {
                 // the widths match, and the bundle is already set; nothing to do
                 return;
-            // the widths are broken: Create incompatibilityData holding this info
+                // the widths are broken: Create incompatibilityData holding this info
             } else {
                 incompatibilityData = new WidthIncompatibilityData();
                 incompatibilityData.add(widthDeterminant, this.width);

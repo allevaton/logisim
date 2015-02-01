@@ -3,66 +3,56 @@
 
 package com.cburch.logisim.std.io;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.Arrays;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeOption;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceData;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.std.wiring.DurationAttribute;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+import java.util.Arrays;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 // TODO repropagate when rows/cols change
 
 public class DotMatrix extends InstanceFactory {
     static final AttributeOption INPUT_SELECT
-        = new AttributeOption("select", getFromLocale("ioInputSelect"));
+            = new AttributeOption("select", getFromLocale("ioInputSelect"));
     static final AttributeOption INPUT_COLUMN
-        = new AttributeOption("column", getFromLocale("ioInputColumn"));
+            = new AttributeOption("column", getFromLocale("ioInputColumn"));
     static final AttributeOption INPUT_ROW
-        = new AttributeOption("row", getFromLocale("ioInputRow"));
+            = new AttributeOption("row", getFromLocale("ioInputRow"));
 
     static final AttributeOption SHAPE_CIRCLE
-        = new AttributeOption("circle", getFromLocale("ioShapeCircle"));
+            = new AttributeOption("circle", getFromLocale("ioShapeCircle"));
     static final AttributeOption SHAPE_SQUARE
-        = new AttributeOption("square", getFromLocale("ioShapeSquare"));
+            = new AttributeOption("square", getFromLocale("ioShapeSquare"));
 
     static final Attribute<AttributeOption> ATTR_INPUT_TYPE
-        = Attributes.forOption("inputtype", getFromLocale("ioMatrixInput"),
-            new AttributeOption[] { INPUT_COLUMN, INPUT_ROW, INPUT_SELECT });
+            = Attributes.forOption("inputtype", getFromLocale("ioMatrixInput"),
+            new AttributeOption[]{INPUT_COLUMN, INPUT_ROW, INPUT_SELECT});
     static final Attribute<Integer> ATTR_MATRIX_COLS
-        = Attributes.forIntegerRange("matrixcols",
-                getFromLocale("ioMatrixCols"), 1, Value.MAX_WIDTH);
+            = Attributes.forIntegerRange("matrixcols",
+            getFromLocale("ioMatrixCols"), 1, Value.MAX_WIDTH);
     static final Attribute<Integer> ATTR_MATRIX_ROWS
-        = Attributes.forIntegerRange("matrixrows",
-                getFromLocale("ioMatrixRows"), 1, Value.MAX_WIDTH);
+            = Attributes.forIntegerRange("matrixrows",
+            getFromLocale("ioMatrixRows"), 1, Value.MAX_WIDTH);
     static final Attribute<AttributeOption> ATTR_DOT_SHAPE
-        = Attributes.forOption("dotshape", getFromLocale("ioMatrixShape"),
-            new AttributeOption[] { SHAPE_CIRCLE, SHAPE_SQUARE });
+            = Attributes.forOption("dotshape", getFromLocale("ioMatrixShape"),
+            new AttributeOption[]{SHAPE_CIRCLE, SHAPE_SQUARE});
     static final Attribute<Integer> ATTR_PERSIST = new DurationAttribute("persist",
             getFromLocale("ioMatrixPersistenceAttr"), 0, Integer.MAX_VALUE);
 
     public DotMatrix() {
         super("DotMatrix", getFromLocale("dotMatrixComponent"));
-        setAttributes(new Attribute<?>[] {
+        setAttributes(new Attribute<?>[]{
                 ATTR_INPUT_TYPE, ATTR_MATRIX_COLS, ATTR_MATRIX_ROWS,
                 Io.ATTR_ON_COLOR, Io.ATTR_OFF_COLOR,
                 ATTR_PERSIST, ATTR_DOT_SHAPE
-            }, new Object[] {
+        }, new Object[]{
                 INPUT_COLUMN, Integer.valueOf(5), Integer.valueOf(7),
                 Color.GREEN, Color.DARK_GRAY, Integer.valueOf(0), SHAPE_SQUARE
-            });
+        });
         setIconName("dotmat.svg");
     }
 
@@ -75,7 +65,7 @@ public class DotMatrix extends InstanceFactory {
             return Bounds.create(-5, -10 * rows, 10 * cols, 10 * rows);
         } else if (input == INPUT_ROW) {
             return Bounds.create(0, -5, 10 * cols, 10 * rows);
-        // input == INPUT_SELECT
+            // input == INPUT_SELECT
         } else {
             if (rows == 1) {
                 return Bounds.create(0, -5, 10 * cols, 10 * rows);
@@ -117,11 +107,11 @@ public class DotMatrix extends InstanceFactory {
             }
         } else {
             if (rows <= 1) {
-                ps = new Port[] { new Port(0, 0, Port.INPUT, cols) };
+                ps = new Port[]{new Port(0, 0, Port.INPUT, cols)};
             } else if (cols <= 1) {
-                ps = new Port[] { new Port(0, 0, Port.INPUT, rows) };
+                ps = new Port[]{new Port(0, 0, Port.INPUT, rows)};
             } else {
-                ps = new Port[] {
+                ps = new Port[]{
                         new Port(0, 0, Port.INPUT, cols),
                         new Port(0, 10, Port.INPUT, rows)
                 };
@@ -191,13 +181,9 @@ public class DotMatrix extends InstanceFactory {
                     Color c;
                     if (val == Value.TRUE) {
                         c = onColor;
-                    }
-
-                    else if (val == Value.FALSE) {
+                    } else if (val == Value.FALSE) {
                         c = offColor;
-                    }
-
-                    else {
+                    } else {
                         c = Value.ERROR_COLOR;
                     }
 
@@ -205,9 +191,7 @@ public class DotMatrix extends InstanceFactory {
 
                     if (drawSquare) {
                         g.fillRect(x, y, 10, 10);
-                    }
-
-                    else {
+                    } else {
                         g.fillOval(x + 1, y + 1, 8, 8);
                     }
 

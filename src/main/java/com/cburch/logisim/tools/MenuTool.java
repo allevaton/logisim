@@ -4,14 +4,6 @@
 package com.cburch.logisim.tools;
 
 
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
-
 import com.cburch.logisim.circuit.Circuit;
 import com.cburch.logisim.circuit.CircuitMutation;
 import com.cburch.logisim.comp.Component;
@@ -22,8 +14,14 @@ import com.cburch.logisim.gui.main.Selection;
 import com.cburch.logisim.gui.main.SelectionActions;
 import com.cburch.logisim.proj.Project;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.Collection;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 public class MenuTool extends Tool {
@@ -41,9 +39,11 @@ public class MenuTool extends Tool {
             this.comp = comp;
             boolean canChange = proj.getLogisimFile().contains(circ);
 
-            add(del); del.addActionListener(this);
+            add(del);
+            del.addActionListener(this);
             del.setEnabled(canChange);
-            add(attrs); attrs.addActionListener(this);
+            add(attrs);
+            attrs.addActionListener(this);
         }
 
         @Override
@@ -70,11 +70,14 @@ public class MenuTool extends Tool {
         MenuSelection(Project proj) {
             this.proj = proj;
             boolean canChange = proj.getLogisimFile().contains(proj.getCurrentCircuit());
-            add(del); del.addActionListener(this);
+            add(del);
+            del.addActionListener(this);
             del.setEnabled(canChange);
-            add(cut); cut.addActionListener(this);
+            add(cut);
+            cut.addActionListener(this);
             cut.setEnabled(canChange);
-            add(copy); copy.addActionListener(this);
+            add(copy);
+            copy.addActionListener(this);
         }
 
         @Override
@@ -91,7 +94,8 @@ public class MenuTool extends Tool {
         }
     }
 
-    public MenuTool() { }
+    public MenuTool() {
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -104,13 +108,19 @@ public class MenuTool extends Tool {
     }
 
     @Override
-    public String getName() { return "Menu Tool"; }
+    public String getName() {
+        return "Menu Tool";
+    }
 
     @Override
-    public String getDisplayName() { return getFromLocale("menuTool"); }
+    public String getDisplayName() {
+        return getFromLocale("menuTool");
+    }
 
     @Override
-    public String getDescription() { return getFromLocale("menuToolDesc"); }
+    public String getDescription() {
+        return getFromLocale("menuToolDesc");
+    }
 
     @Override
     public void mousePressed(Canvas canvas, Graphics g, MouseEvent e) {
@@ -128,7 +138,7 @@ public class MenuTool extends Tool {
                 menu = new MenuSelection(proj);
             } else {
                 menu = new MenuComponent(proj,
-                    canvas.getCircuit(), comp);
+                        canvas.getCircuit(), comp);
                 MenuExtender extender = (MenuExtender) comp.getFeature(MenuExtender.class);
                 if (extender != null) {
                     extender.configureMenu(menu, proj);
@@ -140,7 +150,7 @@ public class MenuTool extends Tool {
             if (!cl.isEmpty()) {
                 Component comp = cl.iterator().next();
                 menu = new MenuComponent(proj,
-                    canvas.getCircuit(), comp);
+                        canvas.getCircuit(), comp);
                 MenuExtender extender = (MenuExtender) comp.getFeature(MenuExtender.class);
                 if (extender != null) {
                     extender.configureMenu(menu, proj);

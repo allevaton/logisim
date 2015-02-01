@@ -3,27 +3,23 @@
 
 package com.cburch.logisim.circuit.appear;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.collections15.list.UnmodifiableList;
 import com.cburch.draw.model.CanvasObject;
 import com.cburch.draw.model.Handle;
 import com.cburch.draw.model.HandleGesture;
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.Attributes;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Location;
-import static com.cburch.logisim.util.LocaleString.*;
+import com.cburch.logisim.data.*;
+import org.apache.commons.collections15.list.UnmodifiableList;
+
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class AppearanceAnchor extends AppearanceElement {
     public static final Attribute<Direction> FACING
-        = Attributes.forDirection("facing", getFromLocale("appearanceFacingAttr"));
+            = Attributes.forDirection("facing", getFromLocale("appearanceFacingAttr"));
     static final List<Attribute<?>> ATTRIBUTES
-        = UnmodifiableList.decorate(Arrays.asList(new Attribute<?>[] { FACING }));
+            = UnmodifiableList.decorate(Arrays.asList(new Attribute<?>[]{FACING}));
 
     private static final int RADIUS = 3;
     private static final int INDICATOR_LENGTH = 8;
@@ -125,10 +121,10 @@ public class AppearanceAnchor extends AppearanceElement {
             Location end = center.translate(facing, RADIUS + INDICATOR_LENGTH);
             if (facing == Direction.EAST || facing == Direction.WEST) {
                 return Math.abs(loc.getY() - center.getY()) < 2
-                    && (loc.getX() < center.getX()) != (loc.getX() < end.getX());
+                        && (loc.getX() < center.getX()) != (loc.getX() < end.getX());
             } else {
                 return Math.abs(loc.getX() - center.getX()) < 2
-                    && (loc.getY() < center.getY()) != (loc.getY() < end.getY());
+                        && (loc.getY() < center.getY()) != (loc.getY() < end.getY());
             }
         }
     }
@@ -137,7 +133,7 @@ public class AppearanceAnchor extends AppearanceElement {
     public List<Handle> getHandles(HandleGesture gesture) {
         Location c = getLocation();
         Location end = c.translate(facing, RADIUS + INDICATOR_LENGTH);
-        return UnmodifiableList.decorate(Arrays.asList(new Handle[] { new Handle(this, c),
-                new Handle(this, end) }));
+        return UnmodifiableList.decorate(Arrays.asList(new Handle[]{new Handle(this, c),
+                new Handle(this, end)}));
     }
 }

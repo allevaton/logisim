@@ -3,13 +3,9 @@
 
 package com.cburch.draw.util;
 
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 import com.cburch.draw.model.CanvasObject;
+
+import java.util.*;
 
 public class MatchingSet<E extends CanvasObject> extends AbstractSet<E> {
     private static class Member<E extends CanvasObject> {

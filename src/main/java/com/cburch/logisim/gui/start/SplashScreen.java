@@ -3,18 +3,11 @@
 
 package com.cburch.logisim.gui.start;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JWindow;
-import javax.swing.SwingUtilities;
 import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
@@ -36,13 +29,14 @@ public class SplashScreen extends JWindow implements ActionListener {
     private static class Marker {
         int count;
         String message;
+
         Marker(int count, String message) {
             this.count = count;
             this.message = message;
         }
     }
 
-    Marker[] markers = new Marker[] {
+    Marker[] markers = new Marker[]{
             new Marker(377, getFromLocale("progressLibraries")),
             new Marker(990, getFromLocale("progressTemplateCreate")),
             new Marker(1002, getFromLocale("progressTemplateOpen")),

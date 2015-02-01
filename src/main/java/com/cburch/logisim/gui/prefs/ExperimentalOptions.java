@@ -3,16 +3,12 @@
 
 package com.cburch.logisim.gui.prefs;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import com.cburch.logisim.prefs.AppPreferences;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import javax.swing.*;
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 @SuppressWarnings("serial")
 class ExperimentalOptions extends OptionsPanel {
@@ -23,12 +19,12 @@ class ExperimentalOptions extends OptionsPanel {
         super(window);
 
         accel = new PrefOptionList(AppPreferences.GRAPHICS_ACCELERATION,
-            getFromLocale("accelLabel"), new PrefOption[] {
+                getFromLocale("accelLabel"), new PrefOption[]{
                 new PrefOption(AppPreferences.ACCEL_DEFAULT, getFromLocale("accelDefault")),
                 new PrefOption(AppPreferences.ACCEL_NONE, getFromLocale("accelNone")),
                 new PrefOption(AppPreferences.ACCEL_OPENGL, getFromLocale("accelOpenGL")),
                 new PrefOption(AppPreferences.ACCEL_D3D, getFromLocale("accelD3D")),
-            });
+        });
 
         JPanel accelPanel = new JPanel(new BorderLayout());
         accelPanel.add(accel.getJLabel(), BorderLayout.LINE_START);

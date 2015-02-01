@@ -3,26 +3,9 @@
 
 package com.cburch.logisim.circuit;
 
-import java.awt.Graphics;
-import java.io.PrintStream;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
-
 import com.cburch.logisim.circuit.appear.CircuitAppearance;
 import com.cburch.logisim.comp.Component;
-import com.cburch.logisim.comp.ComponentDrawContext;
-import com.cburch.logisim.comp.ComponentEvent;
-import com.cburch.logisim.comp.ComponentFactory;
-import com.cburch.logisim.comp.ComponentListener;
-import com.cburch.logisim.comp.EndData;
+import com.cburch.logisim.comp.*;
 import com.cburch.logisim.data.AttributeSet;
 import com.cburch.logisim.data.BitWidth;
 import com.cburch.logisim.data.Bounds;
@@ -31,23 +14,28 @@ import com.cburch.logisim.std.wiring.Clock;
 import com.cburch.logisim.util.CollectionUtil;
 import com.cburch.logisim.util.EventSourceWeakSupport;
 
+import java.awt.*;
+import java.io.PrintStream;
+import java.util.*;
+import java.util.List;
+
 public class Circuit {
     private static final PrintStream DEBUG_STREAM = null;
 
     private class EndChangedTransaction extends CircuitTransaction {
         private Component comp;
-        private Map<Location,EndData> toRemove;
-        private Map<Location,EndData> toAdd;
+        private Map<Location, EndData> toRemove;
+        private Map<Location, EndData> toAdd;
 
-        EndChangedTransaction(Component comp, Map<Location,EndData> toRemove,
-                Map<Location,EndData> toAdd) {
+        EndChangedTransaction(Component comp, Map<Location, EndData> toRemove,
+                              Map<Location, EndData> toAdd) {
             this.comp = comp;
             this.toRemove = toRemove;
             this.toAdd = toAdd;
         }
 
         @Override
-        protected Map<Circuit,Integer> getAccessedCircuits() {
+        protected Map<Circuit, Integer> getAccessedCircuits() {
             return Collections.singletonMap(Circuit.this, READ_WRITE);
         }
 
@@ -74,15 +62,15 @@ public class Circuit {
         public void endChanged(ComponentEvent e) {
             locker.checkForWritePermission("ends changed");
             Component comp = e.getSource();
-            HashMap<Location,EndData> toRemove = toMap(e.getOldData());
-            HashMap<Location,EndData> toAdd = toMap(e.getData());
+            HashMap<Location, EndData> toRemove = toMap(e.getOldData());
+            HashMap<Location, EndData> toAdd = toMap(e.getData());
             EndChangedTransaction xn = new EndChangedTransaction(comp, toRemove, toAdd);
             locker.execute(xn);
             fireEvent(CircuitEvent.ACTION_INVALIDATE, comp);
         }
 
-        private HashMap<Location,EndData> toMap(Object val) {
-            HashMap<Location,EndData> map = new HashMap<Location,EndData>();
+        private HashMap<Location, EndData> toMap(Object val) {
+            HashMap<Location, EndData> map = new HashMap<Location, EndData>();
             if (val instanceof List) {
                 @SuppressWarnings("unchecked")
                 List<EndData> valList = (List<EndData>) val;
@@ -109,11 +97,11 @@ public class Circuit {
     private AttributeSet staticAttrs;
     private SubcircuitFactory subcircuitFactory;
     private EventSourceWeakSupport<CircuitListener> listeners
-        = new EventSourceWeakSupport<CircuitListener>();
+            = new EventSourceWeakSupport<CircuitListener>();
     // doesn't include wires
     private HashSet<Component> comps = new HashSet<Component>();
     CircuitWires wires = new CircuitWires();
-        // wires is package-protected for CircuitState and Analyze only.
+    // wires is package-protected for CircuitState and Analyze only.
     private ArrayList<Component> clocks = new ArrayList<Component>();
     private CircuitLocker locker;
     private WeakHashMap<Component, Circuit> circuitsUsingThis;
@@ -325,8 +313,10 @@ public class Circuit {
         while (it.hasNext()) {
             Component c = it.next();
             Bounds bds = c.getBounds();
-            int x0 = bds.getX(); int x1 = x0 + bds.getWidth();
-            int y0 = bds.getY(); int y1 = y0 + bds.getHeight();
+            int x0 = bds.getX();
+            int x1 = x0 + bds.getWidth();
+            int y0 = bds.getY();
+            int y1 = y0 + bds.getHeight();
             if (x0 < xMin) {
                 xMin = x0;
             }
@@ -367,8 +357,10 @@ public class Circuit {
         for (Component c : comps) {
             Bounds bds = c.getBounds(g);
             if (bds != null && bds != Bounds.EMPTY_BOUNDS) {
-                int x0 = bds.getX(); int x1 = x0 + bds.getWidth();
-                int y0 = bds.getY(); int y1 = y0 + bds.getHeight();
+                int x0 = bds.getX();
+                int x1 = x0 + bds.getWidth();
+                int y0 = bds.getY();
+                int y1 = y0 + bds.getHeight();
                 if (x0 < xMin) {
                     xMin = x0;
                 }

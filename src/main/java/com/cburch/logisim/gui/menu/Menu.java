@@ -3,7 +3,7 @@
 
 package com.cburch.logisim.gui.menu;
 
-import javax.swing.JMenu;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 abstract class Menu extends JMenu {

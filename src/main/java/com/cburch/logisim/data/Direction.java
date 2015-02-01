@@ -3,31 +3,31 @@
 
 package com.cburch.logisim.data;
 
-import static com.cburch.logisim.util.LocaleString.*;
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class Direction implements AttributeOptionInterface {
     public static final Direction EAST
-        = new Direction("east", getFromLocale("directionEastOption"),
-                getFromLocale("directionEastVertical"), 0);
+            = new Direction("east", getFromLocale("directionEastOption"),
+            getFromLocale("directionEastVertical"), 0);
     public static final Direction WEST
-        = new Direction("west", getFromLocale("directionWestOption"),
-                getFromLocale("directionWestVertical"), 1);
+            = new Direction("west", getFromLocale("directionWestOption"),
+            getFromLocale("directionWestVertical"), 1);
     public static final Direction NORTH
-        = new Direction("north", getFromLocale("directionNorthOption"),
-                getFromLocale("directionNorthVertical"), 2);
+            = new Direction("north", getFromLocale("directionNorthOption"),
+            getFromLocale("directionNorthVertical"), 2);
     public static final Direction SOUTH
-        = new Direction("south", getFromLocale("directionSouthOption"),
-                getFromLocale("directionSouthVertical"), 3);
+            = new Direction("south", getFromLocale("directionSouthOption"),
+            getFromLocale("directionSouthVertical"), 3);
     public static final Direction[] cardinals
-        = { NORTH, EAST, SOUTH, WEST };
+            = {NORTH, EAST, SOUTH, WEST};
 
     public static Direction parse(String str) {
         if (str.equals(EAST.name)) {
-             return EAST;
+            return EAST;
         }
 
         if (str.equals(WEST.name)) {
-             return WEST;
+            return WEST;
         }
 
         if (str.equals(NORTH.name)) {
@@ -76,13 +76,13 @@ public class Direction implements AttributeOptionInterface {
         return id;
     }
 
-	public boolean equals( Direction other ) {
-		if (other != null) {
-			return this.id == other.id;
-		}
-		return false;
-	}
-	
+    public boolean equals(Direction other) {
+        if (other != null) {
+            return this.id == other.id;
+        }
+        return false;
+    }
+
     public double toRadians() {
         if (this == Direction.EAST) {
             return 0.0;

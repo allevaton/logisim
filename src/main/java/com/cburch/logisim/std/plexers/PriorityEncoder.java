@@ -3,24 +3,14 @@
 
 package com.cburch.logisim.std.plexers;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import com.cburch.logisim.data.Attribute;
-import com.cburch.logisim.data.AttributeSet;
-import com.cburch.logisim.data.BitWidth;
-import com.cburch.logisim.data.Bounds;
-import com.cburch.logisim.data.Direction;
-import com.cburch.logisim.data.Value;
-import com.cburch.logisim.instance.Instance;
-import com.cburch.logisim.instance.InstanceFactory;
-import com.cburch.logisim.instance.InstancePainter;
-import com.cburch.logisim.instance.InstanceState;
-import com.cburch.logisim.instance.Port;
-import com.cburch.logisim.instance.StdAttr;
+import com.cburch.logisim.data.*;
+import com.cburch.logisim.instance.*;
 import com.cburch.logisim.tools.key.BitWidthConfigurator;
 import com.cburch.logisim.util.GraphicsUtil;
-import static com.cburch.logisim.util.LocaleString.*;
+
+import java.awt.*;
+
+import static com.cburch.logisim.util.LocaleString.getFromLocale;
 
 public class PriorityEncoder extends InstanceFactory {
     private static final int OUT = 0;
@@ -30,11 +20,11 @@ public class PriorityEncoder extends InstanceFactory {
 
     public PriorityEncoder() {
         super("Priority Encoder", getFromLocale("priorityEncoderComponent"));
-        setAttributes(new Attribute[] {
+        setAttributes(new Attribute[]{
                 StdAttr.FACING, Plexers.ATTR_SELECT, Plexers.ATTR_DISABLED
-            }, new Object[] {
+        }, new Object[]{
                 Direction.EAST, BitWidth.create(3), Plexers.DISABLED_FLOATING
-            });
+        });
         setKeyConfigurator(new BitWidthConfigurator(Plexers.ATTR_SELECT, 1, 5, 0));
         setIconName("priencod.svg");
         setFacingAttribute(StdAttr.FACING);
@@ -48,12 +38,12 @@ public class PriorityEncoder extends InstanceFactory {
         int offs = -5 * inputs;
         int len = 10 * inputs + 10;
         if (dir == Direction.NORTH) {
-            return Bounds.create(offs,   0, len, 40);
+            return Bounds.create(offs, 0, len, 40);
         } else if (dir == Direction.SOUTH) {
             return Bounds.create(offs, -40, len, 40);
         } else if (dir == Direction.WEST) {
-            return Bounds.create(  0, offs, 40, len);
-        // dir == Direction.EAST
+            return Bounds.create(0, offs, 40, len);
+            // dir == Direction.EAST
         } else {
             return Bounds.create(-40, offs, 40, len);
         }

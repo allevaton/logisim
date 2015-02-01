@@ -5,8 +5,8 @@ package com.cburch.logisim.util;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Dag {
     private static class Node {
@@ -21,9 +21,10 @@ public class Dag {
         }
     }
 
-    private HashMap<Object,Node> nodes = new HashMap<Object,Node>();
+    private HashMap<Object, Node> nodes = new HashMap<Object, Node>();
 
-    public Dag() { }
+    public Dag() {
+    }
 
     public boolean hasPredecessors(Object data) {
         Node from = findNode(data);
@@ -64,7 +65,7 @@ public class Dag {
         // returns true if the edge could be removed
         Node src = findNode(srcData);
         Node dst = findNode(dstData);
-        
+
         if (src == null || dst == null || !src.succs.remove(dst)) {
             return false;
         }
@@ -124,7 +125,7 @@ public class Dag {
         if (data == null) {
             return null;
         }
-        
+
         ret = new Node(data);
         nodes.put(data, ret);
         return ret;
